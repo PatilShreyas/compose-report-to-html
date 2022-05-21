@@ -123,8 +123,6 @@ class CliArguments(args: Array<String>) {
     ).required()
 
     init {
-        printHeader("Parsing Arguments")
-
         parser.parse(args)
 
         printHeader("Validating Arguments")
