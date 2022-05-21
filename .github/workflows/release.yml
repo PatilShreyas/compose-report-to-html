@@ -1,5 +1,8 @@
 name: Release
-on: [push]
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -36,7 +39,7 @@ jobs:
           node-version: 14
           registry-url: 'https://registry.npmjs.org'
           
-      - name: Publish CLI Application
+      - name: Publish CLI Application 🚀
         run: |
           npm ci
           npm install
@@ -44,3 +47,24 @@ jobs:
           jdeploy publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Create Release ✅
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: true
+          prerelease: false
+          
+      - name: Upload CLI JAR ⬆️
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: cli/build/libs/cli.jar
+          asset_name: composeReport2Html.jar
+          asset_content_type: application/jar
