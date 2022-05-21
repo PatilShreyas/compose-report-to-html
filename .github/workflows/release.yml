@@ -37,6 +37,7 @@ jobs:
           
       - name: Publish CLI Application
         run: |
-          npm installl
+          npm ci
+          npm install
           npm install jdeploy -g
           jdeploy publish
