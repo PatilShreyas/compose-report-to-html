@@ -34,6 +34,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
+          registry-url: 'https://registry.npmjs.org'
           
       - name: Publish CLI Application
         run: |
@@ -41,3 +42,5 @@ jobs:
           npm install
           npm install jdeploy -g
           jdeploy publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
