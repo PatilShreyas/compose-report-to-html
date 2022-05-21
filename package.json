@@ -18,7 +18,7 @@
         "njre": "^0.2.0",
         "shelljs": "^0.8.4"
     },
-    "license": "ISC",
+    "license": "MIT",
     "name": "compose-report2html",
     "files": ["jdeploy-bundle"],
     "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
