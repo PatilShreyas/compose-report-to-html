@@ -1,0 +1,25 @@
+{
+    "bin": {"composeReport2Html": "jdeploy-bundle/jdeploy.js"},
+    "author": "Shreyas Patil",
+    "description": "CLI utility to convert Jetpack Compose metrics and report to beautified HTML page",
+    "main": "index.js",
+    "preferGlobal": true,
+    "repository": "",
+    "version": "1.0.0-alpha01-dev01",
+    "jdeploy": {
+        "jdk": false,
+        "javaVersion": "11",
+        "jar": "cli/build/libs/cli.jar",
+        "javafx": false,
+        "title": "Compose Report to HTML Generator"
+    },
+    "dependencies": {
+        "node-fetch": "^2.6.7",
+        "njre": "^0.2.0",
+        "shelljs": "^0.8.4"
+    },
+    "license": "ISC",
+    "name": "compose-report2html",
+    "files": ["jdeploy-bundle"],
+    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+}
