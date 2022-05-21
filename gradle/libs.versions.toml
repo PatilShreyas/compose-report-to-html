@@ -1,0 +1,15 @@
+[versions]
+coroutines = "1.6.1"
+moshi = "1.13.0"
+spotless = "6.3.0"
+kotlinxHtml = "0.7.5"
+kotlinxCli = "0.3.4"
+
+[libraries]
+moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-html-jvm = { module = "org.jetbrains.kotlinx:kotlinx-html-jvm", version.ref = "kotlinxHtml" }
+kotlinx-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlinxCli" }
+
+[plugins]
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
