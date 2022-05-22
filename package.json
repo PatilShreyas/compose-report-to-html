@@ -1,5 +1,7 @@
 {
-    "bin": {"composeReport2Html": "jdeploy-bundle/jdeploy.js"},
+    "bin": {
+        "composeReport2Html": "jdeploy-bundle/jdeploy.js"
+    },
     "author": "Shreyas Patil",
     "description": "CLI utility to convert Jetpack Compose metrics and report to beautified HTML page",
     "main": "index.js",
@@ -20,6 +22,10 @@
     },
     "license": "MIT",
     "name": "compose-report2html",
-    "files": ["jdeploy-bundle"],
-    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+    "files": [
+        "jdeploy-bundle"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
 }
