@@ -3,12 +3,6 @@
 A CLI (_Command Line Interface_) utility to convert Jetpack Compose metrics and reports to beautified HTML page 😍. 
 _Made with ❤️ for Android Developers and Composers_
 
-[![npm](https://img.shields.io/npm/v/compose-report2html?label=npm)](https://www.npmjs.com/package/compose-report2html)
-[![npm](https://img.shields.io/npm/dm/compose-report2html?label=NPM%20Downloads)](https://www.npmjs.com/package/compose-report2html)
-
-[![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?color=7885FF&label=Download%20JAR&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar)
-[![GitHub downloads](https://img.shields.io/github/downloads/PatilShreyas/compose-report-to-html/total?label=Downloads&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar)
-
 [![Build](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml)
 [![Release](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/release.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/release.yml)
 
@@ -17,6 +11,13 @@ _Made with ❤️ for Android Developers and Composers_
 [![GitHub forks](https://img.shields.io/github/forks/PatilShreyas/compose-report-to-html?style=social)](https://github.com/PatilShreyas/compose-report-to-html/network/members)
 [![GitHub watchers](https://img.shields.io/github/watchers/PatilShreyas/compose-report-to-html?style=social)](https://github.com/PatilShreyas/compose-report-to-html/watchers)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imShreyasPatil?label=Follow&style=social)](https://twitter.com/imShreyasPatil)
+
+
+|         | **Install**                                                                                                                                                                                                                             | **Downloads**                                                                                                                                                                                                                              |
+|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **NPM** | [![NPM Package](https://img.shields.io/npm/v/compose-report2html?label=npm&logo=npm)](https://www.npmjs.com/package/compose-report2html)                                                                                                | [![NPM Downloads](https://img.shields.io/npm/dm/compose-report2html?label=Downloads&logo=npm)](https://www.npmjs.com/package/compose-report2html)                                                                                    |
+| **JAR** | [![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?color=7885FF&label=JAR&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar) | [![GitHub downloads](https://img.shields.io/github/downloads/PatilShreyas/compose-report-to-html/total?label=Downloads&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar) |
+
 
 ## 💡 Motivation 
 
