@@ -110,7 +110,7 @@ In the above example, it will create report with name **"NotyKT"** with specifie
 
 Once report is generated, it looks like this
 
-| **Title**               | **Comments**                                                                                                                              | **Demo**                                           |
+| **Title**               | **Comments**                                                                                                                              | **Preview**                                           |
 |-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
 | **Brief Statistics**    | Generates metrics from `.json` file and represents in tabular format.                                                                     | ![Brief Statistics](images/brief-stats.png)        |
 | **Detailed Statistics** | Generates report from `.csv` file and represents in tabular format.                                                                       | ![Detailed Statistics](images/detailed-stats.png)  |
