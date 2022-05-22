@@ -84,7 +84,7 @@ fun saveReportAsHtml(htmlContent: String, outputDirectory: String): String {
  * Parses and validates CLI arguments
  */
 class CliArguments(args: Array<String>) {
-    private val parser = ArgParser("Compose Compiler Report to HTML Generator")
+    private val parser = ArgParser("Compose Compiler Report to HTML Generator ~ ${Constants.VERSION}")
 
     val applicationName by parser.option(
         ArgType.String,
@@ -159,3 +159,7 @@ fun printHeader(header: String) = println(
     $header
     """.trimIndent()
 )
+
+object Constants {
+    const val VERSION = "v1.0.0-alpha01-dev03"
+}
