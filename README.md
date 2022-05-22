@@ -109,12 +109,12 @@ In the above example, it will create report with name **"NotyKT"** with specifie
 
 Once report is generated, it looks like this
 
-| **Title**               | **Comments**                                                                                                                              | **Demo**                        |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|
-| **Brief Statistics**    | Generates metrics from `.json` file and represents in tabular format.                                                                     | ![images/brief-stats.png]       |
-| **Detailed Statistics** | Generates report from `.csv` file and represents in tabular format.                                                                       | ![images/detailed-stats.png]    |
-| **Composable Report**   | Parses `-composables.txt` file and separates out composables with and without issues and properly highlights issues associated with them. | ![images/composable-report.png] |
-| **Class Report**        | Parses `-classes.txt` file and separates out stable and unstable classes out of it and properly highlights issues associated with them.   | ![images/class-report.png]      |
+| **Title**               | **Comments**                                                                                                                              | **Demo**                                           |
+|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
+| **Brief Statistics**    | Generates metrics from `.json` file and represents in tabular format.                                                                     | ![Brief Statistics](images/brief-stats.png)        |
+| **Detailed Statistics** | Generates report from `.csv` file and represents in tabular format.                                                                       | ![Detailed Statistics](images/detailed-stats.png)  |
+| **Composable Report**   | Parses `-composables.txt` file and separates out composables with and without issues and properly highlights issues associated with them. | ![Composable Report](images/composable-report.png) |
+| **Class Report**        | Parses `-classes.txt` file and separates out stable and unstable classes out of it and properly highlights issues associated with them.   | ![Class Report](images/class-report.png)           |
 
 ## 🙋‍♂️ Contribute
 
