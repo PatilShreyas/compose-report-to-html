@@ -4,7 +4,7 @@
     "description": "CLI utility to convert Jetpack Compose metrics and report to beautified HTML page",
     "main": "index.js",
     "preferGlobal": true,
-    "repository": "",
+    "repository": "https://github.com/PatilShreyas/compose-report-to-html",
     "version": "1.0.0-alpha01-dev03",
     "jdeploy": {
         "jdk": false,
