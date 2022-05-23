@@ -1,6 +1,6 @@
 # Compose Compiler Reports to HTML Generator
 
-A CLI utility to convert Jetpack Compose metrics and reports to beautified 😍 HTML page. 
+A CLI utility to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page. 
 _Made with ❤️ for Android Developers and Composers_
 
 [![Build](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml)
@@ -81,6 +81,8 @@ Options:
 ```
 
 ### 3. Generate report
+
+Make sure to generate Compose compiler metrics and reports as mentioned [here](https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md) or [this good read article by Chris Banes](https://chris.banes.dev/composable-metrics/). These files are then needed to this CLI utility to feed the data.
 
 To generate the report, provide details related to app, metric and report files and output directory.
 
