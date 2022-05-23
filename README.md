@@ -82,6 +82,8 @@ Options:
 
 ### 3. Generate report
 
+To generate the report, provide details related to app, metric and report files and output directory.
+
 ```shell
 java -jar composeReport2Html.jar \
   -app <YOUR_APP_NAME> \
@@ -91,6 +93,8 @@ java -jar composeReport2Html.jar \
   -classMetrics <PATH TO *-classes.txt FILE> \
   -o <OUTPUT DIRECTORY PATH FOR REPORT>
 ```
+
+OR, directly use `composeReport2Html` (_if using NPM package_).
 
 ***Example Usage:***
 
