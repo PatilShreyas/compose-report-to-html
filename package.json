@@ -23,7 +23,8 @@
   "license": "MIT",
   "name": "compose-report2html",
   "files": [
-    "jdeploy-bundle"
+    "jdeploy-bundle",
+    "images/*"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
