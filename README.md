@@ -1,6 +1,6 @@
 # Compose Compiler Reports to HTML Generator
 
-A CLI (_Command Line Interface_) utility to convert Jetpack Compose metrics and reports to beautified HTML page 😍. 
+A CLI utility to convert Jetpack Compose metrics and reports to beautified 😍 HTML page. 
 _Made with ❤️ for Android Developers and Composers_
 
 [![Build](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml)
