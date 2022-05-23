@@ -1,31 +1,45 @@
 {
-    "bin": {
-        "composeReport2Html": "jdeploy-bundle/jdeploy.js"
-    },
-    "author": "Shreyas Patil",
-    "description": "CLI utility to convert Jetpack Compose metrics and report to beautified HTML page",
-    "main": "index.js",
-    "preferGlobal": true,
-    "repository": "https://github.com/PatilShreyas/compose-report-to-html",
-    "version": "1.0.0-alpha01-dev04",
-    "jdeploy": {
-        "jdk": false,
-        "javaVersion": "11",
-        "jar": "cli/build/libs/cli.jar",
-        "javafx": false,
-        "title": "Compose Report to HTML Generator"
-    },
-    "dependencies": {
-        "node-fetch": "^2.6.7",
-        "njre": "^0.2.0",
-        "shelljs": "^0.8.4"
-    },
-    "license": "MIT",
-    "name": "compose-report2html",
-    "files": [
-        "jdeploy-bundle"
-    ],
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    }
+  "bin": {
+    "composeReport2Html": "jdeploy-bundle/jdeploy.js"
+  },
+  "author": "Shreyas Patil",
+  "description": "CLI utility to convert Jetpack Compose metrics and report to beautified HTML page",
+  "main": "index.js",
+  "preferGlobal": true,
+  "repository": "https://github.com/PatilShreyas/compose-report-to-html",
+  "version": "1.0.0-alpha01-dev04",
+  "jdeploy": {
+    "jdk": false,
+    "javaVersion": "11",
+    "jar": "cli/build/libs/cli.jar",
+    "javafx": false,
+    "title": "Compose Report to HTML Generator"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "njre": "^0.2.0",
+    "shelljs": "^0.8.4"
+  },
+  "license": "MIT",
+  "name": "compose-report2html",
+  "files": [
+    "jdeploy-bundle"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://patilshreyas.github.io/compose-report-to-html/",
+  "keywords": [
+    "android",
+    "jetpack-compose",
+    "compose-compiler",
+    "report",
+    "kotlin",
+    "androidx",
+    "jetpack"
+  ],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/PatilShreyas/"
+  }
 }
