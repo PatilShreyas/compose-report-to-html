@@ -7,7 +7,7 @@
   "main": "index.js",
   "preferGlobal": true,
   "repository": "https://github.com/PatilShreyas/compose-report-to-html",
-  "version": "1.0.0-alpha01-dev04",
+  "version": "1.0.0-alpha01-dev05",
   "jdeploy": {
     "jdk": false,
     "javaVersion": "11",
