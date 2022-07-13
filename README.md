@@ -65,7 +65,7 @@ java -jar composeReport2Html.jar -h
 If you have installed CLI utility from NPM package, it can be directly available from Terminal.
 
 ```shell
-composeReport2Html.jar -h
+composeReport2Html -h
 ```
 
 Once you run, here's how it looks.
