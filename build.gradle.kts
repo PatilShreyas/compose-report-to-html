@@ -4,7 +4,7 @@ val libraryVersion: String by project
 val libraryGroup: String by project
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.10"
     alias(libs.plugins.spotless)
 }
 
