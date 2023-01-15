@@ -4,7 +4,7 @@ moshi = "1.13.0"
 spotless = "6.3.0"
 kotlinxHtml = "0.7.5"
 kotlinxCli = "0.3.4"
-mavenPublish = "0.23.1"
+mavenPublish = "0.21.0"
 
 [libraries]
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
