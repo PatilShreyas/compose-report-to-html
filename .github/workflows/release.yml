@@ -26,18 +26,18 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: Set up NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org'
             
       - name: Grant Permission to Execute
         run: chmod +x gradlew
 
       - name: 🏗 Build with Gradle 🛠️
         run: ./gradlew build --stacktrace
-        
-      - name: Set up NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Publish Library on Maven Central
         run: |
