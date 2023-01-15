@@ -38,7 +38,21 @@ jobs:
         with:
           node-version: 14
           registry-url: 'https://registry.npmjs.org'
-          
+
+      - name: Publish Library on Maven Central
+        run: |
+          echo "Publishing library🚀"
+          ./gradlew publish --no-daemon --no-parallel
+          echo "Published✅"
+          echo "Releasing repository...🚀"
+          ./gradlew closeAndReleaseRepository
+          echo "Released✅"
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSWORD }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+
       - name: Publish CLI Application 🚀
         run: |
           npm ci
