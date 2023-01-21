@@ -161,5 +161,5 @@ fun printHeader(header: String) = println(
 )
 
 object Constants {
-    const val VERSION = "v1.0.0-alpha02-dev01"
+    const val VERSION = "v1.0.0-alpha02"
 }
