@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    id(libs.plugins.mavenPublish.get().pluginId)
 }
 repositories {
     mavenCentral()

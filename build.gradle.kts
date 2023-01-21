@@ -1,15 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val libraryVersion: String by project
-val libraryGroup: String by project
+val VERSION_NAME: String by project
+val GROUP: String by project
 
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version libs.versions.kotlin.get()
     alias(libs.plugins.spotless)
+    alias(libs.plugins.mavenPublish) apply false
 }
 
-group = libraryGroup
-version = libraryVersion
+group = GROUP
+version = VERSION_NAME
 
 repositories {
     mavenCentral()

@@ -1,6 +1,6 @@
 # Compose Compiler Reports to HTML Generator
 
-A CLI utility to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page. 
+A CLI utility to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page.
 _Made with ❤️ for Android Developers and Composers_
 
 [![Build](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml)
@@ -12,23 +12,26 @@ _Made with ❤️ for Android Developers and Composers_
 [![GitHub watchers](https://img.shields.io/github/watchers/PatilShreyas/compose-report-to-html?style=social)](https://github.com/PatilShreyas/compose-report-to-html/watchers)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imShreyasPatil?label=Follow&style=social)](https://twitter.com/imShreyasPatil)
 
+|           | **Install**                                                                                                                                                                                                                                                               | **Downloads**                                                                                                                                                                                                                              |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **NPM**   | [![NPM Package](https://img.shields.io/npm/v/compose-report2html?label=npm&logo=npm)](https://www.npmjs.com/package/compose-report2html)                                                                                                                                  | [![NPM Downloads](https://img.shields.io/npm/dm/compose-report2html?label=Downloads&logo=npm)](https://www.npmjs.com/package/compose-report2html)                                                                                          |
+| **JAR**   | [![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?label=JAR&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar)                                                | [![GitHub downloads](https://img.shields.io/github/downloads/PatilShreyas/compose-report-to-html/total?label=Downloads&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar) |
+| **Maven** | [![Install](https://img.shields.io/maven-central/v/dev.shreyaspatil.compose-compiler-report-generator/core?label=Maven%20Central&logo=android&style=flat-square)](https://search.maven.org/search?q=g:dev.shreyaspatil.compose-compiler-report-generator) |
 
-|         | **Install**                                                                                                                                                                                                                             | **Downloads**                                                                                                                                                                                                                              |
-|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **NPM** | [![NPM Package](https://img.shields.io/npm/v/compose-report2html?label=npm&logo=npm)](https://www.npmjs.com/package/compose-report2html)                                                                                                | [![NPM Downloads](https://img.shields.io/npm/dm/compose-report2html?label=Downloads&logo=npm)](https://www.npmjs.com/package/compose-report2html)                                                                                    |
-| **JAR** | [![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?label=JAR&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar) | [![GitHub downloads](https://img.shields.io/github/downloads/PatilShreyas/compose-report-to-html/total?label=Downloads&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar) |
+## 💡 Motivation
 
-
-## 💡 Motivation 
-
-The Compose Compiler plugin can generate reports / metrics around certain compose-specific concepts that can be useful to understand what is happening with some of your compose code at a fine-grained level.
-[_**See this**_](https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md).  
+The Compose Compiler plugin can generate reports / metrics around certain compose-specific concepts that can be useful
+to understand what is happening with some of your compose code at a fine-grained level.
+[_**See this**_](https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md).
 
 This generates reports in `json`, `csv` and `txt` files which are not easily trace-able for developers.
 Also, Composable function and class reports becomes large and tedious to check.
-This tool parses the reports and metrics generated by Compose compiler and beautifies into a HTML page and intelligently distinguishes problematic and non-problematic composable functions and classes.
+This tool parses the reports and metrics generated by Compose compiler and beautifies into a HTML page and intelligently
+distinguishes problematic and non-problematic composable functions and classes.
 
-_This utility doesn't generate Compose Metrics and Reports. First, raw Compose report should be generated from the Compiler and those generated files should be feed to this utility. By parsing that data, this utility generates the beautified report._
+_This utility doesn't generate Compose Metrics and Reports. First, raw Compose report should be generated from the
+Compiler and those generated files should be feed to this utility. By parsing that data, this utility generates the
+beautified report._
 
 ## 🧑‍💻 Usage
 
@@ -40,7 +43,8 @@ To install the CLI utility, there are two ways
 
 #### 1.1 Directly use `.jar` distribution
 
-Navigate to the [releases](https://github.com/PatilShreyas/compose-report-to-html/releases) and download the latest JAR artifact.
+Navigate to the [releases](https://github.com/PatilShreyas/compose-report-to-html/releases) and download the latest JAR
+artifact.
 
 #### 1.2 Install from NPM
 
@@ -84,7 +88,10 @@ Options:
 
 ### 3. Generate report
 
-Make sure to generate Compose compiler metrics and reports as mentioned [here](https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md) or [this good read article by Chris Banes](https://chris.banes.dev/composable-metrics/). These files are then needed to this CLI utility to feed the data.
+Make sure to generate Compose compiler metrics and reports as
+mentioned [here](https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md)
+or [this good read article by Chris Banes](https://chris.banes.dev/composable-metrics/). These files are then needed to
+this CLI utility to feed the data.
 
 To generate the report, provide details related to app, metric and report files and output directory.
 
@@ -112,9 +119,17 @@ java -jar composeReport2Html.jar \
   -o notyReport
 ```
 
-In the above example, it will create report with name **"NotyKT"** with specified metric and report files and finally report will be generated in the specified path i.e. `notyReport/index.html`.
+In the above example, it will create report with name **"NotyKT"** with specified metric and report files and finally
+report will be generated in the specified path i.e. `notyReport/index.html`.
 
-## 📈 Report Overview 
+## Utility as a library
+
+This utility is also published as a maven artifact on Maven Central so that you can make use of it as you want to use it
+(_For example: automation in CI_).
+
+Refer to the Wiki for more information: [**Using this utility as a library**](https://github.com/PatilShreyas/compose-report-to-html/wiki/Using-utility-as-a-library)
+
+## 📈 Report Overview
 
 Once report is generated, it looks like this.
 
@@ -126,7 +141,7 @@ Once report is generated, it looks like this.
 | **Class Report**        | Parses `-classes.txt` file and separates out stable and unstable classes out of it and properly highlights issues associated with them. <br><br> ![Class Report](images/class-report.png)             |
 
 Right now, work is in progress and more improvements related to the report
-will happen in some time. If you have any feedback / suggestions related to 
+will happen in some time. If you have any feedback / suggestions related to
 the report, feel free to discuss it (_find discussion link in the below section_).
 
 ## 🙋‍♂️ Contribute
@@ -135,7 +150,8 @@ Read [contribution guidelines](CONTRIBUTING.md) for more information regarding c
 
 ## 💬 Discuss?
 
-Have any questions, doubts or want to present your opinions, views? You're always welcome. You can [start discussions](https://github.com/PatilShreyas/compose-report-to-html/discussions).
+Have any questions, doubts or want to present your opinions, views? You're always welcome. You
+can [start discussions](https://github.com/PatilShreyas/compose-report-to-html/discussions).
 
 ## License
 

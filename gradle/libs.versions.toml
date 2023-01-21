@@ -1,9 +1,11 @@
 [versions]
-coroutines = "1.6.1"
+kotlin = "1.8.0"
+coroutines = "1.6.4"
 moshi = "1.13.0"
 spotless = "6.3.0"
 kotlinxHtml = "0.7.5"
 kotlinxCli = "0.3.4"
+mavenPublish = "0.23.2"
 
 [libraries]
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
@@ -13,3 +15,4 @@ kotlinx-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kot
 
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }

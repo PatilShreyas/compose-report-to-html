@@ -26,19 +26,40 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: Set up NPM
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org'
             
       - name: Grant Permission to Execute
         run: chmod +x gradlew
 
       - name: 🏗 Build with Gradle 🛠️
         run: ./gradlew build --stacktrace
-        
-      - name: Set up NPM
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish Library on Maven Central
+        run: |
+          echo "Publishing Core🚀"
+          ./gradlew :core:publish
+          echo "Published Core✅"
+          echo "Releasing Core...🚀"
+          ./gradlew closeAndReleaseRepository
+          echo "Released Core✅"
           
+          echo "Publishing Report Generator🚀"
+          ./gradlew :reportGenerator:publish
+          echo "Published Report Generator✅"
+          echo "Releasing Report Generator...🚀"
+          ./gradlew closeAndReleaseRepository
+          echo "Released Report Generator✅"
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSWORD }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+
       - name: Publish CLI Application 🚀
         run: |
           npm ci
