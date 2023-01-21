@@ -39,14 +39,14 @@ jobs:
       - name: Publish Library on Maven Central
         run: |
           echo "Publishing Core🚀"
-          ./gradlew :core:publish --no-daemon --no-parallel
+          ./gradlew :core:publish
           echo "Published Core✅"
           echo "Releasing Core...🚀"
           ./gradlew closeAndReleaseRepository
           echo "Released Core✅"
           
           echo "Publishing Report Generator🚀"
-          ./gradlew :reportGenerator:publish --no-daemon --no-parallel
+          ./gradlew :reportGenerator:publish
           echo "Published Report Generator✅"
           echo "Releasing Report Generator...🚀"
           ./gradlew closeAndReleaseRepository
