@@ -1,5 +1,6 @@
 [versions]
-coroutines = "1.6.1"
+kotlin = "1.8.0"
+coroutines = "1.6.4"
 moshi = "1.13.0"
 spotless = "6.3.0"
 kotlinxHtml = "0.7.5"
