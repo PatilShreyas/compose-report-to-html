@@ -27,6 +27,7 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerMetr
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.DetailedStatistics
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.ClassesReport
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposablesReport
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils.camelCaseToWord
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.MainContent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -46,7 +47,9 @@ class HtmlReportGenerator(
      */
     fun generateHtml(): String = runBlocking(Dispatchers.Default) {
 
-        val deferredOverallStatistics = async { metricsProvider.getOverallStatistics() }
+        val deferredOverallStatistics = async {
+            metricsProvider.getOverallStatistics().map { (name, value) -> camelCaseToWord(name) to value }.toMap()
+        }
         val deferredDetailedStatistics = async { metricsProvider.getDetailedStatistics() }
         val deferredComposablesReport = async { metricsProvider.getComposablesReport() }
         val deferredClassesReport = async { metricsProvider.getClassesReport() }
