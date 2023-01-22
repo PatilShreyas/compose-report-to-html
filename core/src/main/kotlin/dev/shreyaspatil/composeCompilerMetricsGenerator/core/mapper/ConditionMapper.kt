@@ -29,6 +29,6 @@ object ConditionMapper {
     fun from(value: String): Condition = when (value.lowercase()) {
         "stable" -> Condition.STABLE
         "unstable" -> Condition.UNSTABLE
-        else -> error("Unable to parse unrecognized value for condition '$value'")
+        else -> Condition.MISSING
     }
 }
