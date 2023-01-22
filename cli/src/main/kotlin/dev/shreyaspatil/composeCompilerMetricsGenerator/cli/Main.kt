@@ -107,25 +107,25 @@ class CliArguments(args: Array<String>, private val path: Path) {
     val overallStatsFile by parser.option(
         ArgType.String,
         shortName = "overallStatsReport",
-        description = "Overall Statistics Metrics JSON file"
+        description = "Overall Statistics Metrics JSON files (separated by commas)"
     )
 
     val detailedStatsFile by parser.option(
         ArgType.String,
         shortName = "detailedStatsMetrics",
-        description = "Detailed Statistics Metrics CSV file"
+        description = "Detailed Statistics Metrics CSV files (separated by commas)"
     )
 
     val composableMetricsFile by parser.option(
         ArgType.String,
         shortName = "composableMetrics",
-        description = "Composable Metrics TXT file"
+        description = "Composable Metrics TXT files (separated by commas)"
     )
 
     val classMetricsFile by parser.option(
         ArgType.String,
         shortName = "classMetrics",
-        description = "Class Metrics TXT file"
+        description = "Class Metrics TXT files (separated by commas)"
     )
 
     val outputDirectory by parser.option(

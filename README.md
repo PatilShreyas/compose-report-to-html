@@ -79,10 +79,10 @@ Usage: Compose Compiler Report to HTML Generator ~ v1.0.0-alpha02 options_list
 Options:
     --applicationName, -app -> Application name (To be displayed in the report) (always required) { String }
     --inputDirectory, -i -> Input directory where composable report and metrics are available { String }
-    --overallStatsFile, -overallStatsReport -> Overall Statistics Metrics JSON file { String }
-    --detailedStatsFile, -detailedStatsMetrics -> Detailed Statistics Metrics CSV file { String }
-    --composableMetricsFile, -composableMetrics -> Composable Metrics TXT file { String }
-    --classMetricsFile, -classMetrics -> Class Metrics TXT file { String }
+    --overallStatsFile, -overallStatsReport -> Overall Statistics Metrics JSON files (separated by commas) { String }
+    --detailedStatsFile, -detailedStatsMetrics -> Detailed Statistics Metrics CSV files (separated by commas) { String }
+    --composableMetricsFile, -composableMetrics -> Composable Metrics TXT files (separated by commas) { String }
+    --classMetricsFile, -classMetrics -> Class Metrics TXT files (separated by commas) { String }
     --outputDirectory, -o -> Output directory name (always required) { String }
     --help, -h -> Usage info
 ```
