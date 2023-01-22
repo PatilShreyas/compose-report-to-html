@@ -25,6 +25,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.cli
 
 import dev.shreyaspatil.composeCompilerMetricsGenerator.cli.file.ReportAndMetricsFileFinder
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerMetricsProvider
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerReportFiles
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGenerator
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import kotlinx.cli.ArgParser
@@ -49,10 +50,12 @@ fun main(args: Array<String>) {
     val html = HtmlReportGenerator(
         reportSpec = reportSpec,
         metricsProvider = ComposeCompilerMetricsProvider(
-            briefStatisticsJsonFilePath = inputFiles.briefStatisticsJsonFilePath,
-            detailedStatisticsJsonFilePath = inputFiles.detailedStatisticsJsonFilePath,
-            composableReportFilePath = inputFiles.composableReportFilePath,
-            classesReportFilePath = inputFiles.classesReportFilePath
+            ComposeCompilerReportFiles(
+                briefStatisticsJsonFiles = inputFiles.briefStatisticsJsonFilePath,
+                detailedStatisticsCsvFiles = inputFiles.detailedStatisticsJsonFilePath,
+                composableReportFiles = inputFiles.composableReportFilePath,
+                classesReportFiles = inputFiles.classesReportFilePath
+            )
         )
     ).generateHtml()
 
@@ -140,7 +143,7 @@ class CliArguments(args: Array<String>, private val path: Path) {
         require(outputDirectory.isNotBlank()) { "Output directory path should not be blank" }
     }
 
-    fun getRequiredFiles(): RequiredFiles {
+    fun getRequiredFiles(): InputFiles {
         val directory = inputDirectory
 
         val files = arrayOf(
@@ -152,15 +155,13 @@ class CliArguments(args: Array<String>, private val path: Path) {
 
         if (directory != null) {
             ensureDirectory(directory) { "Directory '$directory' not exists" }
-
             return findRequiredFilesInDirectory(directory)
         } else if (files.all { !it.isNullOrBlank() }) {
-            files.forEach { ensureFileExists(it!!) { fileNotExistMessage(it) } }
-            return RequiredFiles(
-                briefStatisticsJsonFilePath = overallStatsFile!!,
-                detailedStatisticsJsonFilePath = detailedStatsFile!!,
-                composableReportFilePath = composableMetricsFile!!,
-                classesReportFilePath = classMetricsFile!!
+            return InputFiles(
+                briefStatisticsJsonFilePath = files(overallStatsFile!!),
+                detailedStatisticsJsonFilePath = files(detailedStatsFile!!),
+                composableReportFilePath = files(composableMetricsFile!!),
+                classesReportFilePath = files(classMetricsFile!!)
             )
         } else {
             // Assume report and metric files available in the current working directory as specified in the `path`
@@ -169,42 +170,43 @@ class CliArguments(args: Array<String>, private val path: Path) {
         }
     }
 
-    private fun findRequiredFilesInDirectory(directory: String): RequiredFiles {
+    private fun findRequiredFilesInDirectory(directory: String): InputFiles {
         val finder = ReportAndMetricsFileFinder(File(Paths.get(directory).toAbsolutePath().toString()))
 
-        return RequiredFiles(
-            briefStatisticsJsonFilePath = finder.findBriefStatisticsJsonFile()!!.absolutePath,
-            detailedStatisticsJsonFilePath = finder.findDetailsStatisticsCsvFile()!!.absolutePath,
-            composableReportFilePath = finder.findComposablesReportTxtFile()!!.absolutePath,
-            classesReportFilePath = finder.findClassesReportTxtFile()!!.absolutePath
+        return InputFiles(
+            briefStatisticsJsonFilePath = finder.findBriefStatisticsJsonFile(),
+            detailedStatisticsJsonFilePath = finder.findDetailsStatisticsCsvFile(),
+            composableReportFilePath = finder.findComposablesReportTxtFile(),
+            classesReportFilePath = finder.findClassesReportTxtFile()
         )
     }
 
-    companion object {
-        fun fileNotExistMessage(filename: String) = "File not exists with name '$filename'"
+    private fun files(filenames: String): List<File> {
+        return filenames.split(",").map { ensureFileExists(it) { "File not exist: $it" } }
     }
 
     /**
      *
      */
-    class RequiredFiles(
-        val briefStatisticsJsonFilePath: String,
-        val detailedStatisticsJsonFilePath: String,
-        val composableReportFilePath: String,
-        val classesReportFilePath: String
+    class InputFiles(
+        val briefStatisticsJsonFilePath: List<File>,
+        val detailedStatisticsJsonFilePath: List<File>,
+        val composableReportFilePath: List<File>,
+        val classesReportFilePath: List<File>
     )
 }
 
 /**
  * Checks whether file with [filename] exists or not. Else throws [FileNotFoundException].
  */
-inline fun ensureFileExists(filename: String, lazyMessage: () -> Any) {
+inline fun ensureFileExists(filename: String, lazyMessage: () -> Any): File {
     val file = File(Paths.get(filename).toAbsolutePath().toString())
     println("Checking file '${file.absolutePath}'")
     if (!file.exists()) {
         val message = lazyMessage()
         throw FileNotFoundException(message.toString())
     }
+    return file
 }
 
 /**

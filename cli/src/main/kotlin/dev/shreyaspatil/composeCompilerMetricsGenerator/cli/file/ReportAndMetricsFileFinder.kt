@@ -35,20 +35,20 @@ class ReportAndMetricsFileFinder(directory: File) {
         .listFiles()
         .filterNotNull()
 
-    fun findBriefStatisticsJsonFile(): File? {
-        return allFiles.find { it.name.endsWith(FileSuffixes.MODULE_REPORT_JSON) }
+    fun findBriefStatisticsJsonFile(): List<File> {
+        return allFiles.filter { it.name.endsWith(FileSuffixes.MODULE_REPORT_JSON) }
     }
 
-    fun findDetailsStatisticsCsvFile(): File? {
-        return allFiles.find { it.name.endsWith(FileSuffixes.COMPOSABLES_STATS_METRICS_CSV) }
+    fun findDetailsStatisticsCsvFile(): List<File> {
+        return allFiles.filter { it.name.endsWith(FileSuffixes.COMPOSABLES_STATS_METRICS_CSV) }
     }
 
-    fun findComposablesReportTxtFile(): File? {
-        return allFiles.find { it.name.endsWith(FileSuffixes.COMPOSABLES_REPORT_TXT) }
+    fun findComposablesReportTxtFile(): List<File> {
+        return allFiles.filter { it.name.endsWith(FileSuffixes.COMPOSABLES_REPORT_TXT) }
     }
 
-    fun findClassesReportTxtFile(): File? {
-        return allFiles.find { it.name.endsWith(FileSuffixes.CLASSES_REPORT_TXT) }
+    fun findClassesReportTxtFile(): List<File> {
+        return allFiles.filter { it.name.endsWith(FileSuffixes.CLASSES_REPORT_TXT) }
     }
 
     object FileSuffixes {
