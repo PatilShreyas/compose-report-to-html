@@ -32,8 +32,6 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.Class
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposablesReport
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ClassReportParser
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ComposableReportParser
-import java.nio.file.Paths
-import kotlin.io.path.absolutePathString
 
 /**
  * Provides metrics and reports of a Compose compiler
@@ -62,7 +60,7 @@ interface ComposeCompilerMetricsProvider {
 
 /**
  * Default implementation for [ComposeCompilerMetricsProvider] which parses content provided by
- * [ComposeMetricsFileProvider].
+ * [ComposeCompilerReportFiles].
  */
 @OptIn(ExperimentalStdlibApi::class)
 private class DefaultComposeCompilerMetricsProvider(
@@ -71,8 +69,18 @@ private class DefaultComposeCompilerMetricsProvider(
     private val moshi = Moshi.Builder().build()
 
     override fun getOverallStatistics(): Map<String, Long> {
-        val statistics = moshi.adapter<Map<String, Long>>().fromJson(contentProvider.briefStatisticsContents)
-        return statistics?.map { (name, value) -> camelCaseToWord(name) to value }?.toMap() ?: emptyMap()
+        val statistics = mutableMapOf<String, Long>()
+        contentProvider.briefStatisticsContents.forEach { statContent ->
+            val stats = moshi.adapter<Map<String, Long>>().fromJson(statContent) ?: emptyMap()
+            if (statistics.isEmpty()) {
+                statistics.putAll(stats)
+            } else {
+                stats.forEach { (key, value) ->
+                    statistics[key] = statistics[key]?.plus(value) ?: value
+                }
+            }
+        }
+        return statistics.toMap()
     }
 
     override fun getDetailedStatistics(): DetailedStatistics {
@@ -100,30 +108,14 @@ private class DefaultComposeCompilerMetricsProvider(
     }
 
     private fun splitWithCsvSeparator(content: String) = content.split(",").filter { it.isNotBlank() }
-
-    private fun camelCaseToWord(content: String): String =
-        content.replace(REGEX_CAMEL_CASE) { " ${it.value[0].uppercase()}" }.trim()
-
-    companion object {
-        private val REGEX_CAMEL_CASE = "(\\A[a-z]|[A-Z])".toRegex()
-    }
 }
 
 /**
  * Factory function for creating [ComposeCompilerMetricsProvider].
  */
 fun ComposeCompilerMetricsProvider(
-    briefStatisticsJsonFilePath: String,
-    detailedStatisticsJsonFilePath: String,
-    composableReportFilePath: String,
-    classesReportFilePath: String
-): ComposeCompilerMetricsProvider = DefaultComposeCompilerMetricsProvider(
-    ComposeMetricsContentProvider(
-        ComposeMetricsFileProvider(
-            briefStatisticsJsonFilePath = Paths.get(briefStatisticsJsonFilePath).absolutePathString(),
-            detailedStatisticsCsvFilePath = Paths.get(detailedStatisticsJsonFilePath).absolutePathString(),
-            composableReportFilePath = Paths.get(composableReportFilePath).absolutePathString(),
-            classesReportFilePath = Paths.get(classesReportFilePath).absolutePathString()
-        )
-    )
-)
+    files: ComposeCompilerReportFiles
+): ComposeCompilerMetricsProvider {
+    val contentProvider = ComposeMetricsContentProvider(files)
+    return DefaultComposeCompilerMetricsProvider(contentProvider)
+}

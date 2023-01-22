@@ -28,14 +28,9 @@ import java.io.File
 /**
  * Provide files of compose compiler metrics and reports
  */
-class ComposeMetricsFileProvider(
-    val briefStatisticsJsonFilePath: String,
-    val detailedStatisticsCsvFilePath: String,
-    val composableReportFilePath: String,
-    val classesReportFilePath: String,
-) {
-    fun provideBriefStatisticsJsonFile(): File = File(briefStatisticsJsonFilePath)
-    fun provideStatisticsCsvFile(): File = File(detailedStatisticsCsvFilePath)
-    fun provideComposablesReportTxtFile(): File = File(composableReportFilePath)
-    fun provideClassesReportTxtFile(): File = File(classesReportFilePath)
-}
+class ComposeCompilerReportFiles(
+    val briefStatisticsJsonFiles: List<File>,
+    val detailedStatisticsCsvFiles: List<File>,
+    val composableReportFiles: List<File>,
+    val classesReportFiles: List<File>,
+)
