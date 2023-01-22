@@ -136,6 +136,11 @@ fun HEAD.PageStyle() {
                         color: ${Colors.WHITE}
                     }
                     
+                    .background-status-missing {
+                        background-color: ${Colors.BRIGHT_ORANGE};
+                        color: ${Colors.BLACK}
+                    }
+                    
                     .empty-content {
                         margin: 4px;
                         padding: 18px;

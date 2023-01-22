@@ -120,7 +120,13 @@ fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) = table {
                             th { +"Type" }
                         }
                         detail.params.forEachIndexedFromOne { index, param ->
-                            tr(if (param.condition === Condition.STABLE) "background-status-success" else "background-status-failure") {
+                            tr(
+                                when (param.condition) {
+                                    Condition.STABLE -> "background-status-success"
+                                    Condition.UNSTABLE -> "background-status-failure"
+                                    Condition.MISSING -> "background-status-missing"
+                                }
+                            ) {
                                 td { +index.toString() }
                                 td { +param.condition.toString() }
                                 td("code") { +param.name }

@@ -99,10 +99,10 @@ fun FlowContent.ClassesReport(classes: List<ClassDetail>) = table {
             td {
                 h3 {
                     span(statusCssClass(detail.stability === Condition.STABLE)) {
-                        if (detail.stability === Condition.STABLE) {
-                            +"✅ Stable"
-                        } else {
-                            +"❌ Unstable"
+                        when (detail.stability) {
+                            Condition.STABLE -> +"✅ Stable"
+                            Condition.UNSTABLE -> +"❌ Unstable"
+                            else -> +"Missing"
                         }
                     }
                     span("code") { +" class ${detail.className}" }
