@@ -75,7 +75,7 @@ composeReport2Html -h
 Once you run, here's how it looks.
 
 ```shell
-Usage: Compose Compiler Report to HTML Generator ~ v1.0.0-alpha02 options_list
+Usage: Compose Compiler Report to HTML Generator ~ v1.0.0-alpha03 options_list
 Options:
     --applicationName, -app -> Application name (To be displayed in the report) (always required) { String }
     --inputDirectory, -i -> Input directory where composable report and metrics are available { String }
