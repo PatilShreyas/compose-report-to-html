@@ -23,7 +23,9 @@
  */
 package dev.shreyaspatil.composeCompilerMetricsGenerator.cli
 
+import dev.shreyaspatil.composeCompilerMetricsGenerator.cli.file.ReportAndMetricsFileFinder
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerMetricsProvider
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerReportFiles
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGenerator
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import kotlinx.cli.ArgParser
@@ -31,25 +33,29 @@ import kotlinx.cli.ArgType
 import kotlinx.cli.required
 import java.io.File
 import java.io.FileNotFoundException
+import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
  * Entry point of a CLI application
  */
 fun main(args: Array<String>) {
-    val arguments = CliArguments(args)
+    val arguments = CliArguments(args, Paths.get("").toAbsolutePath())
 
     val reportSpec = ReportSpec(arguments.applicationName)
+    val inputFiles = arguments.getRequiredFiles()
 
     printHeader("Generating Composable HTML Report")
 
     val html = HtmlReportGenerator(
         reportSpec = reportSpec,
         metricsProvider = ComposeCompilerMetricsProvider(
-            briefStatisticsJsonFilePath = arguments.overallStatsFile,
-            detailedStatisticsJsonFilePath = arguments.detailedStatsFile,
-            composableReportFilePath = arguments.composableMetricsFile,
-            classesReportFilePath = arguments.classMetricsFile
+            ComposeCompilerReportFiles(
+                briefStatisticsJsonFiles = inputFiles.briefStatisticsJsonFilePath,
+                detailedStatisticsCsvFiles = inputFiles.detailedStatisticsJsonFilePath,
+                composableReportFiles = inputFiles.composableReportFilePath,
+                classesReportFiles = inputFiles.classesReportFilePath
+            )
         )
     ).generateHtml()
 
@@ -83,7 +89,7 @@ fun saveReportAsHtml(htmlContent: String, outputDirectory: String): String {
 /**
  * Parses and validates CLI arguments
  */
-class CliArguments(args: Array<String>) {
+class CliArguments(args: Array<String>, private val path: Path) {
     private val parser = ArgParser("Compose Compiler Report to HTML Generator ~ ${Constants.VERSION}")
 
     val applicationName by parser.option(
@@ -92,29 +98,35 @@ class CliArguments(args: Array<String>) {
         description = "Application name (To be displayed in the report)"
     ).required()
 
+    val inputDirectory by parser.option(
+        ArgType.String,
+        shortName = "i",
+        description = "Input directory where composable report and metrics are available"
+    )
+
     val overallStatsFile by parser.option(
         ArgType.String,
         shortName = "overallStatsReport",
-        description = "Overall Statistics Metrics JSON file"
-    ).required()
+        description = "Overall Statistics Metrics JSON files (separated by commas)"
+    )
 
     val detailedStatsFile by parser.option(
         ArgType.String,
         shortName = "detailedStatsMetrics",
-        description = "Detailed Statistics Metrics CSV file"
-    ).required()
+        description = "Detailed Statistics Metrics CSV files (separated by commas)"
+    )
 
     val composableMetricsFile by parser.option(
         ArgType.String,
         shortName = "composableMetrics",
-        description = "Composable Metrics TXT file"
-    ).required()
+        description = "Composable Metrics TXT files (separated by commas)"
+    )
 
     val classMetricsFile by parser.option(
         ArgType.String,
         shortName = "classMetrics",
-        description = "Class Metrics TXT file"
-    ).required()
+        description = "Class Metrics TXT files (separated by commas)"
+    )
 
     val outputDirectory by parser.option(
         ArgType.String,
@@ -129,25 +141,82 @@ class CliArguments(args: Array<String>) {
 
         require(applicationName.isNotBlank()) { "Application name should not be blank" }
         require(outputDirectory.isNotBlank()) { "Output directory path should not be blank" }
+    }
 
-        printHeader("Checking files")
-        listOf(overallStatsFile, detailedStatsFile, composableMetricsFile, classMetricsFile).forEach { filename ->
-            ensureFileExists(filename) { fileNotExistMessage(filename) }
+    fun getRequiredFiles(): InputFiles {
+        val directory = inputDirectory
+
+        val files = arrayOf(
+            overallStatsFile,
+            detailedStatsFile,
+            composableMetricsFile,
+            classMetricsFile
+        )
+
+        if (directory != null) {
+            ensureDirectory(directory) { "Directory '$directory' not exists" }
+            return findRequiredFilesInDirectory(directory)
+        } else if (files.all { !it.isNullOrBlank() }) {
+            return InputFiles(
+                briefStatisticsJsonFilePath = files(overallStatsFile!!),
+                detailedStatisticsJsonFilePath = files(detailedStatsFile!!),
+                composableReportFilePath = files(composableMetricsFile!!),
+                classesReportFilePath = files(classMetricsFile!!)
+            )
+        } else {
+            // Assume report and metric files available in the current working directory as specified in the `path`
+            val defaultDirectory = path.toAbsolutePath().toString()
+            return findRequiredFilesInDirectory(defaultDirectory)
         }
     }
 
-    companion object {
-        fun fileNotExistMessage(filename: String) = "File not exists with name '$filename'"
+    private fun findRequiredFilesInDirectory(directory: String): InputFiles {
+        val finder = ReportAndMetricsFileFinder(File(Paths.get(directory).toAbsolutePath().toString()))
+
+        return InputFiles(
+            briefStatisticsJsonFilePath = finder.findBriefStatisticsJsonFile(),
+            detailedStatisticsJsonFilePath = finder.findDetailsStatisticsCsvFile(),
+            composableReportFilePath = finder.findComposablesReportTxtFile(),
+            classesReportFilePath = finder.findClassesReportTxtFile()
+        )
     }
+
+    private fun files(filenames: String): List<File> {
+        return filenames.split(",").map { ensureFileExists(it) { "File not exist: $it" } }
+    }
+
+    /**
+     *
+     */
+    class InputFiles(
+        val briefStatisticsJsonFilePath: List<File>,
+        val detailedStatisticsJsonFilePath: List<File>,
+        val composableReportFilePath: List<File>,
+        val classesReportFilePath: List<File>
+    )
 }
 
 /**
  * Checks whether file with [filename] exists or not. Else throws [FileNotFoundException].
  */
-inline fun ensureFileExists(filename: String, lazyMessage: () -> Any) {
+inline fun ensureFileExists(filename: String, lazyMessage: () -> Any): File {
     val file = File(Paths.get(filename).toAbsolutePath().toString())
     println("Checking file '${file.absolutePath}'")
     if (!file.exists()) {
+        val message = lazyMessage()
+        throw FileNotFoundException(message.toString())
+    }
+    return file
+}
+
+/**
+ * Checks whether directory with [name] exists or not.
+ * Else throws [FileNotFoundException].
+ */
+inline fun ensureDirectory(name: String, lazyMessage: () -> Any) {
+    val file = File(Paths.get(name).toAbsolutePath().toString())
+    println("Checking directory '${file.absolutePath}'")
+    if (!file.isDirectory) {
         val message = lazyMessage()
         throw FileNotFoundException(message.toString())
     }
@@ -161,5 +230,5 @@ fun printHeader(header: String) = println(
 )
 
 object Constants {
-    const val VERSION = "v1.0.0-alpha02"
+    const val VERSION = "v1.0.0-alpha03"
 }

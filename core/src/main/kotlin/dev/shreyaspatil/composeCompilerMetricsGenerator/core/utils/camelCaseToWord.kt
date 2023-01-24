@@ -21,21 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.shreyaspatil.composeCompilerMetricsGenerator.core
+package dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils
 
-import java.io.File
-
-/**
- * Provide files of compose compiler metrics and reports
- */
-class ComposeMetricsFileProvider(
-    val briefStatisticsJsonFilePath: String,
-    val detailedStatisticsCsvFilePath: String,
-    val composableReportFilePath: String,
-    val classesReportFilePath: String,
-) {
-    fun provideBriefStatisticsJsonFile(): File = File(briefStatisticsJsonFilePath)
-    fun provideStatisticsCsvFile(): File = File(detailedStatisticsCsvFilePath)
-    fun provideComposablesReportTxtFile(): File = File(composableReportFilePath)
-    fun provideClassesReportTxtFile(): File = File(classesReportFilePath)
-}
+private val REGEX_CAMEL_CASE = "(\\A[a-z]|[A-Z])".toRegex()
+fun camelCaseToWord(content: String): String =
+    content.replace(REGEX_CAMEL_CASE) { " ${it.value[0].uppercase()}" }.trim()

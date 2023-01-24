@@ -33,4 +33,5 @@ object Colors {
     const val BLUE_LIGHT = "#E1F5FE"
     const val WHITE = "#FFFFFF"
     const val BLACK = "#000000"
+    const val BRIGHT_ORANGE = "#FFAC1C"
 }

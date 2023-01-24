@@ -21,14 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.shreyaspatil.composeCompilerMetricsGenerator.core.mapper
+package dev.shreyaspatil.composeCompilerMetricsGenerator.core
 
-import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
+import java.io.File
 
-object ConditionMapper {
-    fun from(value: String): Condition = when (value.lowercase()) {
-        "stable" -> Condition.STABLE
-        "unstable" -> Condition.UNSTABLE
-        else -> Condition.MISSING
-    }
-}
+/**
+ * Provide files of compose compiler metrics and reports
+ */
+class ComposeCompilerReportFiles(
+    val briefStatisticsJsonFiles: List<File>,
+    val detailedStatisticsCsvFiles: List<File>,
+    val composableReportFiles: List<File>,
+    val classesReportFiles: List<File>,
+)
