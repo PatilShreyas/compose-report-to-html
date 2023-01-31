@@ -60,7 +60,7 @@ interface ComposeCompilerMetricsProvider {
 
 /**
  * Default implementation for [ComposeCompilerMetricsProvider] which parses content provided by
- * [ComposeCompilerReportFiles].
+ * [ComposeCompilerRawReportProvider].
  */
 @OptIn(ExperimentalStdlibApi::class)
 private class DefaultComposeCompilerMetricsProvider(
@@ -114,7 +114,7 @@ private class DefaultComposeCompilerMetricsProvider(
  * Factory function for creating [ComposeCompilerMetricsProvider].
  */
 fun ComposeCompilerMetricsProvider(
-    files: ComposeCompilerReportFiles
+    files: ComposeCompilerRawReportProvider
 ): ComposeCompilerMetricsProvider {
     val contentProvider = ComposeMetricsContentProvider(files)
     return DefaultComposeCompilerMetricsProvider(contentProvider)
