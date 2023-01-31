@@ -176,7 +176,6 @@ class CliArguments(args: Array<String>, private val path: Path) {
     }
 }
 
-
 fun printHeader(header: String) = println(
     """
     ------------------------------------------------------------------

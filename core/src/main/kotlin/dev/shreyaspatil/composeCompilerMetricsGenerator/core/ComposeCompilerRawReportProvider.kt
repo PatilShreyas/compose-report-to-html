@@ -74,9 +74,9 @@ sealed interface ComposeCompilerRawReportProvider {
  */
 fun ComposeCompilerRawReportProvider.validateComposeCompilerRawReportProvider() {
     val files = briefStatisticsJsonFiles +
-            detailedStatisticsCsvFiles +
-            composableReportFiles +
-            classesReportFiles
+        detailedStatisticsCsvFiles +
+        composableReportFiles +
+        classesReportFiles
 
     files.forEach { ensureFileExists(it) { "File '$it' not exists" } }
 }
