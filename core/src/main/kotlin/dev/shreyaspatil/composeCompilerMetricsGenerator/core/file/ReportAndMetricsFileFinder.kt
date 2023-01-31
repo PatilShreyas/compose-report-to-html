@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.shreyaspatil.composeCompilerMetricsGenerator.cli.file
+package dev.shreyaspatil.composeCompilerMetricsGenerator.core.file
 
 import java.io.File
 
