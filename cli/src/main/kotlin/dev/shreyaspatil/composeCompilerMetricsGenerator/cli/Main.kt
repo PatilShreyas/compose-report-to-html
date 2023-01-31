@@ -23,16 +23,16 @@
  */
 package dev.shreyaspatil.composeCompilerMetricsGenerator.cli
 
-import dev.shreyaspatil.composeCompilerMetricsGenerator.cli.file.ReportAndMetricsFileFinder
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerMetricsProvider
-import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerReportFiles
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerRawReportProvider
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils.ensureDirectory
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils.ensureFileExists
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGenerator
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.required
 import java.io.File
-import java.io.FileNotFoundException
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -43,20 +43,13 @@ fun main(args: Array<String>) {
     val arguments = CliArguments(args, Paths.get("").toAbsolutePath())
 
     val reportSpec = ReportSpec(arguments.applicationName)
-    val inputFiles = arguments.getRequiredFiles()
+    val rawReportProvider = arguments.getRawReportProvider()
 
     printHeader("Generating Composable HTML Report")
 
     val html = HtmlReportGenerator(
         reportSpec = reportSpec,
-        metricsProvider = ComposeCompilerMetricsProvider(
-            ComposeCompilerReportFiles(
-                briefStatisticsJsonFiles = inputFiles.briefStatisticsJsonFilePath,
-                detailedStatisticsCsvFiles = inputFiles.detailedStatisticsJsonFilePath,
-                composableReportFiles = inputFiles.composableReportFilePath,
-                classesReportFiles = inputFiles.classesReportFilePath
-            )
-        )
+        metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider)
     ).generateHtml()
 
     printHeader("Saving Composable Report")
@@ -143,7 +136,7 @@ class CliArguments(args: Array<String>, private val path: Path) {
         require(outputDirectory.isNotBlank()) { "Output directory path should not be blank" }
     }
 
-    fun getRequiredFiles(): InputFiles {
+    fun getRawReportProvider(): ComposeCompilerRawReportProvider {
         val directory = inputDirectory
 
         val files = arrayOf(
@@ -153,74 +146,36 @@ class CliArguments(args: Array<String>, private val path: Path) {
             classMetricsFile
         )
 
-        if (directory != null) {
+        return if (directory != null) {
             ensureDirectory(directory) { "Directory '$directory' not exists" }
-            return findRequiredFilesInDirectory(directory)
+            getRawReportProviderFromDirectory(directory)
         } else if (files.all { !it.isNullOrBlank() }) {
-            return InputFiles(
-                briefStatisticsJsonFilePath = files(overallStatsFile!!),
-                detailedStatisticsJsonFilePath = files(detailedStatsFile!!),
-                composableReportFilePath = files(composableMetricsFile!!),
-                classesReportFilePath = files(classMetricsFile!!)
-            )
+            getRawReportProviderFromIndividualFiles()
         } else {
             // Assume report and metric files available in the current working directory as specified in the `path`
             val defaultDirectory = path.toAbsolutePath().toString()
-            return findRequiredFilesInDirectory(defaultDirectory)
+            getRawReportProviderFromDirectory(defaultDirectory)
         }
     }
 
-    private fun findRequiredFilesInDirectory(directory: String): InputFiles {
-        val finder = ReportAndMetricsFileFinder(File(Paths.get(directory).toAbsolutePath().toString()))
-
-        return InputFiles(
-            briefStatisticsJsonFilePath = finder.findBriefStatisticsJsonFile(),
-            detailedStatisticsJsonFilePath = finder.findDetailsStatisticsCsvFile(),
-            composableReportFilePath = finder.findComposablesReportTxtFile(),
-            classesReportFilePath = finder.findClassesReportTxtFile()
+    private fun getRawReportProviderFromIndividualFiles(): ComposeCompilerRawReportProvider {
+        return ComposeCompilerRawReportProvider.FromIndividualFiles(
+            briefStatisticsJsonFiles = files(overallStatsFile!!),
+            detailedStatisticsCsvFiles = files(detailedStatsFile!!),
+            composableReportFiles = files(composableMetricsFile!!),
+            classesReportFiles = files(classMetricsFile!!)
         )
+    }
+
+    private fun getRawReportProviderFromDirectory(directory: String): ComposeCompilerRawReportProvider.FromDirectory {
+        return ComposeCompilerRawReportProvider.FromDirectory(File(Paths.get(directory).toAbsolutePath().toString()))
     }
 
     private fun files(filenames: String): List<File> {
         return filenames.split(",").map { ensureFileExists(it) { "File not exist: $it" } }
     }
-
-    /**
-     *
-     */
-    class InputFiles(
-        val briefStatisticsJsonFilePath: List<File>,
-        val detailedStatisticsJsonFilePath: List<File>,
-        val composableReportFilePath: List<File>,
-        val classesReportFilePath: List<File>
-    )
 }
 
-/**
- * Checks whether file with [filename] exists or not. Else throws [FileNotFoundException].
- */
-inline fun ensureFileExists(filename: String, lazyMessage: () -> Any): File {
-    val file = File(Paths.get(filename).toAbsolutePath().toString())
-    println("Checking file '${file.absolutePath}'")
-    if (!file.exists()) {
-        val message = lazyMessage()
-        throw FileNotFoundException(message.toString())
-    }
-    return file
-}
-
-/**
- * Checks whether directory with [name] exists or not.
- * Else throws [FileNotFoundException].
- */
-inline fun ensureDirectory(name: String, lazyMessage: () -> Any) {
-    val file = File(Paths.get(name).toAbsolutePath().toString())
-    println("Checking directory '${file.absolutePath}'")
-    if (!file.isDirectory) {
-        val message = lazyMessage()
-        throw FileNotFoundException(message.toString())
-    }
-}
 
 fun printHeader(header: String) = println(
     """
