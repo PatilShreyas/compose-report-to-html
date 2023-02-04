@@ -1,6 +1,7 @@
 plugins {
     `kotlin-dsl`
     id("java-gradle-plugin")
+    id(libs.plugins.mavenPublish.get().pluginId)
 }
 
 repositories {
