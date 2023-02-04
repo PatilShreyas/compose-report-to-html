@@ -6,12 +6,15 @@ spotless = "6.3.0"
 kotlinxHtml = "0.7.5"
 kotlinxCli = "0.3.4"
 mavenPublish = "0.23.2"
+androidGradlePlugin = "7.3.1"
 
 [libraries]
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-html-jvm = { module = "org.jetbrains.kotlinx:kotlinx-html-jvm", version.ref = "kotlinxHtml" }
 kotlinx-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlinxCli" }
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
