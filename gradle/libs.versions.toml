@@ -7,6 +7,7 @@ kotlinxHtml = "0.7.5"
 kotlinxCli = "0.3.4"
 mavenPublish = "0.24.0"
 androidGradlePlugin = "7.3.1"
+gradlePluginPublish = "1.1.0"
 
 [libraries]
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
@@ -19,3 +20,4 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
+gradle-plugin-publish = { id = "com.gradle.plugin-publish", version.ref = "gradlePluginPublish" }
