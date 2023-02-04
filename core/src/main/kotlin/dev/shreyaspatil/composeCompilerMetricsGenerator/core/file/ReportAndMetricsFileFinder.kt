@@ -33,7 +33,8 @@ import java.io.File
 class ReportAndMetricsFileFinder(directory: File) {
     private val allFiles = directory
         .listFiles()
-        .filterNotNull()
+        ?.filterNotNull()
+        ?: emptyList()
 
     fun findBriefStatisticsJsonFile(): List<File> {
         return allFiles.filter { it.name.endsWith(FileSuffixes.MODULE_REPORT_JSON) }
