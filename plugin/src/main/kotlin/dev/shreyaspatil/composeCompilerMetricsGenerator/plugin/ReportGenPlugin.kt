@@ -57,21 +57,19 @@ class ReportPlugin : Plugin<Project> {
         reportExtension: ComposeCompilerReportExtension,
     ) {
         kotlinOptions {
-            if (reportExtension.enable.get()) {
-                val outputPath = reportExtension.outputDirectory.get().absolutePath
-                if (reportExtension.enableReport.get()) {
-                    freeCompilerArgs += listOf(
-                        "-P",
-                        "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath"
+            val outputPath = reportExtension.outputPath.get()
+            if (reportExtension.enableReport.get()) {
+                freeCompilerArgs += listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath"
 
-                    )
-                }
-                if (reportExtension.enableMetrics.get()) {
-                    freeCompilerArgs += listOf(
-                        "-P",
-                        "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath"
-                    )
-                }
+                )
+            }
+            if (reportExtension.enableMetrics.get()) {
+                freeCompilerArgs += listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath"
+                )
             }
         }
     }
