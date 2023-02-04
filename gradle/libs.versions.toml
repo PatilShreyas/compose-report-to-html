@@ -5,7 +5,7 @@ moshi = "1.13.0"
 spotless = "6.3.0"
 kotlinxHtml = "0.7.5"
 kotlinxCli = "0.3.4"
-mavenPublish = "0.23.2"
+mavenPublish = "0.24.0"
 androidGradlePlugin = "7.3.1"
 
 [libraries]
