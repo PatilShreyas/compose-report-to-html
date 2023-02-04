@@ -6,10 +6,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
 
 interface ComposeCompilerReportExtension {
-    /**
-     * Enable report generation
-     */
-    val enable: Property<Boolean>
 
     /**
      * Enable calculating metrics from the compose compiler in the main report.
@@ -27,19 +23,18 @@ interface ComposeCompilerReportExtension {
     val name: Property<String>
 
     /**
-     * The directory where report will be stored.
+     * The directory path where report will be stored.
      */
-    val outputDirectory: Property<File>
+    val outputPath: Property<String>
 
     companion object {
         const val NAME = "htmlComposeCompilerReport"
 
         fun get(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
-            enable.convention(true)
             enableReport.convention(true)
             enableMetrics.convention(true)
             name.convention(target.rootProject.name)
-            outputDirectory.convention(target.rootProject.buildDir.resolve("/compose_metrics"))
+            outputPath.convention(target.rootProject.buildDir.resolve("compose_metrics").absolutePath)
         }
     }
 }
