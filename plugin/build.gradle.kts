@@ -40,7 +40,7 @@ gradlePlugin {
             id = "dev.shreyaspatil.compose-compiler-report-generator"
             displayName = POM_NAME
             description = POM_DESCRIPTION
-            implementationClass = "dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ReportPlugin"
+            implementationClass = "dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ReportGenPlugin"
             tags.set(listOf("android", "compose", "report", "jetpackcompose", "composecompiler"))
         }
     }
