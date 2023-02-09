@@ -35,26 +35,26 @@ import org.gradle.api.Project
 class ReportGenPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val reportExt = ComposeCompilerReportExtension.get(target)
-        target.afterEvaluate {
-            val android = runCatching {
-                extensions.getByType(AndroidComponentsExtension::class.java)
-            }.getOrNull()
 
-            val commonExtension = runCatching { extensions.getByType(CommonExtension::class.java) }.getOrNull()
+        val android = runCatching {
+            target.extensions.getByType(AndroidComponentsExtension::class.java)
+        }.getOrNull()
+
+        val commonExtension = runCatching { target.extensions.getByType(CommonExtension::class.java) }.getOrNull()
+
+        android?.onVariants { variant ->
+            // Create gradle tasks for generating report
+            target.createComposeCompilerReportGenTaskForVariant(variant, reportExt)
+        }
+
+        target.afterEvaluate {
             val isComposeEnabled = commonExtension?.buildFeatures?.compose
 
             // When this method returns true it means gradle task for generating report is executing otherwise
             // normal compilation task is executing.
-            val isFromReportGenGradleTask = project.executingComposeCompilerReportGenerationGradleTask()
+            val isFromReportGenGradleTask = executingComposeCompilerReportGenerationGradleTask()
             if (isComposeEnabled == true && isFromReportGenGradleTask) {
                 commonExtension.configureKotlinOptionsForComposeCompilerReport(reportExt)
-            }
-
-            if (android != null && isComposeEnabled == true) {
-                android.onVariants { variant ->
-                    // Create gradle tasks for generating report
-                    createComposeCompilerReportGenTaskForVariant(variant, reportExt)
-                }
             }
         }
     }
