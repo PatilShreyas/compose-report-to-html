@@ -58,8 +58,8 @@ interface ComposeCompilerReportExtension {
         fun get(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
             enableReport.convention(true)
             enableMetrics.convention(true)
-            name.convention(target.rootProject.name)
-            outputPath.convention(target.rootProject.buildDir.resolve("compose_metrics").absolutePath)
+            name.convention("${target.rootProject.name}:${target.name}")
+            outputPath.convention(target.buildDir.resolve("compose_report").absolutePath)
         }
     }
 }

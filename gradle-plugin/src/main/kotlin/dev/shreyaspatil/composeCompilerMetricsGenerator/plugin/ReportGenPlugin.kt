@@ -35,28 +35,25 @@ import org.gradle.api.Project
 class ReportGenPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val reportExt = ComposeCompilerReportExtension.get(target)
+        target.afterEvaluate {
+            val android = runCatching {
+                extensions.getByType(AndroidComponentsExtension::class.java)
+            }.getOrNull()
 
-        target.subprojects {
-            afterEvaluate {
-                val android = runCatching {
-                    extensions.getByType(AndroidComponentsExtension::class.java)
-                }.getOrNull()
+            val commonExtension = runCatching { extensions.getByType(CommonExtension::class.java) }.getOrNull()
+            val isComposeEnabled = commonExtension?.buildFeatures?.compose
 
-                val commonExtension = runCatching { extensions.getByType(CommonExtension::class.java) }.getOrNull()
-                val isComposeEnabled = commonExtension?.buildFeatures?.compose
+            // When this method returns true it means gradle task for generating report is executing otherwise
+            // normal compilation task is executing.
+            val isFromReportGenGradleTask = project.executingComposeCompilerReportGenerationGradleTask()
+            if (isComposeEnabled == true && isFromReportGenGradleTask) {
+                commonExtension.configureKotlinOptionsForComposeCompilerReport(reportExt)
+            }
 
-                // When this method returns true it means gradle task for generating report is executing otherwise
-                // normal compilation task is executing.
-                val isFromReportGenGradleTask = project.executingComposeCompilerReportGenerationGradleTask()
-                if (isComposeEnabled == true && isFromReportGenGradleTask) {
-                    commonExtension.configureKotlinOptionsForComposeCompilerReport(reportExt)
-                }
-
-                if (android != null && isComposeEnabled == true) {
-                    android.onVariants { variant ->
-                        // Create gradle tasks for generating report
-                        createComposeCompilerReportGenTaskForVariant(variant, reportExt)
-                    }
+            if (android != null && isComposeEnabled == true) {
+                android.onVariants { variant ->
+                    // Create gradle tasks for generating report
+                    createComposeCompilerReportGenTaskForVariant(variant, reportExt)
                 }
             }
         }
