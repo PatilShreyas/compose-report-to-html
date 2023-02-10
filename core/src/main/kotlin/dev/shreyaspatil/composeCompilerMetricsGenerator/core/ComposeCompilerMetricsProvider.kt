@@ -89,7 +89,7 @@ private class DefaultComposeCompilerMetricsProvider(
         val metrics = if (csv.size > 1) {
             val headers = splitWithCsvSeparator(csv.first())
 
-            csv.subList(1, csv.lastIndex)
+            csv.subList(1, csv.size)
                 .map { splitWithCsvSeparator(it) }
                 .map { items -> RowItems(items.mapIndexed { index, value -> Item(headers[index], value) }) }
         } else {
