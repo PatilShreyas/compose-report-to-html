@@ -49,7 +49,7 @@ jobs:
           echo "Released Core✅"
           
           echo "Publishing Report Generator🚀"
-          ./gradlew :reportGenerator:publish
+          ./gradlew :report-generator:publish
           echo "Published Report Generator✅"
           echo "Releasing Report Generator...🚀"
           ./gradlew closeAndReleaseRepository

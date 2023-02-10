@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":reportGenerator"))
+    implementation(project(":report-generator"))
 
     implementation(kotlin("stdlib"))
     implementation(libs.kotlinx.cli)

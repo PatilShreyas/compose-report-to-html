@@ -25,7 +25,7 @@ dependencies {
     implementation(libs.android.gradle.plugin)
 
     implementation(project(":core"))
-    implementation(project(":reportGenerator"))
+    implementation(project(":report-generator"))
 }
 
 tasks.getByName<Test>("test") {
