@@ -35,6 +35,7 @@ import kotlinx.cli.required
 import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlinx.cli.default
 
 /**
  * Entry point of a CLI application
@@ -125,7 +126,7 @@ class CliArguments(args: Array<String>, private val path: Path) {
         ArgType.String,
         shortName = "o",
         description = "Output directory name"
-    ).required()
+    ).default(path.toAbsolutePath().toString())
 
     init {
         parser.parse(args)
