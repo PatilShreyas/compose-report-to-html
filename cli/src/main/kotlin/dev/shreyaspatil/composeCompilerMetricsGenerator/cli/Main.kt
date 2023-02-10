@@ -31,11 +31,11 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGene
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
+import kotlinx.cli.default
 import kotlinx.cli.required
 import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlinx.cli.default
 
 /**
  * Entry point of a CLI application
