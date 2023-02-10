@@ -84,7 +84,9 @@ private fun Task.generateReport(reportExtension: ComposeCompilerReportExtension)
     // Create a report specification with application name
     val reportSpec = ReportSpec(reportExtension.name.get())
 
-    val rawReportProvider = ComposeCompilerRawReportProvider.FromDirectory(outputDirectory)
+    val rawReportProvider = ComposeCompilerRawReportProvider.FromDirectory(
+        directory = reportExtension.composeRawMetricsOutputDirectory
+    )
 
     // Provide metric files to generator
     val htmlGenerator = HtmlReportGenerator(

@@ -26,6 +26,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.create
+import java.io.File
 
 interface ComposeCompilerReportExtension {
 
@@ -48,6 +49,9 @@ interface ComposeCompilerReportExtension {
      * The directory path where report will be stored.
      */
     val outputPath: Property<String>
+
+    val composeRawMetricsOutputDirectory: File
+        get() = File(outputPath.get()).resolve("raw")
 
     companion object {
         const val NAME = "htmlComposeCompilerReport"

@@ -63,12 +63,11 @@ class ReportGenPlugin : Plugin<Project> {
         reportExtension: ComposeCompilerReportExtension,
     ) {
         kotlinOptions {
-            val outputPath = reportExtension.outputPath.get()
+            val outputPath = reportExtension.composeRawMetricsOutputDirectory.absolutePath
             if (reportExtension.enableReport.get()) {
                 freeCompilerArgs += listOf(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath"
-
                 )
             }
             if (reportExtension.enableMetrics.get()) {
