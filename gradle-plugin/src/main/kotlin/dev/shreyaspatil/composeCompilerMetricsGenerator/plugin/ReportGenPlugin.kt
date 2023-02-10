@@ -38,11 +38,11 @@ class ReportGenPlugin : Plugin<Project> {
 
         val android = runCatching {
             target.extensions.getByType(AndroidComponentsExtension::class.java)
-        }.getOrNull()
+        }.getOrElse { error("This plugin is only applicable for Android modules") }
 
         val commonExtension = runCatching { target.extensions.getByType(CommonExtension::class.java) }.getOrNull()
 
-        android?.onVariants { variant ->
+        android.onVariants { variant ->
             // Create gradle tasks for generating report
             target.createComposeCompilerReportGenTaskForVariant(variant, reportExt)
         }
