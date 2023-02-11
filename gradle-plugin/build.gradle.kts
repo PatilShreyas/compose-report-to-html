@@ -21,8 +21,9 @@ version = VERSION_NAME
 
 dependencies {
     implementation(gradleApi())
-    implementation(libs.kotlin.gradle.plugin)
-    implementation(libs.android.gradle.plugin)
+    compileOnly(kotlin("stdlib"))
+    compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.android.gradle.plugin)
 
     implementation(project(":core"))
     implementation(project(":report-generator"))
