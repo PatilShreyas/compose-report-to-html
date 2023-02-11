@@ -49,14 +49,17 @@ class ReportGenPlugin : Plugin<Project> {
 
         target.afterEvaluate {
             val isComposeEnabled = commonExtension?.buildFeatures?.compose
-                ?: error("Jetpack Compose is not found enabled in this module '$name'")
 
-            // When this method returns true it means gradle task for generating report is executing otherwise
-            // normal compilation task is executing.
-            val isFromReportGenGradleTask = executingComposeCompilerReportGenerationGradleTask()
-            if (isComposeEnabled && isFromReportGenGradleTask) {
-                commonExtension.configureKotlinOptionsForComposeCompilerReport(reportExt)
+            if (isComposeEnabled != true) {
+                error("Jetpack Compose is not found enabled in this module '$name'")
             }
+        }
+
+        // When this method returns true it means gradle task for generating report is executing otherwise
+        // normal compilation task is executing.
+        val isFromReportGenGradleTask = target.executingComposeCompilerReportGenerationGradleTask()
+        if (isFromReportGenGradleTask) {
+            commonExtension?.configureKotlinOptionsForComposeCompilerReport(reportExt)
         }
     }
 

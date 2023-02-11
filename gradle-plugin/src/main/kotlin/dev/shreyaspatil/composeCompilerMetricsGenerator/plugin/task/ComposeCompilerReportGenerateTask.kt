@@ -32,10 +32,10 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ComposeCompilerRe
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.GradleBuild
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.configurationcache.extensions.capitalized
 import java.io.File
 import java.io.FileNotFoundException
-import org.gradle.api.tasks.TaskProvider
 
 const val KEY_ENABLE_REPORT_GEN = "dev.shreyaspatil.composeCompiler.reportGen.enable"
 
