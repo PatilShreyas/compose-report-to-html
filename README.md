@@ -6,24 +6,14 @@ _Made with ❤️ for Android Developers and Composers_
 [![Build](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml)
 [![Release](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/release.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/release.yml)
 
-|                   | **Install**                                                                                                                                                                                                                                                           |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Gradle Plugin** | [![Gradle Plugin](https://img.shields.io/gradle-plugin-portal/v/dev.shreyaspatil.compose-compiler-report-generator?color=%233cafc6&label=Plugin&logo=gradle&style=flat-square)](https://plugins.gradle.org/plugin/dev.shreyaspatil.compose-compiler-report-generator) |
-| **NPM**           | [![NPM Package](https://img.shields.io/npm/v/compose-report2html?label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/compose-report2html)                                                                                                                              |
-| **JAR**           | [![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?label=JAR&logo=java&style=flat-square)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar)                                            |
-| **Maven**         | [![Install](https://img.shields.io/maven-central/v/dev.shreyaspatil.compose-compiler-report-generator/core?label=Maven%20Central&logo=android&style=flat-square)](https://search.maven.org/search?q=g:dev.shreyaspatil.compose-compiler-report-generator)             |
+| Distribution         | Usage Guide  | Install                                                                                                                                                                                                                                                                                                                                                                                                 |
+|----------------------|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Gradle Plugin**    | [Read](TODO) | [![Gradle Plugin](https://img.shields.io/gradle-plugin-portal/v/dev.shreyaspatil.compose-compiler-report-generator?color=%233cafc6&label=Plugin&logo=gradle&style=flat-square)](https://plugins.gradle.org/plugin/dev.shreyaspatil.compose-compiler-report-generator)                                                                                                                                   |
+| **CLI**              | [Read](TODO) | [![NPM Package](https://img.shields.io/npm/v/compose-report2html?label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/compose-report2html) [![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?label=JAR&logo=java&style=flat-square)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar) |
+| **Library Artifact** | [Read](TODO) | [![Install](https://img.shields.io/maven-central/v/dev.shreyaspatil.compose-compiler-report-generator/core?label=Maven%20Central&logo=android&style=flat-square)](https://search.maven.org/search?q=g:dev.shreyaspatil.compose-compiler-report-generator)                                                                                                                                               |
 
----
-
-**Visit [_official docs_](https://patilshreyas.github.io/compose-report-to-html/) for more information and guide to use this utility**
-
-___
-
-## 🧑‍💻 Using 
-
-- [Using Gradle Plugin](https://patilshreyas.github.io/compose-report-to-html/use/using-gradle-plugin/)
-- [Using CLI](https://patilshreyas.github.io/compose-report-to-html/use/using-cli/)
-- [Using as a Library](https://patilshreyas.github.io/use/using-utility-as-library//)
+**▶️ [Read _official docs_](https://patilshreyas.github.io/compose-report-to-html/) for more information and guide to use
+this utility**
 
 ## 🙋‍♂️ Contribute
 
