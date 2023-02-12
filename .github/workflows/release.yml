@@ -49,7 +49,7 @@ jobs:
           echo "Released Core✅"
           
           echo "Publishing Report Generator🚀"
-          ./gradlew :reportGenerator:publish
+          ./gradlew :report-generator:publish
           echo "Published Report Generator✅"
           echo "Releasing Report Generator...🚀"
           ./gradlew closeAndReleaseRepository
@@ -59,6 +59,14 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSWORD }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+
+      - name: Publish Gradle Plugin
+        run: |
+          echo "Publishing Gradle Plugin🚀"
+          ./gradlew :gradle-plugin:publishPlugins
+        env:
+          GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PLUGIN_PORTAL_KEY }}
+          GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PLUGIN_PORTAL_SECRET }}
 
       - name: Publish CLI Application 🚀
         run: |

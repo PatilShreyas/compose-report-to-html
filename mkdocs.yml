@@ -1,0 +1,61 @@
+# Project
+site_name: Compose Compiler Report to HTML
+site_description: 'Utility to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page'
+site_author: 'PatilShreyas'
+site_url: 'https://github.com/PatilShreyas/compose-report-to-html'
+edit_uri: 'tree/main/docs/'
+remote_branch: gh-pages
+
+# Repository
+repo_name: 'Compose Report to HTML'
+repo_url: https://github.com/PatilShreyas/compose-report-to-html
+
+theme:
+  name: material
+  palette:
+    primary: white
+    accent: red
+  icon:
+    repo: fontawesome/brands/github
+  font:
+    text: 'Roboto'
+    code: 'JetBrains Mono'
+  features:
+    - content.action.edit
+    - content.code.copy
+    - content.tabs.link
+
+plugins:
+  - search
+
+markdown_extensions:
+  # Admonitions
+  - admonition
+  - pymdownx.details
+
+  # Code highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+  # Tabs
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+  - toc:
+      permalink: true
+
+  # For images
+  - attr_list
+  - md_in_html
+
+# Navigation
+nav:
+  - 'Home': index.md
+  - 'How to use?':
+    - 'Gradle Plugin': use/using-gradle-plugin.md
+    - 'CLI': use/using-cli.md
+    - 'Library': use/using-utility-as-library.md

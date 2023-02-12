@@ -60,7 +60,7 @@ interface ComposeCompilerMetricsProvider {
 
 /**
  * Default implementation for [ComposeCompilerMetricsProvider] which parses content provided by
- * [ComposeCompilerReportFiles].
+ * [ComposeCompilerRawReportProvider].
  */
 @OptIn(ExperimentalStdlibApi::class)
 private class DefaultComposeCompilerMetricsProvider(
@@ -89,7 +89,7 @@ private class DefaultComposeCompilerMetricsProvider(
         val metrics = if (csv.size > 1) {
             val headers = splitWithCsvSeparator(csv.first())
 
-            csv.subList(1, csv.lastIndex)
+            csv.subList(1, csv.size)
                 .map { splitWithCsvSeparator(it) }
                 .map { items -> RowItems(items.mapIndexed { index, value -> Item(headers[index], value) }) }
         } else {
@@ -114,7 +114,7 @@ private class DefaultComposeCompilerMetricsProvider(
  * Factory function for creating [ComposeCompilerMetricsProvider].
  */
 fun ComposeCompilerMetricsProvider(
-    files: ComposeCompilerReportFiles
+    files: ComposeCompilerRawReportProvider
 ): ComposeCompilerMetricsProvider {
     val contentProvider = ComposeMetricsContentProvider(files)
     return DefaultComposeCompilerMetricsProvider(contentProvider)

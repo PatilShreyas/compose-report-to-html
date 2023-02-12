@@ -21,16 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.shreyaspatil.composeCompilerMetricsGenerator.core
+package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.utils
 
-import java.io.File
+import com.android.build.api.dsl.CommonExtension
+import org.gradle.api.plugins.ExtensionAware
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 /**
- * Provide files of compose compiler metrics and reports
+ * Configures kotlinOptions{}
  */
-class ComposeCompilerReportFiles(
-    val briefStatisticsJsonFiles: List<File>,
-    val detailedStatisticsCsvFiles: List<File>,
-    val composableReportFiles: List<File>,
-    val classesReportFiles: List<File>,
-)
+fun CommonExtension<*, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit) {
+    (this as ExtensionAware).extensions.configure("kotlinOptions", block)
+}
