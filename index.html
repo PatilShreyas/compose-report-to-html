@@ -415,10 +415,34 @@
 
 
 <h1 id="compose-compiler-report-to-html">Compose Compiler Report to HTML<a class="headerlink" href="#compose-compiler-report-to-html" title="Permanent link">&para;</a></h1>
-<p>A utility (<strong>Gradle Plugin + CLI</strong>) to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page. 
+<p>A utility (<strong>Gradle Plugin + CLI</strong>) to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page.
 <em>Made with ❤️ for Android Developers and Composers</em></p>
-<p><a href="https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml"><img alt="Build" src="https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml/badge.svg" /></a>
-<a href="https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/release.yml"><img alt="Release" src="https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/release.yml/badge.svg" /></a></p>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>Usage Guide</th>
+<th>Install</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gradle Plugin</strong></td>
+<td><a href="https://patilshreyas.github.io/compose-report-to-html/use/using-gradle-plugin/">Read</a></td>
+<td><a href="https://plugins.gradle.org/plugin/dev.shreyaspatil.compose-compiler-report-generator"><img alt="Gradle Plugin" src="https://img.shields.io/gradle-plugin-portal/v/dev.shreyaspatil.compose-compiler-report-generator?color=%233cafc6&amp;label=Plugin&amp;logo=gradle&amp;style=flat-square" /></a></td>
+</tr>
+<tr>
+<td><strong>CLI</strong></td>
+<td><a href="https://patilshreyas.github.io/compose-report-to-html/use/using-cli/">Read</a></td>
+<td><a href="https://www.npmjs.com/package/compose-report2html"><img alt="NPM Package" src="https://img.shields.io/npm/v/compose-report2html?label=npm&amp;logo=npm&amp;style=flat-square" /></a> <br> <a href="https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar"><img alt="Download JAR" src="https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?label=JAR&amp;logo=java&amp;style=flat-square" /></a></td>
+</tr>
+<tr>
+<td><strong>Library Artifact</strong></td>
+<td><a href="https://patilshreyas.github.io/compose-report-to-html/use/using-utility-as-library/">Read</a></td>
+<td><a href="https://search.maven.org/search?q=g:dev.shreyaspatil.compose-compiler-report-generator"><img alt="Install" src="https://img.shields.io/maven-central/v/dev.shreyaspatil.compose-compiler-report-generator/core?label=Maven%20Central&amp;logo=android&amp;style=flat-square" /></a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="motivation">💡 Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
 <p>The Compose Compiler plugin can generate reports / metrics around certain compose-specific concepts that can be useful
 to understand what is happening with some of your compose code at a fine-grained level.
@@ -432,7 +456,7 @@ distinguishes problematic and non-problematic composable functions and classes.<
 First, raw Compose report should be generated from the Compose Compiler and those generated files should be feed to
 this utility. By parsing that data, this utility generates the beautified report.</em></p>
 <h2 id="how-it-looks">📈 How it looks?<a class="headerlink" href="#how-it-looks" title="Permanent link">&para;</a></h2>
-<p>Once report is generated, it looks like this. 
+<p>Once report is generated, it looks like this.
 This is overall Report Overview:</p>
 <table>
 <thead>
