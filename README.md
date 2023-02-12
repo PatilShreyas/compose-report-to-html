@@ -1,6 +1,6 @@
 # Compose Compiler Reports to HTML Generator
 
-A CLI utility to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page.
+A utility to convert Jetpack Compose compiler metrics and reports to beautified 😍 HTML page.
 _Made with ❤️ for Android Developers and Composers_
 
 [![Build](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml/badge.svg)](https://github.com/PatilShreyas/compose-report-to-html/actions/workflows/build.yml)
@@ -13,30 +13,17 @@ _Made with ❤️ for Android Developers and Composers_
 | **JAR**           | [![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?label=JAR&logo=java)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar)                                            |
 | **Maven**         | [![Install](https://img.shields.io/maven-central/v/dev.shreyaspatil.compose-compiler-report-generator/core?label=Maven%20Central&logo=android&style=flat-square)](https://search.maven.org/search?q=g:dev.shreyaspatil.compose-compiler-report-generator)             |
 
+---
 
-## 🧑‍💻 Usage
+**Visit [_official docs_](https://patilshreyas.github.io/compose-report-to-html/) for more information and guide to use this utility**
 
-## Utility as a library
+___
 
-This utility is also published as a maven artifact on Maven Central so that you can make use of it as you want to use it
-(_For example: automation in CI_).
+## 🧑‍💻 Using 
 
-Refer to the Wiki for more information: [**Using this utility as a library**](https://github.com/PatilShreyas/compose-report-to-html/wiki/Using-utility-as-a-library)
-
-## 📈 Report Overview
-
-Once report is generated, it looks like this.
-
-| **Title**               | **Preview**                                                                                                                                                                                           |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Brief Statistics**    | Generates metrics from `.json` file and represents in tabular format. <br><br> ![Brief Statistics](docs/images/brief-stats.png)                                                                            |
-| **Detailed Statistics** | Generates report from `.csv` file and represents in tabular format. <br><br> ![Detailed Statistics](docs/images/detailed-stats.png)                                                                        |
-| **Composable Report**   | Parses `-composables.txt` file and separates out composables with and without issues and properly highlights issues associated with them. <br><br> ![Composable Report](docs/images/composable-report.png) |
-| **Class Report**        | Parses `-classes.txt` file and separates out stable and unstable classes out of it and properly highlights issues associated with them. <br><br> ![Class Report](docs/images/class-report.png)             |
-
-Right now, work is in progress and more improvements related to the report
-will happen in some time. If you have any feedback / suggestions related to
-the report, feel free to discuss it (_find discussion link in the below section_).
+- [Using Gradle Plugin](https://patilshreyas.github.io/compose-report-to-html/use/using-gradle-plugin/)
+- [Using CLI](https://patilshreyas.github.io/compose-report-to-html/use/using-cli/)
+- [Using as a Library](https://patilshreyas.github.io/use/using-utility-as-library//)
 
 ## 🙋‍♂️ Contribute
 
