@@ -80,7 +80,7 @@ Add this to top project level `build.gradle`
 ## 💫 Sync the project 
 
 Once plugin is applied, sync the project. After the project is synced, tasks for generating compose report will be 
-generated for the variants and flavours used in the project.
+generated for the variants and flavors used in the project.
 
 !!! example
     
