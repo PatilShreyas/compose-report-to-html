@@ -34,7 +34,13 @@ this utility. By parsing that data, this utility generates the beautified report
 
 ## 📈 How it looks?
 
-Once report is generated, it looks like this.
+!!! info
+
+    _See report generated for [NotyKT app](https://patilshreyas.github.io/NotyKT/#/pages/noty-android/compose-compiler-metrics-and-report)_.
+    Once report is generated, it looks like this ⬇️.
+    
+    [View Report](https://patilshreyas.github.io/NotyKT/pages/noty-android/compose_report.html){ .md-button .md-button--primary }
+
 This is overall Report Overview:
 
 | **Title**               | **Preview**                                                                                                                                                                                           |
