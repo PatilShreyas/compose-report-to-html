@@ -54,7 +54,7 @@ markdown_extensions:
 
 # Navigation
 nav:
-  - 'Home': index.md
+  - 'Overview': index.md
   - 'How to use?':
     - 'Gradle Plugin': use/using-gradle-plugin.md
     - 'CLI': use/using-cli.md
