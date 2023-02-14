@@ -25,6 +25,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser
 
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.exception.ParsingException
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.mapper.ConditionMapper
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.RawContent
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposableDetail
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposablesReport
 
@@ -32,9 +33,6 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.C
  * Parses [ComposablesReport] from the [String] content.
  */
 object ComposableReportParser : Parser<String, ComposablesReport> {
-    private val REGEX_ALL_COMPOSABLES_FUNCTIONS =
-        "(.*(\\s|\\S)fun \\w*\\([\\s\\S]*?^\\))".toRegex(RegexOption.MULTILINE)
-
     private val REGEX_COMPOSABLE_FUNCTION = "(?:(.*))fun (\\w*)".toRegex()
     private val REGEX_COMPOSABLE_PARAMETERS = "(?:(stable|unstable|) (\\w*:\\s.*))".toRegex()
 
@@ -43,8 +41,8 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
      */
     override fun parse(content: String): ComposablesReport {
         val errors = mutableListOf<ParsingException>()
-        val composables = REGEX_ALL_COMPOSABLES_FUNCTIONS.findAll(content)
-            .map { it.value }
+
+        val composables = getComposableFunctions(content)
             .mapNotNull { function ->
                 runCatching {
                     parseComposableDetail(function)
@@ -55,6 +53,22 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
             .toList()
 
         return ComposablesReport(composables, errors.toList())
+    }
+
+    internal fun getComposableFunctions(content: String): List<String> {
+        val lines = content.split("\n").filter { it.isNotBlank() }
+
+        val composableFunIndexes = lines.mapIndexedNotNull { index, s ->
+            if (REGEX_COMPOSABLE_FUNCTION.containsMatchIn(s)) {
+                index
+            } else {
+                null
+            }
+        }
+
+        return composableFunIndexes.mapIndexed { index: Int, item: Int ->
+            lines.subList(item, composableFunIndexes.getOrElse(index + 1) { lines.size }).joinToString(separator = "\n")
+        }
     }
 
     /**
@@ -73,6 +87,13 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
         val params = REGEX_COMPOSABLE_PARAMETERS.findAll(function).map { it.groupValues }.filter { it.isNotEmpty() }
             .map { ComposableDetail.Parameter(ConditionMapper.from(it[1]), it[2]) }.toList()
 
-        return ComposableDetail(functionName, isRestartable, isSkippable, isInline, params)
+        return ComposableDetail(
+            functionName = functionName,
+            isRestartable = isRestartable,
+            isSkippable = isSkippable,
+            isInline = isInline,
+            params = params,
+            rawContent = RawContent(function)
+        )
     }
 }
