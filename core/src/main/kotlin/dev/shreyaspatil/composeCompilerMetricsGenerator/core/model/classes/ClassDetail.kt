@@ -24,6 +24,7 @@
 package dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes
 
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.RawContent
 
 /**
  * Model for holding class details
@@ -37,7 +38,8 @@ data class ClassDetail(
     val className: String,
     val stability: Condition,
     val runtimeStability: Condition?,
-    val fields: List<Field>
+    val fields: List<Field>,
+    val rawContent: RawContent,
 ) {
     /**
      * Model for holding field details of a class

@@ -24,6 +24,7 @@
 package dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables
 
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.RawContent
 
 /**
  * Model for holding Detail of a composable function
@@ -39,7 +40,8 @@ data class ComposableDetail(
     val isRestartable: Boolean,
     val isSkippable: Boolean,
     val isInline: Boolean,
-    val params: List<Parameter>
+    val params: List<Parameter>,
+    val rawContent: RawContent,
 ) {
     /**
      * Model for holding details of a parameter of a function

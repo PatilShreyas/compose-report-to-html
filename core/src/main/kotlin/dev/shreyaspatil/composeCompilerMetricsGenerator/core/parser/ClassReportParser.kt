@@ -25,6 +25,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser
 
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.exception.ParsingException
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.mapper.ConditionMapper
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.RawContent
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.ClassDetail
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.ClassesReport
 
@@ -33,17 +34,16 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.Class
  */
 object ClassReportParser : Parser<String, ClassesReport> {
     private val REGEX_RUNTIME_STABILITY = "<runtime stability> = (\\w+)".toRegex()
-    private val REGEX_CLASS_NAME = "(stable|unstable) class (\\w*)".toRegex()
+    private val REGEX_CLASS_NAME = "(stable|unstable|runtime) class (\\w*)".toRegex()
     private val REGEX_CLASS_FIELDS = "((\\w*) ((?:val|var) .*))".toRegex()
-    private val REGEX_ALL_CLASSES = "((?:stable|unstable) class \\w+ \\{\\s*(?:[^{}\\r\\n]|\\n|)*})".toRegex()
 
     /**
      * Parses all classes
      */
     override fun parse(content: String): ClassesReport {
         val errors = mutableListOf<ParsingException>()
-        val classes = REGEX_ALL_CLASSES.findAll(content)
-            .map { it.value }
+
+        val classes = getClasses(content)
             .mapNotNull { classBody ->
                 runCatching {
                     parseClassDetail(classBody)
@@ -53,6 +53,22 @@ object ClassReportParser : Parser<String, ClassesReport> {
             }.toList()
 
         return ClassesReport(classes, errors.toList())
+    }
+
+    internal fun getClasses(content: String): List<String> {
+        val lines = content.split("\n").filter { it.isNotBlank() }
+
+        val classIndexes = lines.mapIndexedNotNull { index, s ->
+            if (REGEX_CLASS_NAME.containsMatchIn(s)) {
+                index
+            } else {
+                null
+            }
+        }
+
+        return classIndexes.mapIndexed { index: Int, item: Int ->
+            lines.subList(item, classIndexes.getOrElse(index + 1) { lines.size }).joinToString(separator = "\n")
+        }
     }
 
     /**
@@ -70,6 +86,12 @@ object ClassReportParser : Parser<String, ClassesReport> {
         val fields = REGEX_CLASS_FIELDS.findAll(classBody).map { it.groupValues }.filter { it.isNotEmpty() }
             .map { ClassDetail.Field(it[2], it[3]) }.toList()
 
-        return ClassDetail(className, stability, runtimeStability, fields = fields)
+        return ClassDetail(
+            className = className,
+            stability = stability,
+            runtimeStability = runtimeStability,
+            fields = fields,
+            rawContent = RawContent(classBody)
+        )
     }
 }
