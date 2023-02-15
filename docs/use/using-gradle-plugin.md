@@ -19,7 +19,7 @@ Apply the plugin to the module in which _**compose is enabled**_.
 
     ```groovy title="build.gradle"
     plugins {
-      id "dev.shreyaspatil.compose-compiler-report-generator" version "1.0.0-beta02"
+      id "dev.shreyaspatil.compose-compiler-report-generator" version "1.0.0-beta03"
     }
     ```
 
@@ -27,7 +27,7 @@ Apply the plugin to the module in which _**compose is enabled**_.
 
     ```kotlin title="build.gradle.kts"
     plugins {
-      id("dev.shreyaspatil.compose-compiler-report-generator") version "1.0.0-beta02"
+      id("dev.shreyaspatil.compose-compiler-report-generator") version "1.0.0-beta03"
     }    
     ```
 
@@ -45,7 +45,7 @@ Add this to top project level `build.gradle`
         }
       }
       dependencies {
-        classpath "dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.0.0-beta02"
+        classpath "dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.0.0-beta03"
       }
     }
     ```
@@ -66,7 +66,7 @@ Add this to top project level `build.gradle`
         }
       }
       dependencies {
-        classpath("dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.0.0-beta02")
+        classpath("dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.0.0-beta03")
       }
     }
     ```

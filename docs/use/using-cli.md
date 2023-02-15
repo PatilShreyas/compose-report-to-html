@@ -56,7 +56,7 @@ Run the command to know the usage of CLI
 !!! success "▶️Output"
 
     ```shell
-    Usage: Compose Compiler Report to HTML Generator ~ v1.0.0-beta02 options_list
+    Usage: Compose Compiler Report to HTML Generator ~ v1.0.0-beta03 options_list
     Options:
         --applicationName, -app -> Application name (To be displayed in the report) (always required) { String }
         --inputDirectory, -i -> Input directory where composable report and metrics are available { String }
