@@ -27,6 +27,7 @@ import org.gradle.api.Project
 import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.create
 import java.io.File
+import org.gradle.kotlin.dsl.getByType
 
 interface ComposeCompilerReportExtension {
 
@@ -65,5 +66,10 @@ interface ComposeCompilerReportExtension {
             name.convention("${target.rootProject.name}:${target.name}")
             outputPath.convention(target.buildDir.resolve("compose_report").absolutePath)
         }
+
+        /**
+         * Get extensions applied to the [target] project.
+         */
+        fun get(target: Project) = target.extensions.getByType<ComposeCompilerReportExtension>()
     }
 }
