@@ -25,7 +25,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.variant.AndroidComponentsExtension
-import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.createComposeCompilerReportGenTaskForVariant
+import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForVariant
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.executingComposeCompilerReportGenerationGradleTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -46,7 +46,7 @@ class ReportGenPlugin : Plugin<Project> {
 
         android.onVariants { variant ->
             // Create gradle tasks for generating report
-            target.createComposeCompilerReportGenTaskForVariant(variant, reportExt)
+            target.registerComposeCompilerReportGenTaskForVariant(variant)
         }
 
         target.afterEvaluate {
