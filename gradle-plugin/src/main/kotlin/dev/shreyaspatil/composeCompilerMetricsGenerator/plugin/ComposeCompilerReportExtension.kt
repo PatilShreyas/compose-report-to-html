@@ -26,6 +26,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.getByType
 import java.io.File
 
 interface ComposeCompilerReportExtension {
@@ -59,11 +60,16 @@ interface ComposeCompilerReportExtension {
         /**
          * Creates a extension of type [ComposeCompilerReportExtension] and returns
          */
-        fun get(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
+        fun create(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
             enableReport.convention(true)
             enableMetrics.convention(true)
             name.convention("${target.rootProject.name}:${target.name}")
             outputPath.convention(target.buildDir.resolve("compose_report").absolutePath)
         }
+
+        /**
+         * Get extensions applied to the [target] project.
+         */
+        fun get(target: Project) = target.extensions.getByType<ComposeCompilerReportExtension>()
     }
 }

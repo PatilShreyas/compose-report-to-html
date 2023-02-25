@@ -20,7 +20,7 @@ group = GROUP
 version = VERSION_NAME
 
 dependencies {
-    implementation(gradleApi())
+    compileOnly(gradleApi())
     compileOnly(kotlin("stdlib"))
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.android.gradle.plugin)
