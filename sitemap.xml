@@ -2,22 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://github.com/PatilShreyas/compose-report-to-html/</loc>
-         <lastmod>2023-02-15</lastmod>
+         <lastmod>2023-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/PatilShreyas/compose-report-to-html/use/using-cli/</loc>
-         <lastmod>2023-02-15</lastmod>
+         <lastmod>2023-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/PatilShreyas/compose-report-to-html/use/using-gradle-plugin/</loc>
-         <lastmod>2023-02-15</lastmod>
+         <lastmod>2023-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/PatilShreyas/compose-report-to-html/use/using-utility-as-library/</loc>
-         <lastmod>2023-02-15</lastmod>
+         <lastmod>2023-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
