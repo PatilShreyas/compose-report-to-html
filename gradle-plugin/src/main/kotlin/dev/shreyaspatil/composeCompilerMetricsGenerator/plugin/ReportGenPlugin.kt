@@ -36,7 +36,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 @Suppress("UnstableApiUsage")
 class ReportGenPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val reportExt = ComposeCompilerReportExtension.get(target)
+        val reportExt = ComposeCompilerReportExtension.create(target)
 
         val android = runCatching {
             target.extensions.getByType(AndroidComponentsExtension::class.java)

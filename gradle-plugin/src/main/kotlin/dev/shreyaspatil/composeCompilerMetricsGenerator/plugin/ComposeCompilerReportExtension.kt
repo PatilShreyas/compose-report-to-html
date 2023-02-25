@@ -59,7 +59,7 @@ interface ComposeCompilerReportExtension {
         /**
          * Creates a extension of type [ComposeCompilerReportExtension] and returns
          */
-        fun get(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
+        fun create(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
             enableReport.convention(true)
             enableMetrics.convention(true)
             name.convention("${target.rootProject.name}:${target.name}")
