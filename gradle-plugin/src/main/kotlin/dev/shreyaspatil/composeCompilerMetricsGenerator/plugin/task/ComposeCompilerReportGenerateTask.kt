@@ -29,8 +29,6 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerRawR
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGenerator
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ComposeCompilerReportExtension
-import java.io.File
-import java.io.FileNotFoundException
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
@@ -38,6 +36,8 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.tooling.GradleConnector
+import java.io.File
+import java.io.FileNotFoundException
 
 const val KEY_ENABLE_REPORT_GEN = "dev.shreyaspatil.composeCompiler.reportGen.enable"
 
@@ -129,7 +129,6 @@ fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): Ta
         description = "Generate Compose Compiler Metrics and Report"
     }
 }
-
 
 /**
  * Returns true if currently executing task is about generating compose compiler report

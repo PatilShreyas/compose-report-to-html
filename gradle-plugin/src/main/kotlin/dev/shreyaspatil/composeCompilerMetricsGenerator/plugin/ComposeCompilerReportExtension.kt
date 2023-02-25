@@ -26,8 +26,8 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.create
-import java.io.File
 import org.gradle.kotlin.dsl.getByType
+import java.io.File
 
 interface ComposeCompilerReportExtension {
 
