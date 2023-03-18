@@ -57,9 +57,9 @@ fun FlowContent.ClassesReport(report: ClassesReport) {
                         summaryAttr = {
                             setStyle(
                                 backgroundColor = Colors.RED_DARK,
-                                fontSize = "18px"
+                                fontSize = "18px",
                             )
-                        }
+                        },
                     ) {
                         setStyle(backgroundColor = Colors.PINK_LIGHT)
                         ClassesReport(report.unstableClasses)
@@ -74,9 +74,9 @@ fun FlowContent.ClassesReport(report: ClassesReport) {
                         summaryAttr = {
                             setStyle(
                                 backgroundColor = Colors.GREEN_DARK,
-                                fontSize = "18px"
+                                fontSize = "18px",
                             )
-                        }
+                        },
                     ) {
                         setStyle(backgroundColor = Colors.ALABASTER)
                         ClassesReport(report.stableClasses)
@@ -119,7 +119,7 @@ fun FlowContent.ClassesReport(classes: List<ClassDetail>) = table {
                             tr {
                                 setStyle(
                                     backgroundColor = statusColorFrom(field.status),
-                                    color = textColorFrom(field.status)
+                                    color = textColorFrom(field.status),
                                 )
                                 td { +index.toString() }
                                 td { +field.status.uppercase() }

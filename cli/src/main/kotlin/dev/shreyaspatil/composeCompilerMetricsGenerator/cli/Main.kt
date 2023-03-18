@@ -50,7 +50,7 @@ fun main(args: Array<String>) {
 
     val html = HtmlReportGenerator(
         reportSpec = reportSpec,
-        metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider)
+        metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider),
     ).generateHtml()
 
     printHeader("Saving Composable Report")
@@ -89,43 +89,43 @@ class CliArguments(args: Array<String>, private val path: Path) {
     val applicationName by parser.option(
         ArgType.String,
         shortName = "app",
-        description = "Application name (To be displayed in the report)"
+        description = "Application name (To be displayed in the report)",
     ).required()
 
     val inputDirectory by parser.option(
         ArgType.String,
         shortName = "i",
-        description = "Input directory where composable report and metrics are available"
+        description = "Input directory where composable report and metrics are available",
     )
 
     val overallStatsFile by parser.option(
         ArgType.String,
         shortName = "overallStatsReport",
-        description = "Overall Statistics Metrics JSON files (separated by commas)"
+        description = "Overall Statistics Metrics JSON files (separated by commas)",
     )
 
     val detailedStatsFile by parser.option(
         ArgType.String,
         shortName = "detailedStatsMetrics",
-        description = "Detailed Statistics Metrics CSV files (separated by commas)"
+        description = "Detailed Statistics Metrics CSV files (separated by commas)",
     )
 
     val composableMetricsFile by parser.option(
         ArgType.String,
         shortName = "composableMetrics",
-        description = "Composable Metrics TXT files (separated by commas)"
+        description = "Composable Metrics TXT files (separated by commas)",
     )
 
     val classMetricsFile by parser.option(
         ArgType.String,
         shortName = "classMetrics",
-        description = "Class Metrics TXT files (separated by commas)"
+        description = "Class Metrics TXT files (separated by commas)",
     )
 
     val outputDirectory by parser.option(
         ArgType.String,
         shortName = "o",
-        description = "Output directory name"
+        description = "Output directory name",
     ).default(path.toAbsolutePath().toString())
 
     init {
@@ -144,7 +144,7 @@ class CliArguments(args: Array<String>, private val path: Path) {
             overallStatsFile,
             detailedStatsFile,
             composableMetricsFile,
-            classMetricsFile
+            classMetricsFile,
         )
 
         return if (directory != null) {
@@ -164,7 +164,7 @@ class CliArguments(args: Array<String>, private val path: Path) {
             briefStatisticsJsonFiles = files(overallStatsFile!!),
             detailedStatisticsCsvFiles = files(detailedStatsFile!!),
             composableReportFiles = files(composableMetricsFile!!),
-            classesReportFiles = files(classMetricsFile!!)
+            classesReportFiles = files(classMetricsFile!!),
         )
     }
 
@@ -181,7 +181,7 @@ fun printHeader(header: String) = println(
     """
     ------------------------------------------------------------------
     $header
-    """.trimIndent()
+    """.trimIndent(),
 )
 
 object Constants {

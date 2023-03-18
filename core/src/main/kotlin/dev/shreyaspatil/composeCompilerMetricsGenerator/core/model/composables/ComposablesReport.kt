@@ -27,7 +27,7 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.exception.ParsingEx
 
 data class ComposablesReport(
     val composables: List<ComposableDetail>,
-    val errors: List<ParsingException>
+    val errors: List<ParsingException>,
 ) {
     private val partitionedComposables by lazy { composables.partition { !it.isSkippable && it.isRestartable } }
 

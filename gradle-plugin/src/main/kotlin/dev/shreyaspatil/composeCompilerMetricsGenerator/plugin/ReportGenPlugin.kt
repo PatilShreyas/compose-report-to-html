@@ -79,13 +79,13 @@ class ReportGenPlugin : Plugin<Project> {
         if (reportExtension.enableReport.get()) {
             freeCompilerArgs += listOf(
                 "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath"
+                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath",
             )
         }
         if (reportExtension.enableMetrics.get()) {
             freeCompilerArgs += listOf(
                 "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath"
+                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath",
             )
         }
     }

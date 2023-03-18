@@ -148,7 +148,7 @@ fun HEAD.PageStyle() {
                         font-size: 18px;
                         font-weight: 600;
                     }
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }

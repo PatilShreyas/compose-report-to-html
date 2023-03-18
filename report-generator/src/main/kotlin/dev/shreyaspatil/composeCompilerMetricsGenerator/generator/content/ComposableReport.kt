@@ -55,7 +55,7 @@ fun BODY.ComposablesReport(composablesReport: ComposablesReport) {
                     summary = "Composables with issues (Restartable but Not Skippable)",
                     summaryAttr = {
                         setStyle(backgroundColor = Colors.RED_DARK, fontSize = "18px")
-                    }
+                    },
                 ) {
                     setStyle(backgroundColor = Colors.PINK_LIGHT)
                     ComposablesReport(composablesReport.restartableButNotSkippableComposables)
@@ -69,7 +69,7 @@ fun BODY.ComposablesReport(composablesReport: ComposablesReport) {
                     summary = "Composibles without issues",
                     summaryAttr = {
                         setStyle(backgroundColor = Colors.GREEN_DARK, fontSize = "18px")
-                    }
+                    },
                 ) {
                     setStyle(backgroundColor = Colors.ALABASTER)
                     ComposablesReport(composablesReport.nonIssuesComposables)
@@ -125,7 +125,7 @@ fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) = table {
                                     Condition.STABLE -> "background-status-success"
                                     Condition.UNSTABLE -> "background-status-failure"
                                     Condition.MISSING -> "background-status-missing"
-                                }
+                                },
                             ) {
                                 td { +index.toString() }
                                 td { +param.condition.toString() }

@@ -32,7 +32,7 @@ import kotlinx.html.impl.DelegatingMap
 fun FlowContent.CollapsibleContent(
     summary: String,
     summaryAttr: DelegatingMap.() -> Unit = {},
-    content: DIV.() -> Unit
+    content: DIV.() -> Unit,
 ) {
     button(classes = "collapsible") {
         attributes.apply(summaryAttr)
