@@ -23,8 +23,6 @@
  */
 package dev.shreyaspatil.composeCompilerMetricsGenerator.core
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.DetailedStatistics
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Item
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.RowItems
@@ -32,6 +30,8 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.Class
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposablesReport
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ClassReportParser
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ComposableReportParser
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 /**
  * Provides metrics and reports of a Compose compiler
@@ -66,12 +66,11 @@ interface ComposeCompilerMetricsProvider {
 private class DefaultComposeCompilerMetricsProvider(
     private val contentProvider: ComposeMetricsContentProvider
 ) : ComposeCompilerMetricsProvider {
-    private val moshi = Moshi.Builder().build()
 
     override fun getOverallStatistics(): Map<String, Long> {
         val statistics = mutableMapOf<String, Long>()
         contentProvider.briefStatisticsContents.forEach { statContent ->
-            val stats = moshi.adapter<Map<String, Long>>().fromJson(statContent) ?: emptyMap()
+            val stats = Json.decodeFromString<Map<String, Long>>(statContent)
             if (statistics.isEmpty()) {
                 statistics.putAll(stats)
             } else {
