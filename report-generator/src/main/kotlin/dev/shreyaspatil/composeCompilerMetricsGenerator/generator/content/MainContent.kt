@@ -42,7 +42,7 @@ fun HTML.MainContent(
     overallStatistics: Map<String, Long>,
     detailedStatistics: DetailedStatistics,
     composablesReport: ComposablesReport,
-    classesReport: ClassesReport
+    classesReport: ClassesReport,
 ) {
     head {
         title("${reportSpec.name} - Compose Compiler Report")

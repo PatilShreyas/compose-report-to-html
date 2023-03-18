@@ -64,7 +64,7 @@ interface ComposeCompilerMetricsProvider {
  */
 @OptIn(ExperimentalStdlibApi::class)
 private class DefaultComposeCompilerMetricsProvider(
-    private val contentProvider: ComposeMetricsContentProvider
+    private val contentProvider: ComposeMetricsContentProvider,
 ) : ComposeCompilerMetricsProvider {
 
     override fun getOverallStatistics(): Map<String, Long> {
@@ -113,7 +113,7 @@ private class DefaultComposeCompilerMetricsProvider(
  * Factory function for creating [ComposeCompilerMetricsProvider].
  */
 fun ComposeCompilerMetricsProvider(
-    files: ComposeCompilerRawReportProvider
+    files: ComposeCompilerRawReportProvider,
 ): ComposeCompilerMetricsProvider {
     val contentProvider = ComposeMetricsContentProvider(files)
     return DefaultComposeCompilerMetricsProvider(contentProvider)

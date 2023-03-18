@@ -29,5 +29,5 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator
  * TODO: See if more specifications needed in future
  */
 data class ReportSpec(
-    val name: String
+    val name: String,
 )

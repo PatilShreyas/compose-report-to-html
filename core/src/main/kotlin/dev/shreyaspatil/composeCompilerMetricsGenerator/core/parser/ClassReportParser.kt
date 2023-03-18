@@ -91,7 +91,7 @@ object ClassReportParser : Parser<String, ClassesReport> {
             stability = stability,
             runtimeStability = runtimeStability,
             fields = fields,
-            rawContent = RawContent(classBody)
+            rawContent = RawContent(classBody),
         )
     }
 }

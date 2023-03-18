@@ -40,13 +40,12 @@ import kotlinx.html.stream.createHTML
  */
 class HtmlReportGenerator(
     private val reportSpec: ReportSpec,
-    private val metricsProvider: ComposeCompilerMetricsProvider
+    private val metricsProvider: ComposeCompilerMetricsProvider,
 ) {
     /**
      * Returns HTML content as a [String]
      */
     fun generateHtml(): String = runBlocking(Dispatchers.Default) {
-
         val deferredOverallStatistics = async {
             metricsProvider.getOverallStatistics().map { (name, value) -> camelCaseToWord(name) to value }.toMap()
         }
@@ -66,14 +65,14 @@ class HtmlReportGenerator(
         overallStatistics: Map<String, Long>,
         detailedStatistics: DetailedStatistics,
         composablesReport: ComposablesReport,
-        classesReport: ClassesReport
+        classesReport: ClassesReport,
     ) = createHTML().html {
         MainContent(
             reportSpec = reportSpec,
             overallStatistics = overallStatistics,
             detailedStatistics = detailedStatistics,
             composablesReport = composablesReport,
-            classesReport = classesReport
+            classesReport = classesReport,
         )
     }
 }

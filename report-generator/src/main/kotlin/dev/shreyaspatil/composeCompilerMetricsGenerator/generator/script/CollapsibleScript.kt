@@ -49,7 +49,7 @@ fun FlowContent.CollapsibleScript() {
                         } 
                       });
                     }
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }

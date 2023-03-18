@@ -42,7 +42,7 @@ fun FlowContent.ErrorReports(errors: List<ParsingException>) {
             +"These below errors were occurred while generating this report"
             a(
                 href = "https://github.com/PatilShreyas/compose-report-to-html/issues",
-                target = "_blank"
+                target = "_blank",
             ) { +" Please report issues here" }
         }
         errors.forEachIndexedFromOne { index, error ->
@@ -50,7 +50,7 @@ fun FlowContent.ErrorReports(errors: List<ParsingException>) {
                 summary = "$index. ${error.message ?: "Unknown error"}",
                 summaryAttr = {
                     setStyle(backgroundColor = Colors.RED_DARK, color = Colors.WHITE, margin = "4px", fontSize = "14px")
-                }
+                },
             ) {
                 p("code") {
                     setStyle(
@@ -58,7 +58,7 @@ fun FlowContent.ErrorReports(errors: List<ParsingException>) {
                         fontSize = "14px",
                         color = Colors.BLACK,
                         textAlign = "left",
-                        padding = "8px"
+                        padding = "8px",
                     )
 
                     error.stackTraceToString().lines().forEach { line ->

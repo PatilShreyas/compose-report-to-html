@@ -73,7 +73,7 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
                         "--rerun-tasks",
 
                         // Signal for enabling report generation in `kotlinOptions{}` block.
-                        "-P$KEY_ENABLE_REPORT_GEN=true"
+                        "-P$KEY_ENABLE_REPORT_GEN=true",
                     )
                     .run()
             }
@@ -86,13 +86,13 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
         val reportSpec = ReportSpec(reportExtension.name.get())
 
         val rawReportProvider = ComposeCompilerRawReportProvider.FromDirectory(
-            directory = reportExtension.composeRawMetricsOutputDirectory
+            directory = reportExtension.composeRawMetricsOutputDirectory,
         )
 
         // Provide metric files to generator
         val htmlGenerator = HtmlReportGenerator(
             reportSpec = reportSpec,
-            metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider)
+            metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider),
         )
 
         // Generate HTML (as String)

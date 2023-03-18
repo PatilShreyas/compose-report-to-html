@@ -26,5 +26,5 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.core.exception
 class ParsingException(
     val content: String,
     cause: Throwable,
-    message: String = "Error occurred while parsing the content"
+    message: String = "Error occurred while parsing the content",
 ) : RuntimeException(message, cause)

@@ -93,7 +93,7 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
             isSkippable = isSkippable,
             isInline = isInline,
             params = params,
-            rawContent = RawContent(function)
+            rawContent = RawContent(function),
         )
     }
 }

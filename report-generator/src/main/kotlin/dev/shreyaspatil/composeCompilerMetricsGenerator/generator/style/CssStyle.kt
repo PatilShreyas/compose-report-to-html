@@ -52,7 +52,7 @@ fun HTMLTag.setStyle(
         textAlign = textAlign,
         width = width,
         margin = margin,
-        padding = padding
+        padding = padding,
     )
 }
 
@@ -74,8 +74,8 @@ fun DelegatingMap.setStyle(
             textAlign = textAlign,
             width = width,
             margin = margin,
-            padding = padding
-        )
+            padding = padding,
+        ),
     )
 }
 

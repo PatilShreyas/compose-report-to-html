@@ -34,7 +34,7 @@ fun BODY.Footer() {
             +"This report is beautified with "
             a(
                 href = "https://github.com/PatilShreyas/compose-report-to-html",
-                target = "_blank"
+                target = "_blank",
             ) { +"Compose Report to HTML" }
         }
     }
