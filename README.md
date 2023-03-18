@@ -12,7 +12,7 @@ _Made with ❤️ for Android Developers and Composers_
 | **CLI**              | [Read](https://patilshreyas.github.io/compose-report-to-html/use/using-cli/)                | [![NPM Package](https://img.shields.io/npm/v/compose-report2html?label=npm&logo=npm&style=flat-square)](https://www.npmjs.com/package/compose-report2html) <br> [![Download JAR](https://img.shields.io/github/v/release/patilshreyas/compose-report-to-html?label=JAR&logo=java&style=flat-square)](https://github.com/patilshreyas/compose-report-to-html/releases/latest/download/composeReport2Html.jar) |
 | **Library Artifact** | [Read](https://patilshreyas.github.io/compose-report-to-html/use/using-utility-as-library/) | [![Install](https://img.shields.io/maven-central/v/dev.shreyaspatil.compose-compiler-report-generator/core?label=Maven%20Central&logo=android&style=flat-square)](https://search.maven.org/search?q=g:dev.shreyaspatil.compose-compiler-report-generator)                                                                                                                                                    |
 
-**▶️ [Read _official docs_](https://patilshreyas.github.io/compose-report-to-html/) for more information and guide to
+**▶️ [Read _the documentation_](https://patilshreyas.github.io/compose-report-to-html/) for more information and guide to
 use
 this utility**
 
