@@ -51,6 +51,21 @@ interface ComposeCompilerReportExtension {
      */
     val outputDirectory: Property<File>
 
+    /**
+     * Include the report for stable composable functions in the module which doesn't need optimizations.
+     */
+    val includeStableComposables: Property<Boolean>
+
+    /**
+     * Include the report for stable classes in the module which doesn't need optimizations.
+     */
+    val includeStableClasses: Property<Boolean>
+
+    /**
+     * Include the report for all classes in the module.
+     */
+    val includeClasses: Property<Boolean>
+
     val composeRawMetricsOutputDirectory: File
         get() = outputDirectory.get().resolve("raw")
 
@@ -63,6 +78,9 @@ interface ComposeCompilerReportExtension {
         fun create(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
             enableReport.convention(true)
             enableMetrics.convention(true)
+            includeStableComposables.convention(false)
+            includeStableClasses.convention(false)
+            includeClasses.convention(true)
             name.convention("${target.rootProject.name}:${target.name}")
             outputDirectory.convention(target.buildDir.resolve("compose_report"))
         }
