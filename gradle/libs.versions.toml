@@ -7,7 +7,7 @@ kotlinxHtml = "0.8.1"
 kotlinxCli = "0.3.5"
 mavenPublish = "0.25.2"
 androidGradlePlugin = "7.3.1"
-gradlePluginPublish = "1.1.0"
+gradlePluginPublish = "1.2.0"
 
 [libraries]
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
