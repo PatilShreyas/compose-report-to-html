@@ -43,7 +43,10 @@ import kotlinx.html.td
 import kotlinx.html.th
 import kotlinx.html.tr
 
-fun BODY.ComposablesReport(composablesReport: ComposablesReport) {
+fun BODY.ComposablesReport(
+    includeStableComposables: Boolean,
+    composablesReport: ComposablesReport,
+) {
     if (composablesReport.composables.isEmpty()) {
         EmptyContent("No Composables Report")
         return
@@ -61,10 +64,10 @@ fun BODY.ComposablesReport(composablesReport: ComposablesReport) {
                     ComposablesReport(composablesReport.restartableButNotSkippableComposables)
                 }
             } else {
-                EmptyContent("No composable found with issues")
+                EmptyContent("No composable found with issues 😁")
             }
 
-            if (composablesReport.nonIssuesComposables.isNotEmpty()) {
+            if (composablesReport.nonIssuesComposables.isNotEmpty() && includeStableComposables) {
                 CollapsibleContent(
                     summary = "Composibles without issues",
                     summaryAttr = {
@@ -76,7 +79,12 @@ fun BODY.ComposablesReport(composablesReport: ComposablesReport) {
                 }
             } else {
                 br { }
-                EmptyContent("No composable found without any issues")
+                val message = if (!includeStableComposables) {
+                    "Report for stable composables is disabled in the options"
+                } else {
+                    "No composable found without any issues"
+                }
+                EmptyContent(message)
             }
         }
     }

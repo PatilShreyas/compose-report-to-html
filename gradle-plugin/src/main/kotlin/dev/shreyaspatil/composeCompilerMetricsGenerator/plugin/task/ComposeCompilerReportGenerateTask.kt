@@ -27,15 +27,14 @@ import com.android.build.api.variant.Variant
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerMetricsProvider
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerRawReportProvider
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGenerator
+import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportOptions
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ComposeCompilerReportExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.file.Directory
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
@@ -52,11 +51,20 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     @get:Input
     abstract val reportName: Property<String>
 
-    @get:InputDirectory
+    @get:OutputDirectory
     abstract val composeRawMetricsOutputDirectory: DirectoryProperty
 
     @get:OutputDirectory
     abstract val outputDirectory: DirectoryProperty
+
+    @get:Input
+    abstract val includeStableComposables: Property<Boolean>
+
+    @get:Input
+    abstract val includeStableClasses: Property<Boolean>
+
+    @get:Input
+    abstract val includeClasses: Property<Boolean>
 
     @TaskAction
     fun generate() {
@@ -91,7 +99,14 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
 
     private fun generateReport(outputDirectory: File) {
         // Create a report specification with application name
-        val reportSpec = ReportSpec(reportName.get())
+        val reportSpec = ReportSpec(
+            name = reportName.get(),
+            options = ReportOptions(
+                includeStableComposables = includeStableComposables.get(),
+                includeStableClasses = includeStableClasses.get(),
+                includeClasses = includeClasses.get(),
+            ),
+        )
 
         val rawReportProvider = ComposeCompilerRawReportProvider.FromDirectory(
             directory = composeRawMetricsOutputDirectory.get().asFile,
@@ -135,6 +150,9 @@ fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): Ta
         reportName.set(reportExtension.name)
         composeRawMetricsOutputDirectory.set(reportExtension.composeRawMetricsOutputDirectory)
         outputDirectory.set(layout.dir(reportExtension.outputDirectory))
+        includeStableComposables.set(reportExtension.includeStableComposables)
+        includeStableClasses.set(reportExtension.includeStableClasses)
+        includeClasses.set(reportExtension.includeClasses)
 
         group = "compose compiler report"
         description = "Generate Compose Compiler Metrics and Report"

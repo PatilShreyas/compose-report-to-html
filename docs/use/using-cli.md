@@ -56,7 +56,7 @@ Run the command to know the usage of CLI
 !!! success "▶️Output"
 
     ```shell
-    Usage: Compose Compiler Report to HTML Generator ~ v1.0.1 options_list
+    Usage: Compose Compiler Report to HTML Generator ~ v1.1.0 options_list
     Options:
         --applicationName, -app -> Application name (To be displayed in the report) (always required) { String }
         --inputDirectory, -i -> Input directory where composable report and metrics are available { String }
@@ -65,6 +65,9 @@ Run the command to know the usage of CLI
         --composableMetricsFile, -composableMetrics -> Composable Metrics TXT files (separated by commas) { String }
         --classMetricsFile, -classMetrics -> Class Metrics TXT files (separated by commas) { String }
         --outputDirectory, -o -> Output directory name { String }
+        --includeStableComposables [true] -> Whether to include stable Composable functions in the report
+        --includeStableClasses [true] -> Whether to include stable classes in the report
+        --includeClasses [true] -> Whether to include all the classes in the report
         --help, -h -> Usage info
     ```
 

@@ -43,7 +43,10 @@ import kotlinx.html.td
 import kotlinx.html.th
 import kotlinx.html.tr
 
-fun FlowContent.ClassesReport(report: ClassesReport) {
+fun FlowContent.ClassesReport(
+    includeStableClasses: Boolean,
+    report: ClassesReport,
+) {
     if (report.classes.isEmpty()) {
         EmptyContent("No Class Report")
         return
@@ -65,10 +68,10 @@ fun FlowContent.ClassesReport(report: ClassesReport) {
                         ClassesReport(report.unstableClasses)
                     }
                 } else {
-                    EmptyContent("No Unstable classes found")
+                    EmptyContent("No Unstable classes found 😁")
                 }
 
-                if (report.stableClasses.isNotEmpty()) {
+                if (report.stableClasses.isNotEmpty() && !includeStableClasses) {
                     CollapsibleContent(
                         summary = "Stable Classes",
                         summaryAttr = {
@@ -83,7 +86,12 @@ fun FlowContent.ClassesReport(report: ClassesReport) {
                     }
                 } else {
                     br { }
-                    EmptyContent("No Stable classes found")
+                    val message = if (!includeStableClasses) {
+                        "Report for stable classes is disabled in the options"
+                    } else {
+                        "No Stable classes found"
+                    }
+                    EmptyContent(message)
                 }
             }
         }
