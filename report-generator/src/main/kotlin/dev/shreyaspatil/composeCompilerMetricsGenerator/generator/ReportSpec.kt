@@ -35,7 +35,7 @@ data class ReportSpec(
  * Options for a report
  */
 data class ReportOptions(
-    val includeStableComposables: Boolean = false,
-    val includeStableClasses: Boolean = false,
+    val includeStableComposables: Boolean = true,
+    val includeStableClasses: Boolean = true,
     val includeClasses: Boolean = true,
 )

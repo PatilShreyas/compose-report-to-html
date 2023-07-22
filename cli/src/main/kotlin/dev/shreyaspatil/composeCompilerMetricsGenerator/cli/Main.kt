@@ -139,12 +139,12 @@ class CliArguments(args: Array<String>, private val path: Path) {
     val includeStableComposables by parser.option(
         ArgType.Boolean,
         description = "Whether to include stable Composable functions in the report",
-    ).default(false)
+    ).default(true)
 
     val includeStableClasses by parser.option(
         ArgType.Boolean,
         description = "Whether to include stable classes in the report",
-    ).default(false)
+    ).default(true)
 
     val includeClasses by parser.option(
         ArgType.Boolean,

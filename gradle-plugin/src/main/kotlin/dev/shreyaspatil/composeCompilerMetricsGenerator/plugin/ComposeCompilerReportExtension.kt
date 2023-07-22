@@ -78,8 +78,8 @@ interface ComposeCompilerReportExtension {
         fun create(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
             enableReport.convention(true)
             enableMetrics.convention(true)
-            includeStableComposables.convention(false)
-            includeStableClasses.convention(false)
+            includeStableComposables.convention(true)
+            includeStableClasses.convention(true)
             includeClasses.convention(true)
             name.convention("${target.rootProject.name}:${target.name}")
             outputDirectory.convention(target.buildDir.resolve("compose_report"))
