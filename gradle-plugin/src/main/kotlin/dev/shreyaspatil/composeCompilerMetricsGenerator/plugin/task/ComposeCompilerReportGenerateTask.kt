@@ -31,8 +31,12 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ComposeCompilerReportExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.file.Directory
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.tooling.GradleConnector
@@ -45,17 +49,23 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     @get:Input
     abstract val compileKotlinTasks: Property<String>
 
-    private val reportExtension: ComposeCompilerReportExtension
-        get() = ComposeCompilerReportExtension.get(project)
+    @get:Input
+    abstract val reportName: Property<String>
+
+    @get:InputDirectory
+    abstract val composeRawMetricsOutputDirectory: DirectoryProperty
+
+    @get:OutputDirectory
+    abstract val outputDirectory: DirectoryProperty
 
     @TaskAction
     fun generate() {
-        val reportExt = reportExtension
-        cleanupDirectory(reportExtension.outputPath.get())
+        val outputDirectory = outputDirectory.get().asFile
+        cleanupDirectory(outputDirectory)
 
         generateRawMetricsAndReport()
 
-        generateReport(reportExt)
+        generateReport(outputDirectory)
     }
 
     private fun generateRawMetricsAndReport() {
@@ -79,14 +89,12 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
             }
     }
 
-    private fun generateReport(reportExtension: ComposeCompilerReportExtension) {
-        val outputDirectory = reportExtension.outputPath.get().let { File(it) }
-
+    private fun generateReport(outputDirectory: File) {
         // Create a report specification with application name
-        val reportSpec = ReportSpec(reportExtension.name.get())
+        val reportSpec = ReportSpec(reportName.get())
 
         val rawReportProvider = ComposeCompilerRawReportProvider.FromDirectory(
-            directory = reportExtension.composeRawMetricsOutputDirectory,
+            directory = composeRawMetricsOutputDirectory.get().asFile,
         )
 
         // Provide metric files to generator
@@ -106,24 +114,27 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
         logger.quiet("Compose Compiler report is generated: $reportUrl")
     }
 
-    private fun cleanupDirectory(directory: String) {
-        val dirFile = File(directory)
-        if (dirFile.exists()) {
-            if (!dirFile.isDirectory) {
-                throw FileNotFoundException("'$directory' is not a directory")
+    private fun cleanupDirectory(outputDirectory: File) {
+        if (outputDirectory.exists()) {
+            if (!outputDirectory.isDirectory) {
+                throw FileNotFoundException("'$outputDirectory' is not a directory")
             }
         }
 
-        dirFile.deleteRecursively()
+        outputDirectory.deleteRecursively()
     }
 }
 
 fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = variant.name + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromVariant(variant)
+    val reportExtension = ComposeCompilerReportExtension.get(project)
 
     return tasks.register(taskName, ComposeCompilerReportGenerateTask::class.java) {
         compileKotlinTasks.set(compileKotlinTaskName)
+        reportName.set(reportExtension.name)
+        composeRawMetricsOutputDirectory.set(reportExtension.composeRawMetricsOutputDirectory)
+        outputDirectory.set(layout.dir(reportExtension.outputDirectory))
 
         group = "compose compiler report"
         description = "Generate Compose Compiler Metrics and Report"

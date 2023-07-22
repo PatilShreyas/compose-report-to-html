@@ -47,12 +47,12 @@ interface ComposeCompilerReportExtension {
     val name: Property<String>
 
     /**
-     * The directory path where report will be stored.
+     * The directory where report will be stored.
      */
-    val outputPath: Property<String>
+    val outputDirectory: Property<File>
 
     val composeRawMetricsOutputDirectory: File
-        get() = File(outputPath.get()).resolve("raw")
+        get() = outputDirectory.get().resolve("raw")
 
     companion object {
         const val NAME = "htmlComposeCompilerReport"
@@ -64,7 +64,7 @@ interface ComposeCompilerReportExtension {
             enableReport.convention(true)
             enableMetrics.convention(true)
             name.convention("${target.rootProject.name}:${target.name}")
-            outputPath.convention(target.buildDir.resolve("compose_report").absolutePath)
+            outputDirectory.convention(target.buildDir.resolve("compose_report"))
         }
 
         /**
