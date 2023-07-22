@@ -25,9 +25,17 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator
 
 /**
  * Specification of a report
- *
- * TODO: See if more specifications needed in future
  */
 data class ReportSpec(
     val name: String,
+    val options: ReportOptions = ReportOptions(),
+)
+
+/**
+ * Options for a report
+ */
+data class ReportOptions(
+    val includeStableComposables: Boolean = false,
+    val includeStableClasses: Boolean = false,
+    val includeClasses: Boolean = true,
 )
