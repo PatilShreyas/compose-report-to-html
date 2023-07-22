@@ -122,8 +122,17 @@ If you have to configure plugin parameters manually (which is completely optiona
         // Sets the name for a report
         name = "Report Name" // Default: Module name
     
-        // Output path where report will be generated
-        outputPath = project.buildDir.absolutePath + "/custom_path" // Default: module/buildDir/compose_report
+        // Output directory where report will be generated
+        outputDirectory = layout.buildDirectory.dir("custom_dir").get().asFile // Default: module/buildDir/compose_report
+        
+        // Whether to include stable composable functions in the final report or not.
+        includeStableComposables = true/false // Default: true
+
+        // Whether to include stable classes in the final report or not.
+        includeStableClasses = true/false // Default: true
+
+        // Whether to include the ALL classes in the final report or not.
+        includeClasses = true/false // Default: true
     }
     ```
 
@@ -140,7 +149,16 @@ If you have to configure plugin parameters manually (which is completely optiona
         // Sets the name for a report
         name.set("Report Name") // Default: Module name
     
-        // Output path where report will be generated
-        outputPath.set(project.buildDir.resolve("custom_path").absolutePath) // Default: module/buildDir/compose_report
+        // Output directory where report will be generated
+        outputDirectory.set(layout.buildDirectory.dir("custom_dir").get().asFile) // Default: module/buildDir/compose_report
+
+        // Whether to include stable composable functions in the final report or not.
+        includeStableComposables.set(true/false) // Default: true
+
+        // Whether to include stable classes in the final report or not.
+        includeStableClasses.set(true/false) // Default: true
+
+        // Whether to include the ALL classes in the final report or not.
+        includeClasses.set(true/false) // Default: true
     }
     ```

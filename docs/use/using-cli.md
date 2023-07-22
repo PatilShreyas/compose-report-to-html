@@ -64,7 +64,10 @@ Run the command to know the usage of CLI
         --detailedStatsFile, -detailedStatsMetrics -> Detailed Statistics Metrics CSV files (separated by commas) { String }
         --composableMetricsFile, -composableMetrics -> Composable Metrics TXT files (separated by commas) { String }
         --classMetricsFile, -classMetrics -> Class Metrics TXT files (separated by commas) { String }
-        --outputDirectory, -o -> Output directory name { String }
+        --outputDirectory, -o [F:\Work\MyProHub\compose-report-to-html\cli\build\libs] -> Output directory name { String }
+        --includeStableComposables [true] -> Whether to include stable Composable functions in the report
+        --includeStableClasses [true] -> Whether to include stable classes in the report
+        --includeClasses [true] -> Whether to include all the classes in the report
         --help, -h -> Usage info
     ```
 
