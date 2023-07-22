@@ -44,6 +44,7 @@ fun HTML.MainContent(
     composablesReport: ComposablesReport,
     classesReport: ClassesReport,
 ) {
+    val options = reportSpec.options
     head {
         title("${reportSpec.name} - Compose Compiler Report")
         FontsLinking()
@@ -55,10 +56,12 @@ fun HTML.MainContent(
         hr { }
         DetailedStatistics(detailedStatistics)
         hr { }
-        ComposablesReport(composablesReport)
+        ComposablesReport(options.includeStableComposables, composablesReport)
         hr { }
-        ClassesReport(classesReport)
-        hr { }
+        if (options.includeClasses) {
+            ClassesReport(options.includeStableClasses, classesReport)
+            hr { }
+        }
         ErrorReports(composablesReport.errors + classesReport.errors)
         Footer()
         CollapsibleScript()
