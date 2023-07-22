@@ -28,6 +28,7 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.ComposeCompilerRawR
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils.ensureDirectory
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils.ensureFileExists
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGenerator
+import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportOptions
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
@@ -43,7 +44,14 @@ import java.nio.file.Paths
 fun main(args: Array<String>) {
     val arguments = CliArguments(args, Paths.get("").toAbsolutePath())
 
-    val reportSpec = ReportSpec(arguments.applicationName)
+    val reportSpec = ReportSpec(
+        name = arguments.applicationName,
+        options = ReportOptions(
+            includeStableComposables = arguments.includeStableComposables,
+            includeStableClasses = arguments.includeStableClasses,
+            includeClasses = arguments.includeClasses,
+        ),
+    )
     val rawReportProvider = arguments.getRawReportProvider()
 
     printHeader("Generating Composable HTML Report")
@@ -127,6 +135,21 @@ class CliArguments(args: Array<String>, private val path: Path) {
         shortName = "o",
         description = "Output directory name",
     ).default(path.toAbsolutePath().toString())
+
+    val includeStableComposables by parser.option(
+        ArgType.Boolean,
+        description = "Whether to include stable Composable functions in the report",
+    ).default(false)
+
+    val includeStableClasses by parser.option(
+        ArgType.Boolean,
+        description = "Whether to include stable classes in the report",
+    ).default(false)
+
+    val includeClasses by parser.option(
+        ArgType.Boolean,
+        description = "Whether to include all the classes in the report",
+    ).default(true)
 
     init {
         parser.parse(args)
