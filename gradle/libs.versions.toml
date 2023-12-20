@@ -5,7 +5,7 @@ coroutines = "1.7.3"
 spotless = "6.21.0"
 kotlinxHtml = "0.9.1"
 kotlinxCli = "0.3.6"
-mavenPublish = "0.25.3"
+mavenPublish = "0.26.0"
 androidGradlePlugin = "7.3.1"
 gradlePluginPublish = "1.2.1"
 
