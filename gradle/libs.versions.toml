@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.8.22"
-serialization = "1.6.0"
+serialization = "1.6.2"
 coroutines = "1.7.3"
 spotless = "6.21.0"
 kotlinxHtml = "0.10.1"
