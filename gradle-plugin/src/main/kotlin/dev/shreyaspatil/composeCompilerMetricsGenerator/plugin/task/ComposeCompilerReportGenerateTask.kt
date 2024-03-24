@@ -66,6 +66,9 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     @get:Input
     abstract val includeClasses: Property<Boolean>
 
+    @get:Input
+    abstract val showOnlyUnstableComposables: Property<Boolean>
+
     @TaskAction
     fun generate() {
         val outputDirectory = outputDirectory.get().asFile
@@ -105,6 +108,7 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
                 includeStableComposables = includeStableComposables.get(),
                 includeStableClasses = includeStableClasses.get(),
                 includeClasses = includeClasses.get(),
+                showOnlyUnstableComposables = showOnlyUnstableComposables.get(),
             ),
         )
 
@@ -153,6 +157,7 @@ fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): Ta
         includeStableComposables.set(reportExtension.includeStableComposables)
         includeStableClasses.set(reportExtension.includeStableClasses)
         includeClasses.set(reportExtension.includeClasses)
+        showOnlyUnstableComposables.set(reportExtension.showOnlyUnstableComposables)
 
         group = "compose compiler report"
         description = "Generate Compose Compiler Metrics and Report"

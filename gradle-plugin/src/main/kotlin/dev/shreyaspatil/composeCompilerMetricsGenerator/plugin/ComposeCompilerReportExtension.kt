@@ -66,6 +66,11 @@ interface ComposeCompilerReportExtension {
      */
     val includeClasses: Property<Boolean>
 
+    /**
+     * The report will only include the detail of unstable composables.
+     */
+    val showOnlyUnstableComposables: Property<Boolean>
+
     val composeRawMetricsOutputDirectory: File
         get() = outputDirectory.get().resolve("raw")
 
@@ -83,6 +88,7 @@ interface ComposeCompilerReportExtension {
             includeClasses.convention(true)
             name.convention("${target.rootProject.name}:${target.name}")
             outputDirectory.convention(target.buildDir.resolve("compose_report"))
+            showOnlyUnstableComposables.convention(false)
         }
 
         /**
