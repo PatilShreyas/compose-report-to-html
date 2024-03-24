@@ -50,7 +50,7 @@ fun main(args: Array<String>) {
             includeStableComposables = arguments.includeStableComposables,
             includeStableClasses = arguments.includeStableClasses,
             includeClasses = arguments.includeClasses,
-            showOnlyUnstableComposables = arguments.showOnlyUnstableComposables
+            showOnlyUnstableComposables = arguments.showOnlyUnstableComposables,
         ),
     )
     val rawReportProvider = arguments.getRawReportProvider()

@@ -159,6 +159,6 @@ fun BODY.OnlyUnstableComposables(composablesReport: ComposablesReport) {
     ComposablesReport(
         includeStableComposables = false,
         onlyUnstableComposables = true,
-        composablesReport = composablesReport
+        composablesReport = composablesReport,
     )
 }

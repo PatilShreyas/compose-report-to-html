@@ -108,7 +108,7 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
                 includeStableComposables = includeStableComposables.get(),
                 includeStableClasses = includeStableClasses.get(),
                 includeClasses = includeClasses.get(),
-                showOnlyUnstableComposables = showOnlyUnstableComposables.get()
+                showOnlyUnstableComposables = showOnlyUnstableComposables.get(),
             ),
         )
 
