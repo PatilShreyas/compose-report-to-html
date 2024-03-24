@@ -31,7 +31,10 @@ import java.nio.file.Paths
  * Checks whether directory with [path] exists or not.
  * Else throws [FileNotFoundException].
  */
-inline fun ensureDirectory(path: String, lazyMessage: () -> Any) {
+inline fun ensureDirectory(
+    path: String,
+    lazyMessage: () -> Any,
+) {
     val file = File(Paths.get(path).toAbsolutePath().toString())
     ensureDirectory(file, lazyMessage)
 }
@@ -40,7 +43,10 @@ inline fun ensureDirectory(path: String, lazyMessage: () -> Any) {
  * Checks whether directory with [path] exists or not.
  * Else throws [FileNotFoundException].
  */
-inline fun ensureDirectory(directory: File, lazyMessage: () -> Any) {
+inline fun ensureDirectory(
+    directory: File,
+    lazyMessage: () -> Any,
+) {
     println("Checking directory '${directory.absolutePath}'")
     if (!directory.isDirectory) {
         val message = lazyMessage()
@@ -51,7 +57,10 @@ inline fun ensureDirectory(directory: File, lazyMessage: () -> Any) {
 /**
  * Checks whether file with [filename] exists or not. Else throws [FileNotFoundException].
  */
-inline fun ensureFileExists(filename: String, lazyMessage: () -> Any): File {
+inline fun ensureFileExists(
+    filename: String,
+    lazyMessage: () -> Any,
+): File {
     val file = File(Paths.get(filename).toAbsolutePath().toString())
     return ensureFileExists(file, lazyMessage)
 }
@@ -59,7 +68,10 @@ inline fun ensureFileExists(filename: String, lazyMessage: () -> Any): File {
 /**
  * Checks whether [file] with exists or not. Else throws [FileNotFoundException].
  */
-inline fun ensureFileExists(file: File, lazyMessage: () -> Any): File {
+inline fun ensureFileExists(
+    file: File,
+    lazyMessage: () -> Any,
+): File {
     println("Checking file '${file.absolutePath}'")
     if (!file.exists()) {
         val message = lazyMessage()

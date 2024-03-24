@@ -37,6 +37,7 @@ import kotlinx.html.head
 import kotlinx.html.hr
 import kotlinx.html.title
 
+@Suppress("ktlint:standard:function-naming")
 fun HTML.MainContent(
     reportSpec: ReportSpec,
     overallStatistics: Map<String, Long>,

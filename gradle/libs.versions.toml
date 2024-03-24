@@ -1,12 +1,12 @@
 [versions]
-kotlin = "1.8.22"
+kotlin = "1.9.23"
 serialization = "1.6.3"
 coroutines = "1.8.0"
-spotless = "6.21.0"
+spotless = "6.25.0"
 kotlinxHtml = "0.11.0"
 kotlinxCli = "0.3.6"
 mavenPublish = "0.28.0"
-androidGradlePlugin = "7.3.1"
+androidGradlePlugin = "8.3.0"
 gradlePluginPublish = "1.2.1"
 
 [libraries]

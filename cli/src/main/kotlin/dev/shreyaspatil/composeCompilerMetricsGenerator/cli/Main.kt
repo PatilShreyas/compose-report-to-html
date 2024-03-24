@@ -44,23 +44,26 @@ import java.nio.file.Paths
 fun main(args: Array<String>) {
     val arguments = CliArguments(args, Paths.get("").toAbsolutePath())
 
-    val reportSpec = ReportSpec(
-        name = arguments.applicationName,
-        options = ReportOptions(
-            includeStableComposables = arguments.includeStableComposables,
-            includeStableClasses = arguments.includeStableClasses,
-            includeClasses = arguments.includeClasses,
-            showOnlyUnstableComposables = arguments.showOnlyUnstableComposables,
-        ),
-    )
+    val reportSpec =
+        ReportSpec(
+            name = arguments.applicationName,
+            options =
+                ReportOptions(
+                    includeStableComposables = arguments.includeStableComposables,
+                    includeStableClasses = arguments.includeStableClasses,
+                    includeClasses = arguments.includeClasses,
+                    showOnlyUnstableComposables = arguments.showOnlyUnstableComposables,
+                ),
+        )
     val rawReportProvider = arguments.getRawReportProvider()
 
     printHeader("Generating Composable HTML Report")
 
-    val html = HtmlReportGenerator(
-        reportSpec = reportSpec,
-        metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider),
-    ).generateHtml()
+    val html =
+        HtmlReportGenerator(
+            reportSpec = reportSpec,
+            metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider),
+        ).generateHtml()
 
     printHeader("Saving Composable Report")
     val reportPath = saveReportAsHtml(html, arguments.outputDirectory)
@@ -72,7 +75,10 @@ fun main(args: Array<String>) {
 /**
  * Saves a file with [htmlContent] having name as 'index.html' at specified [outputDirectory]
  */
-fun saveReportAsHtml(htmlContent: String, outputDirectory: String): String {
+fun saveReportAsHtml(
+    htmlContent: String,
+    outputDirectory: String,
+): String {
     val directory = File(Paths.get(outputDirectory).toAbsolutePath().toString())
 
     if (!directory.exists()) {
@@ -169,12 +175,13 @@ class CliArguments(args: Array<String>, private val path: Path) {
     fun getRawReportProvider(): ComposeCompilerRawReportProvider {
         val directory = inputDirectory
 
-        val files = arrayOf(
-            overallStatsFile,
-            detailedStatsFile,
-            composableMetricsFile,
-            classMetricsFile,
-        )
+        val files =
+            arrayOf(
+                overallStatsFile,
+                detailedStatsFile,
+                composableMetricsFile,
+                classMetricsFile,
+            )
 
         return if (directory != null) {
             ensureDirectory(directory) { "Directory '$directory' not exists" }
@@ -206,12 +213,13 @@ class CliArguments(args: Array<String>, private val path: Path) {
     }
 }
 
-fun printHeader(header: String) = println(
-    """
-    ------------------------------------------------------------------
-    $header
-    """.trimIndent(),
-)
+fun printHeader(header: String) =
+    println(
+        """
+        ------------------------------------------------------------------
+        $header
+        """.trimIndent(),
+    )
 
 object Constants {
     const val VERSION = "v1.1.0"

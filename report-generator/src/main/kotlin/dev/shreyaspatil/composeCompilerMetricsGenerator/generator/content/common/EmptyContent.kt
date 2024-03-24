@@ -26,6 +26,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.commo
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowContent.EmptyContent(text: String) {
     div("empty-content") { +text }
 }

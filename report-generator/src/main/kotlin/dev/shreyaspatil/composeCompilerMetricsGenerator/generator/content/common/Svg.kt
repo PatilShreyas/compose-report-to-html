@@ -34,6 +34,7 @@ import kotlinx.html.visit
 /**
  * Acts as a SVG Icon HTML element
  */
+@Suppress("ktlint:standard:function-naming")
 fun FlowOrPhrasingContent.SvgIcon(
     width: String,
     height: String,

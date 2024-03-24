@@ -27,28 +27,29 @@ import kotlinx.html.FlowContent
 import kotlinx.html.script
 import kotlinx.html.unsafe
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowContent.CollapsibleScript() {
     script {
         unsafe {
             raw(
                 """
-                    var coll = document.getElementsByClassName("collapsible");
-                    var i;
+                var coll = document.getElementsByClassName("collapsible");
+                var i;
 
-                    for (i = 0; i < coll.length; i++) {
-                      coll[i].addEventListener("click", function() {
-                        this.classList.toggle("active");
-                        var content = this.nextElementSibling;
-                        if (content.style.maxHeight){
-                          content.style.maxHeight = null;
-                          content.style.overflow = "hidden"
-                        } else {
-                          content.style.maxHeight = content.scrollHeight + "px";
-                          content.style.overflow = "auto";
-                          content.style.maxHeight = "none";
-                        } 
-                      });
-                    }
+                for (i = 0; i < coll.length; i++) {
+                  coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight){
+                      content.style.maxHeight = null;
+                      content.style.overflow = "hidden"
+                    } else {
+                      content.style.maxHeight = content.scrollHeight + "px";
+                      content.style.overflow = "auto";
+                      content.style.maxHeight = "none";
+                    } 
+                  });
+                }
                 """.trimIndent(),
             )
         }

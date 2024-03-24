@@ -26,5 +26,4 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator.utils
 /**
  * This is similar to [forEachIndexed] but in this function, index starts from 1 instead of 0
  */
-fun <E> Iterable<E>.forEachIndexedFromOne(action: (index: Int, E) -> Unit) =
-    forEachIndexed { index, e -> action(index + 1, e) }
+fun <E> Iterable<E>.forEachIndexedFromOne(action: (index: Int, E) -> Unit) = forEachIndexed { index, e -> action(index + 1, e) }

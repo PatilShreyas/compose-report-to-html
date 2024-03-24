@@ -26,9 +26,10 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.core.mapper
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
 
 object ConditionMapper {
-    fun from(value: String): Condition = when (value.lowercase()) {
-        "stable" -> Condition.STABLE
-        "unstable" -> Condition.UNSTABLE
-        else -> Condition.MISSING
-    }
+    fun from(value: String): Condition =
+        when (value.lowercase()) {
+            "stable" -> Condition.STABLE
+            "unstable" -> Condition.UNSTABLE
+            else -> Condition.MISSING
+        }
 }

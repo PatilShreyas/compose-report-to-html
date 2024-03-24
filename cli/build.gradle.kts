@@ -19,14 +19,15 @@ dependencies {
     implementation(libs.kotlinx.cli)
 }
 
-tasks.withType<Jar>() {
+tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = mainCliClassName
     }
-    val dependencies = configurations
-        .runtimeClasspath
-        .get()
-        .map(::zipTree)
+    val dependencies =
+        configurations
+            .runtimeClasspath
+            .get()
+            .map(::zipTree)
     from(dependencies)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

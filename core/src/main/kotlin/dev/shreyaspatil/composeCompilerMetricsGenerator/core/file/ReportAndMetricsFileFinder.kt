@@ -31,10 +31,11 @@ import java.io.File
  * @param directory The directory in which files will be searched
  */
 class ReportAndMetricsFileFinder(directory: File) {
-    private val allFiles = directory
-        .listFiles()
-        ?.filterNotNull()
-        ?: emptyList()
+    private val allFiles =
+        directory
+            .listFiles()
+            ?.filterNotNull()
+            ?: emptyList()
 
     fun findBriefStatisticsJsonFile(): List<File> {
         return allFiles.filter { it.name.endsWith(FileSuffixes.MODULE_REPORT_JSON) }

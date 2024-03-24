@@ -24,5 +24,7 @@
 package dev.shreyaspatil.composeCompilerMetricsGenerator.core.model
 
 enum class Condition {
-    STABLE, UNSTABLE, MISSING
+    STABLE,
+    UNSTABLE,
+    MISSING,
 }

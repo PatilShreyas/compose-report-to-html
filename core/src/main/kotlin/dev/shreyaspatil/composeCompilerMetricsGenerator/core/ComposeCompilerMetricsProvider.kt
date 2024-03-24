@@ -66,7 +66,6 @@ interface ComposeCompilerMetricsProvider {
 private class DefaultComposeCompilerMetricsProvider(
     private val contentProvider: ComposeMetricsContentProvider,
 ) : ComposeCompilerMetricsProvider {
-
     override fun getOverallStatistics(): Map<String, Long> {
         val statistics = mutableMapOf<String, Long>()
         contentProvider.briefStatisticsContents.forEach { statContent ->
@@ -85,15 +84,16 @@ private class DefaultComposeCompilerMetricsProvider(
     override fun getDetailedStatistics(): DetailedStatistics {
         val csv = contentProvider.detailedStatisticsCsvRows
 
-        val metrics = if (csv.size > 1) {
-            val headers = splitWithCsvSeparator(csv.first())
+        val metrics =
+            if (csv.size > 1) {
+                val headers = splitWithCsvSeparator(csv.first())
 
-            csv.subList(1, csv.size)
-                .map { splitWithCsvSeparator(it) }
-                .map { items -> RowItems(items.mapIndexed { index, value -> Item(headers[index], value) }) }
-        } else {
-            emptyList()
-        }
+                csv.subList(1, csv.size)
+                    .map { splitWithCsvSeparator(it) }
+                    .map { items -> RowItems(items.mapIndexed { index, value -> Item(headers[index], value) }) }
+            } else {
+                emptyList()
+            }
 
         return DetailedStatistics(metrics)
     }
@@ -112,9 +112,7 @@ private class DefaultComposeCompilerMetricsProvider(
 /**
  * Factory function for creating [ComposeCompilerMetricsProvider].
  */
-fun ComposeCompilerMetricsProvider(
-    files: ComposeCompilerRawReportProvider,
-): ComposeCompilerMetricsProvider {
+fun ComposeCompilerMetricsProvider(files: ComposeCompilerRawReportProvider): ComposeCompilerMetricsProvider {
     val contentProvider = ComposeMetricsContentProvider(files)
     return DefaultComposeCompilerMetricsProvider(contentProvider)
 }

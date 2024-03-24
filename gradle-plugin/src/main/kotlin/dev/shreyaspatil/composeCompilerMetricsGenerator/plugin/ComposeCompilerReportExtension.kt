@@ -30,7 +30,6 @@ import org.gradle.kotlin.dsl.getByType
 import java.io.File
 
 interface ComposeCompilerReportExtension {
-
     /**
      * Enable calculating metrics from the compose compiler in the main report.
      */
@@ -80,16 +79,17 @@ interface ComposeCompilerReportExtension {
         /**
          * Creates a extension of type [ComposeCompilerReportExtension] and returns
          */
-        fun create(target: Project) = target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
-            enableReport.convention(true)
-            enableMetrics.convention(true)
-            includeStableComposables.convention(true)
-            includeStableClasses.convention(true)
-            includeClasses.convention(true)
-            name.convention("${target.rootProject.name}:${target.name}")
-            outputDirectory.convention(target.buildDir.resolve("compose_report"))
-            showOnlyUnstableComposables.convention(false)
-        }
+        fun create(target: Project) =
+            target.extensions.create<ComposeCompilerReportExtension>(NAME).apply {
+                enableReport.convention(true)
+                enableMetrics.convention(true)
+                includeStableComposables.convention(true)
+                includeStableClasses.convention(true)
+                includeClasses.convention(true)
+                name.convention("${target.rootProject.name}:${target.name}")
+                outputDirectory.convention(target.buildDir.resolve("compose_report"))
+                showOnlyUnstableComposables.convention(false)
+            }
 
         /**
          * Get extensions applied to the [target] project.
