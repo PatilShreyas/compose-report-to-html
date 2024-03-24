@@ -45,6 +45,7 @@ import kotlinx.html.tr
 
 fun BODY.ComposablesReport(
     includeStableComposables: Boolean,
+    onlyUnstableComposables: Boolean = false,
     composablesReport: ComposablesReport,
 ) {
     if (composablesReport.composables.isEmpty()) {
@@ -52,6 +53,11 @@ fun BODY.ComposablesReport(
         return
     }
     section {
+        if (onlyUnstableComposables) {
+            setStyle(backgroundColor = Colors.PINK_LIGHT, padding = "16px")
+            ComposablesReport(composablesReport.restartableButNotSkippableComposables)
+            return@section
+        }
         CollapsibleContent("Composables Report") {
             if (composablesReport.restartableButNotSkippableComposables.isNotEmpty()) {
                 CollapsibleContent(
@@ -60,8 +66,7 @@ fun BODY.ComposablesReport(
                         setStyle(backgroundColor = Colors.RED_DARK, fontSize = "18px")
                     },
                 ) {
-                    setStyle(backgroundColor = Colors.PINK_LIGHT)
-                    ComposablesReport(composablesReport.restartableButNotSkippableComposables)
+
                 }
             } else {
                 EmptyContent("No composable found with issues 😁")
@@ -146,4 +151,13 @@ fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) = table {
             }
         }
     }
+}
+
+fun BODY.OnlyUnstableComposables(composablesReport: ComposablesReport) {
+    h3 { +"Composables with issues (Restartable but Not Skippable)" }
+    ComposablesReport(
+        includeStableComposables = false,
+        onlyUnstableComposables = true,
+        composablesReport = composablesReport
+    )
 }

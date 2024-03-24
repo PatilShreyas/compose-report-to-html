@@ -52,15 +52,22 @@ fun HTML.MainContent(
     }
     body {
         h1 { +"Compose Compiler Report - ${reportSpec.name}" }
-        BriefStatistics(overallStatistics)
-        hr { }
-        DetailedStatistics(detailedStatistics)
-        hr { }
-        ComposablesReport(options.includeStableComposables, composablesReport)
-        hr { }
-        if (options.includeClasses) {
-            ClassesReport(options.includeStableClasses, classesReport)
+        if (options.showOnlyUnstableComposables) {
+            OnlyUnstableComposables(composablesReport)
+        } else {
+            BriefStatistics(overallStatistics)
             hr { }
+            DetailedStatistics(detailedStatistics)
+            hr { }
+            ComposablesReport(
+                includeStableComposables = options.includeStableComposables,
+                composablesReport = composablesReport
+            )
+            hr { }
+            if (options.includeClasses) {
+                ClassesReport(options.includeStableClasses, classesReport)
+                hr { }
+            }
         }
         ErrorReports(composablesReport.errors + classesReport.errors)
         Footer()
