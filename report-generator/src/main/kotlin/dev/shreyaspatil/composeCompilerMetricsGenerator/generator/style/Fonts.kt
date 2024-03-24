@@ -26,6 +26,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator.style
 import kotlinx.html.HEAD
 import kotlinx.html.link
 
+@Suppress("ktlint:standard:function-naming", "ktlint:standard:max-line-length")
 fun HEAD.FontsLinking() {
     link(rel = "preconnect", href = "https://fonts.googleapis.com")
     link(rel = "preconnect", href = "https://fonts.gstatic.com", type = "crossorigin")

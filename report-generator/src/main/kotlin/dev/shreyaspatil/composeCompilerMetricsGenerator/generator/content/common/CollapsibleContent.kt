@@ -29,6 +29,7 @@ import kotlinx.html.button
 import kotlinx.html.div
 import kotlinx.html.impl.DelegatingMap
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowContent.CollapsibleContent(
     summary: String,
     summaryAttr: DelegatingMap.() -> Unit = {},

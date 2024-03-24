@@ -43,14 +43,15 @@ object ClassReportParser : Parser<String, ClassesReport> {
     override fun parse(content: String): ClassesReport {
         val errors = mutableListOf<ParsingException>()
 
-        val classes = getClasses(content)
-            .mapNotNull { classBody ->
-                runCatching {
-                    parseClassDetail(classBody)
-                }.onFailure { cause ->
-                    errors.add(ParsingException(classBody, cause))
-                }.getOrNull()
-            }.toList()
+        val classes =
+            getClasses(content)
+                .mapNotNull { classBody ->
+                    runCatching {
+                        parseClassDetail(classBody)
+                    }.onFailure { cause ->
+                        errors.add(ParsingException(classBody, cause))
+                    }.getOrNull()
+                }.toList()
 
         return ClassesReport(classes, errors.toList())
     }
@@ -58,13 +59,14 @@ object ClassReportParser : Parser<String, ClassesReport> {
     internal fun getClasses(content: String): List<String> {
         val lines = content.split("\n").filter { it.isNotBlank() }
 
-        val classIndexes = lines.mapIndexedNotNull { index, s ->
-            if (REGEX_CLASS_NAME.containsMatchIn(s)) {
-                index
-            } else {
-                null
+        val classIndexes =
+            lines.mapIndexedNotNull { index, s ->
+                if (REGEX_CLASS_NAME.containsMatchIn(s)) {
+                    index
+                } else {
+                    null
+                }
             }
-        }
 
         return classIndexes.mapIndexed { index: Int, item: Int ->
             lines.subList(item, classIndexes.getOrElse(index + 1) { lines.size }).joinToString(separator = "\n")
@@ -77,14 +79,16 @@ object ClassReportParser : Parser<String, ClassesReport> {
     private fun parseClassDetail(classBody: String): ClassDetail {
         val classDetail = REGEX_CLASS_NAME.find(classBody)?.groupValues
         val className = classDetail?.getOrNull(2) ?: error("Undefined name for the class body: $classBody")
-        val stability = classDetail.getOrNull(1)?.let { ConditionMapper.from(it) }
-            ?: error("Undefined stability status for the class body: $classBody")
+        val stability =
+            classDetail.getOrNull(1)?.let { ConditionMapper.from(it) }
+                ?: error("Undefined stability status for the class body: $classBody")
 
         val runtimeStability =
             REGEX_RUNTIME_STABILITY.find(classBody)?.groupValues?.getOrNull(1)?.let { ConditionMapper.from(it) }
 
-        val fields = REGEX_CLASS_FIELDS.findAll(classBody).map { it.groupValues }.filter { it.isNotEmpty() }
-            .map { ClassDetail.Field(it[2], it[3]) }.toList()
+        val fields =
+            REGEX_CLASS_FIELDS.findAll(classBody).map { it.groupValues }.filter { it.isNotEmpty() }
+                .map { ClassDetail.Field(it[2], it[3]) }.toList()
 
         return ClassDetail(
             className = className,

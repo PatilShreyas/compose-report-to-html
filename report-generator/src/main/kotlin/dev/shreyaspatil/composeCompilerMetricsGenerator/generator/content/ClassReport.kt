@@ -45,6 +45,7 @@ import kotlinx.html.td
 import kotlinx.html.th
 import kotlinx.html.tr
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowContent.ClassesReport(
     includeStableClasses: Boolean,
     report: ClassesReport,
@@ -88,11 +89,12 @@ fun FlowContent.ClassesReport(
                     }
                 } else {
                     br { }
-                    val message = if (!includeStableClasses) {
-                        "Report for stable classes is disabled in the options"
-                    } else {
-                        "No Stable classes found"
-                    }
+                    val message =
+                        if (!includeStableClasses) {
+                            "Report for stable classes is disabled in the options"
+                        } else {
+                            "No Stable classes found"
+                        }
                     EmptyContent(message)
                 }
             }
@@ -100,41 +102,44 @@ fun FlowContent.ClassesReport(
     }
 }
 
-fun FlowContent.ClassesReport(classes: List<ClassDetail>) = table {
-    classes.forEachIndexedFromOne { index, detail ->
-        tr {
-            td {
-                +"$index."
-            }
-            td {
-                h3 {
-                    span(statusCssClass(detail.stability === Condition.STABLE)) {
-                        when (detail.stability) {
-                            Condition.STABLE -> CheckIconWithText("Stable")
-                            Condition.UNSTABLE -> CrossIconWithText("Unstable")
-                            else -> +"Missing"
-                        }
-                    }
-                    span("code") { +" class ${detail.className}" }
+@Suppress("ktlint:standard:function-naming")
+fun FlowContent.ClassesReport(classes: List<ClassDetail>) =
+    table {
+        classes.forEachIndexedFromOne { index, detail ->
+            tr {
+                td {
+                    +"$index."
                 }
-                table {
-                    if (detail.fields.isNotEmpty()) {
-                        tr {
-                            th { +"No." }
-                            th { +"Status" }
-                            th { +"Field" }
-                            th { +"Type" }
+                td {
+                    h3 {
+                        span(statusCssClass(detail.stability === Condition.STABLE)) {
+                            when (detail.stability) {
+                                Condition.STABLE -> CheckIconWithText("Stable")
+                                Condition.UNSTABLE -> CrossIconWithText("Unstable")
+                                else -> +"Missing"
+                            }
                         }
-                        detail.fields.forEachIndexedFromOne { index, field ->
+                        span("code") { +" class ${detail.className}" }
+                    }
+                    table {
+                        if (detail.fields.isNotEmpty()) {
                             tr {
-                                setStyle(
-                                    backgroundColor = statusColorFrom(field.status),
-                                    color = textColorFrom(field.status),
-                                )
-                                td { +index.toString() }
-                                td { +field.status.uppercase() }
-                                td("code") { +field.name }
-                                td("code") { +field.type }
+                                th { +"No." }
+                                th { +"Status" }
+                                th { +"Field" }
+                                th { +"Type" }
+                            }
+                            detail.fields.forEachIndexedFromOne { index, field ->
+                                tr {
+                                    setStyle(
+                                        backgroundColor = statusColorFrom(field.status),
+                                        color = textColorFrom(field.status),
+                                    )
+                                    td { +index.toString() }
+                                    td { +field.status.uppercase() }
+                                    td("code") { +field.name }
+                                    td("code") { +field.type }
+                                }
                             }
                         }
                     }
@@ -142,15 +147,16 @@ fun FlowContent.ClassesReport(classes: List<ClassDetail>) = table {
             }
         }
     }
-}
 
-fun statusColorFrom(status: String) = when (status.lowercase()) {
-    "stable" -> Colors.GREEN_LIGHT
-    "unstable" -> Colors.RED_DARK
-    else -> Colors.YELLOW
-}
+fun statusColorFrom(status: String) =
+    when (status.lowercase()) {
+        "stable" -> Colors.GREEN_LIGHT
+        "unstable" -> Colors.RED_DARK
+        else -> Colors.YELLOW
+    }
 
-fun textColorFrom(status: String) = when (status.lowercase()) {
-    "unstable" -> Colors.WHITE
-    else -> Colors.BLACK
-}
+fun textColorFrom(status: String) =
+    when (status.lowercase()) {
+        "unstable" -> Colors.WHITE
+        else -> Colors.BLACK
+    }

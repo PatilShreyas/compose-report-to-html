@@ -45,21 +45,23 @@ class HtmlReportGenerator(
     /**
      * Returns HTML content as a [String]
      */
-    fun generateHtml(): String = runBlocking(Dispatchers.Default) {
-        val deferredOverallStatistics = async {
-            metricsProvider.getOverallStatistics().map { (name, value) -> camelCaseToWord(name) to value }.toMap()
+    fun generateHtml(): String =
+        runBlocking(Dispatchers.Default) {
+            val deferredOverallStatistics =
+                async {
+                    metricsProvider.getOverallStatistics().map { (name, value) -> camelCaseToWord(name) to value }.toMap()
+                }
+            val deferredDetailedStatistics = async { metricsProvider.getDetailedStatistics() }
+            val deferredComposablesReport = async { metricsProvider.getComposablesReport() }
+            val deferredClassesReport = async { metricsProvider.getClassesReport() }
+
+            val overallStatistics = deferredOverallStatistics.await()
+            val detailedStatistics = deferredDetailedStatistics.await()
+            val composablesReport = deferredComposablesReport.await()
+            val classesReport = deferredClassesReport.await()
+
+            return@runBlocking reportPageHtml(overallStatistics, detailedStatistics, composablesReport, classesReport)
         }
-        val deferredDetailedStatistics = async { metricsProvider.getDetailedStatistics() }
-        val deferredComposablesReport = async { metricsProvider.getComposablesReport() }
-        val deferredClassesReport = async { metricsProvider.getClassesReport() }
-
-        val overallStatistics = deferredOverallStatistics.await()
-        val detailedStatistics = deferredDetailedStatistics.await()
-        val composablesReport = deferredComposablesReport.await()
-        val classesReport = deferredClassesReport.await()
-
-        return@runBlocking reportPageHtml(overallStatistics, detailedStatistics, composablesReport, classesReport)
-    }
 
     private fun reportPageHtml(
         overallStatistics: Map<String, Long>,

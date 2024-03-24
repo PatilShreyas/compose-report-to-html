@@ -92,7 +92,6 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
                         // Re-running is necessary. In case devs deleted raw files and if task uses cache
                         // then this task will explode 💣
                         "--rerun-tasks",
-
                         // Signal for enabling report generation in `kotlinOptions{}` block.
                         "-P$KEY_ENABLE_REPORT_GEN=true",
                     )
@@ -102,25 +101,29 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
 
     private fun generateReport(outputDirectory: File) {
         // Create a report specification with application name
-        val reportSpec = ReportSpec(
-            name = reportName.get(),
-            options = ReportOptions(
-                includeStableComposables = includeStableComposables.get(),
-                includeStableClasses = includeStableClasses.get(),
-                includeClasses = includeClasses.get(),
-                showOnlyUnstableComposables = showOnlyUnstableComposables.get(),
-            ),
-        )
+        val reportSpec =
+            ReportSpec(
+                name = reportName.get(),
+                options =
+                    ReportOptions(
+                        includeStableComposables = includeStableComposables.get(),
+                        includeStableClasses = includeStableClasses.get(),
+                        includeClasses = includeClasses.get(),
+                        showOnlyUnstableComposables = showOnlyUnstableComposables.get(),
+                    ),
+            )
 
-        val rawReportProvider = ComposeCompilerRawReportProvider.FromDirectory(
-            directory = composeRawMetricsOutputDirectory.get().asFile,
-        )
+        val rawReportProvider =
+            ComposeCompilerRawReportProvider.FromDirectory(
+                directory = composeRawMetricsOutputDirectory.get().asFile,
+            )
 
         // Provide metric files to generator
-        val htmlGenerator = HtmlReportGenerator(
-            reportSpec = reportSpec,
-            metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider),
-        )
+        val htmlGenerator =
+            HtmlReportGenerator(
+                reportSpec = reportSpec,
+                metricsProvider = ComposeCompilerMetricsProvider(rawReportProvider),
+            )
 
         // Generate HTML (as String)
         val html = htmlGenerator.generateHtml()
@@ -167,9 +170,10 @@ fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): Ta
 /**
  * Returns true if currently executing task is about generating compose compiler report
  */
-fun Project.executingComposeCompilerReportGenerationGradleTask() = runCatching {
-    property(KEY_ENABLE_REPORT_GEN)
-}.getOrNull() == "true"
+fun Project.executingComposeCompilerReportGenerationGradleTask() =
+    runCatching {
+        property(KEY_ENABLE_REPORT_GEN)
+    }.getOrNull() == "true"
 
 /**
  * Returns a task name for compile<VARIANT>Kotlin with [variant]

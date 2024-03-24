@@ -45,6 +45,7 @@ import kotlinx.html.td
 import kotlinx.html.th
 import kotlinx.html.tr
 
+@Suppress("ktlint:standard:function-naming")
 fun BODY.ComposablesReport(
     includeStableComposables: Boolean,
     onlyUnstableComposables: Boolean = false,
@@ -87,66 +88,70 @@ fun BODY.ComposablesReport(
                 }
             } else {
                 br { }
-                val message = if (!includeStableComposables) {
-                    "Report for stable composables is disabled in the options"
-                } else {
-                    "No composable found without any issues"
-                }
+                val message =
+                    if (!includeStableComposables) {
+                        "Report for stable composables is disabled in the options"
+                    } else {
+                        "No composable found without any issues"
+                    }
                 EmptyContent(message)
             }
         }
     }
 }
 
-fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) = table {
-    composables.forEachIndexedFromOne { index, detail ->
-        tr {
-            td {
-                +"$index."
-            }
-            td {
-                h3("code") {
-                    if (detail.isInline) {
-                        +"inline"
-                    }
-                    span { +" fun ${detail.functionName}" }
+@Suppress("ktlint:standard:function-naming")
+fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) =
+    table {
+        composables.forEachIndexedFromOne { index, detail ->
+            tr {
+                td {
+                    +"$index."
                 }
-                h4 {
-                    span(if (detail.isSkippable) "status-success" else "status-failure") {
-                        if (detail.isSkippable) {
-                            CheckIconWithText("Skippable")
-                        } else {
-                            CrossIconWithText("Non Skippable")
+                td {
+                    h3("code") {
+                        if (detail.isInline) {
+                            +"inline"
+                        }
+                        span { +" fun ${detail.functionName}" }
+                    }
+                    h4 {
+                        span(if (detail.isSkippable) "status-success" else "status-failure") {
+                            if (detail.isSkippable) {
+                                CheckIconWithText("Skippable")
+                            } else {
+                                CrossIconWithText("Non Skippable")
+                            }
+                        }
+                        span(if (detail.isRestartable) "status-success" else "status-failure") {
+                            if (detail.isRestartable) {
+                                CheckIconWithText("Restartable")
+                            } else {
+                                CrossIconWithText("Non Restartable")
+                            }
                         }
                     }
-                    span(if (detail.isRestartable) "status-success" else "status-failure") {
-                        if (detail.isRestartable) {
-                            CheckIconWithText("Restartable")
-                        } else {
-                            CrossIconWithText("Non Restartable")
-                        }
-                    }
-                }
-                table {
-                    if (detail.params.isNotEmpty()) {
-                        tr {
-                            th { +"No." }
-                            th { +"Stability" }
-                            th { +"Parameter" }
-                            th { +"Type" }
-                        }
-                        detail.params.forEachIndexedFromOne { index, param ->
-                            tr(
-                                when (param.condition) {
-                                    Condition.STABLE -> "background-status-success"
-                                    Condition.UNSTABLE -> "background-status-failure"
-                                    Condition.MISSING -> "background-status-missing"
-                                },
-                            ) {
-                                td { +index.toString() }
-                                td { +param.condition.toString() }
-                                td("code") { +param.name }
-                                td("code") { +param.type }
+                    table {
+                        if (detail.params.isNotEmpty()) {
+                            tr {
+                                th { +"No." }
+                                th { +"Stability" }
+                                th { +"Parameter" }
+                                th { +"Type" }
+                            }
+                            detail.params.forEachIndexedFromOne { index, param ->
+                                tr(
+                                    when (param.condition) {
+                                        Condition.STABLE -> "background-status-success"
+                                        Condition.UNSTABLE -> "background-status-failure"
+                                        Condition.MISSING -> "background-status-missing"
+                                    },
+                                ) {
+                                    td { +index.toString() }
+                                    td { +param.condition.toString() }
+                                    td("code") { +param.name }
+                                    td("code") { +param.type }
+                                }
                             }
                         }
                     }
@@ -154,8 +159,8 @@ fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) = table {
             }
         }
     }
-}
 
+@Suppress("ktlint:standard:function-naming")
 fun BODY.OnlyUnstableComposables(composablesReport: ComposablesReport) {
     h3 { +"Composables with issues (Restartable but Not Skippable)" }
     ComposablesReport(

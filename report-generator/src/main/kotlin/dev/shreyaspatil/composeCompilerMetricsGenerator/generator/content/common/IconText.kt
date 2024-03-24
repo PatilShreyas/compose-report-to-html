@@ -28,6 +28,7 @@ import kotlinx.html.FlowOrPhrasingContent
 import kotlinx.html.SPAN
 import kotlinx.html.span
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowOrPhrasingContent.IconWithText(
     icon: SPAN.() -> Unit,
     text: String,
@@ -41,6 +42,7 @@ fun FlowOrPhrasingContent.IconWithText(
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowOrPhrasingContent.CrossIconWithText(
     text: String,
     fontSize: String = "18px",
@@ -54,6 +56,7 @@ fun FlowOrPhrasingContent.CrossIconWithText(
     )
 }
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowOrPhrasingContent.CheckIconWithText(
     text: String,
     fontSize: String = "18px",

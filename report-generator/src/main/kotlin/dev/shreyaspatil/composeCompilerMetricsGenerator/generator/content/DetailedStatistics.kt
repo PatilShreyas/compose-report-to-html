@@ -34,6 +34,7 @@ import kotlinx.html.td
 import kotlinx.html.th
 import kotlinx.html.tr
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowContent.DetailedStatistics(detailedStatistics: DetailedStatistics) {
     if (detailedStatistics.items.isEmpty()) {
         EmptyContent("No Detailed Statistics")

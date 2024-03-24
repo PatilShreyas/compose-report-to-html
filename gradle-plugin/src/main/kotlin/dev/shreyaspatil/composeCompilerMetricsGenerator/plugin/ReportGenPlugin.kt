@@ -38,9 +38,10 @@ class ReportGenPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val reportExt = ComposeCompilerReportExtension.create(target)
 
-        val android = runCatching {
-            target.extensions.getByType(AndroidComponentsExtension::class.java)
-        }.getOrElse { error("This plugin is only applicable for Android modules") }
+        val android =
+            runCatching {
+                target.extensions.getByType(AndroidComponentsExtension::class.java)
+            }.getOrElse { error("This plugin is only applicable for Android modules") }
 
         val commonExtension = runCatching { target.extensions.getByType(CommonExtension::class.java) }.getOrNull()
 
@@ -77,16 +78,18 @@ class ReportGenPlugin : Plugin<Project> {
         val reportExtension = project.extensions.getByType<ComposeCompilerReportExtension>()
         val outputPath = reportExtension.composeRawMetricsOutputDirectory.absolutePath
         if (reportExtension.enableReport.get()) {
-            freeCompilerArgs += listOf(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath",
-            )
+            freeCompilerArgs +=
+                listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath",
+                )
         }
         if (reportExtension.enableMetrics.get()) {
-            freeCompilerArgs += listOf(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath",
-            )
+            freeCompilerArgs +=
+                listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath",
+                )
         }
     }
 }

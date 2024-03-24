@@ -28,6 +28,7 @@ import kotlinx.html.a
 import kotlinx.html.footer
 import kotlinx.html.i
 
+@Suppress("ktlint:standard:function-naming")
 fun BODY.Footer() {
     footer {
         i {

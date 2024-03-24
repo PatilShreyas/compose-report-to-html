@@ -36,6 +36,7 @@ import kotlinx.html.br
 import kotlinx.html.i
 import kotlinx.html.p
 
+@Suppress("ktlint:standard:function-naming")
 fun FlowContent.ErrorReports(errors: List<ParsingException>) {
     if (errors.isNotEmpty()) {
         i {

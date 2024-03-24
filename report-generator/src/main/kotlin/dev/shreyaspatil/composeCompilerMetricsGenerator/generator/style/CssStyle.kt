@@ -26,6 +26,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator.style
 import kotlinx.html.HTMLTag
 import kotlinx.html.impl.DelegatingMap
 
+@Suppress("ktlint:standard:property-naming")
 object StyleProps {
     const val Color = "color"
     const val BackgroundColor = "background-color"
@@ -105,17 +106,21 @@ fun buildStyle(
     padding: String? = null,
     alignItems: String? = null,
     display: String? = null,
-): String = buildString {
-    color?.let { append(styleProperty(StyleProps.Color, color)) }
-    backgroundColor?.let { append(styleProperty(StyleProps.BackgroundColor, backgroundColor)) }
-    fontSize?.let { append(styleProperty(StyleProps.FontSize, fontSize)) }
-    textAlign?.let { append(styleProperty(StyleProps.TextAlign, textAlign)) }
-    width?.let { append(styleProperty(StyleProps.Width, width)) }
-    height?.let { append(styleProperty(StyleProps.Height, height)) }
-    margin?.let { append(styleProperty(StyleProps.Margin, margin)) }
-    padding?.let { append(styleProperty(StyleProps.Padding, padding)) }
-    alignItems?.let { append(styleProperty(StyleProps.AlignItems, it)) }
-    display?.let { append(styleProperty(StyleProps.Display, it)) }
-}
+): String =
+    buildString {
+        color?.let { append(styleProperty(StyleProps.Color, color)) }
+        backgroundColor?.let { append(styleProperty(StyleProps.BackgroundColor, backgroundColor)) }
+        fontSize?.let { append(styleProperty(StyleProps.FontSize, fontSize)) }
+        textAlign?.let { append(styleProperty(StyleProps.TextAlign, textAlign)) }
+        width?.let { append(styleProperty(StyleProps.Width, width)) }
+        height?.let { append(styleProperty(StyleProps.Height, height)) }
+        margin?.let { append(styleProperty(StyleProps.Margin, margin)) }
+        padding?.let { append(styleProperty(StyleProps.Padding, padding)) }
+        alignItems?.let { append(styleProperty(StyleProps.AlignItems, it)) }
+        display?.let { append(styleProperty(StyleProps.Display, it)) }
+    }
 
-fun styleProperty(property: String, value: String) = "$property:$value;"
+fun styleProperty(
+    property: String,
+    value: String,
+) = "$property:$value;"

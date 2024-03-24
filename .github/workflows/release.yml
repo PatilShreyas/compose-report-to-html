@@ -40,20 +40,7 @@ jobs:
         run: ./gradlew build --stacktrace
 
       - name: Publish Library on Maven Central
-        run: |
-          echo "Publishing Core🚀"
-          ./gradlew :core:publish
-          echo "Published Core✅"
-          echo "Releasing Core...🚀"
-          ./gradlew closeAndReleaseRepository
-          echo "Released Core✅"
-          
-          echo "Publishing Report Generator🚀"
-          ./gradlew :report-generator:publish
-          echo "Published Report Generator✅"
-          echo "Releasing Report Generator...🚀"
-          ./gradlew closeAndReleaseRepository
-          echo "Released Report Generator✅"
+        run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
         env:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSWORD }}

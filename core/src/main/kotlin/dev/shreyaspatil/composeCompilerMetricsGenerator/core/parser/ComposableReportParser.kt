@@ -42,15 +42,16 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
     override fun parse(content: String): ComposablesReport {
         val errors = mutableListOf<ParsingException>()
 
-        val composables = getComposableFunctions(content)
-            .mapNotNull { function ->
-                runCatching {
-                    parseComposableDetail(function)
-                }.onFailure { cause ->
-                    errors.add(ParsingException(function, cause))
-                }.getOrNull()
-            }
-            .toList()
+        val composables =
+            getComposableFunctions(content)
+                .mapNotNull { function ->
+                    runCatching {
+                        parseComposableDetail(function)
+                    }.onFailure { cause ->
+                        errors.add(ParsingException(function, cause))
+                    }.getOrNull()
+                }
+                .toList()
 
         return ComposablesReport(composables, errors.toList())
     }
@@ -58,13 +59,14 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
     internal fun getComposableFunctions(content: String): List<String> {
         val lines = content.split("\n").filter { it.isNotBlank() }
 
-        val composableFunIndexes = lines.mapIndexedNotNull { index, s ->
-            if (REGEX_COMPOSABLE_FUNCTION.containsMatchIn(s)) {
-                index
-            } else {
-                null
+        val composableFunIndexes =
+            lines.mapIndexedNotNull { index, s ->
+                if (REGEX_COMPOSABLE_FUNCTION.containsMatchIn(s)) {
+                    index
+                } else {
+                    null
+                }
             }
-        }
 
         return composableFunIndexes.mapIndexed { index: Int, item: Int ->
             lines.subList(item, composableFunIndexes.getOrElse(index + 1) { lines.size }).joinToString(separator = "\n")
@@ -84,8 +86,9 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
         val isRestartable = functionDetail.contains("restartable")
         val isSkippable = functionDetail.contains("skippable")
 
-        val params = REGEX_COMPOSABLE_PARAMETERS.findAll(function).map { it.groupValues }.filter { it.isNotEmpty() }
-            .map { ComposableDetail.Parameter(ConditionMapper.from(it[1]), it[2]) }.toList()
+        val params =
+            REGEX_COMPOSABLE_PARAMETERS.findAll(function).map { it.groupValues }.filter { it.isNotEmpty() }
+                .map { ComposableDetail.Parameter(ConditionMapper.from(it[1]), it[2]) }.toList()
 
         return ComposableDetail(
             functionName = functionName,
