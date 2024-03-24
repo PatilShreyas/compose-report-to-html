@@ -38,4 +38,5 @@ data class ReportOptions(
     val includeStableComposables: Boolean = true,
     val includeStableClasses: Boolean = true,
     val includeClasses: Boolean = true,
+    val showOnlyUnstableComposables: Boolean = false
 )
