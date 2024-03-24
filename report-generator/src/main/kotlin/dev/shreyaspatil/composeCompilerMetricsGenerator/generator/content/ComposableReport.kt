@@ -66,7 +66,8 @@ fun BODY.ComposablesReport(
                         setStyle(backgroundColor = Colors.RED_DARK, fontSize = "18px")
                     },
                 ) {
-
+                    setStyle(backgroundColor = Colors.PINK_LIGHT)
+                    ComposablesReport(composablesReport.restartableButNotSkippableComposables)
                 }
             } else {
                 EmptyContent("No composable found with issues 😁")
