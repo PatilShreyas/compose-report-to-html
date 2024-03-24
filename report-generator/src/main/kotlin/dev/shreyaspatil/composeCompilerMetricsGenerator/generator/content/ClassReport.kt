@@ -71,7 +71,7 @@ fun FlowContent.ClassesReport(
                     EmptyContent("No Unstable classes found 😁")
                 }
 
-                if (report.stableClasses.isNotEmpty() && !includeStableClasses) {
+                if (report.stableClasses.isNotEmpty() && includeStableClasses) {
                     CollapsibleContent(
                         summary = "Stable Classes",
                         summaryAttr = {
