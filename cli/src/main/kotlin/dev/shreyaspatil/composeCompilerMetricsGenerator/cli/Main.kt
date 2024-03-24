@@ -50,6 +50,7 @@ fun main(args: Array<String>) {
             includeStableComposables = arguments.includeStableComposables,
             includeStableClasses = arguments.includeStableClasses,
             includeClasses = arguments.includeClasses,
+            showOnlyUnstableComposables = arguments.showOnlyUnstableComposables
         ),
     )
     val rawReportProvider = arguments.getRawReportProvider()
@@ -150,6 +151,11 @@ class CliArguments(args: Array<String>, private val path: Path) {
         ArgType.Boolean,
         description = "Whether to include all the classes in the report",
     ).default(true)
+
+    val showOnlyUnstableComposables by parser.option(
+        ArgType.Boolean,
+        description = "Whether to ONLY include unstable composables in the report",
+    ).default(false)
 
     init {
         parser.parse(args)
