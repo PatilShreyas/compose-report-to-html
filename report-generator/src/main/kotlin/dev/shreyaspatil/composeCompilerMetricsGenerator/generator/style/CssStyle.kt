@@ -61,7 +61,7 @@ fun HTMLTag.setStyle(
         margin = margin,
         padding = padding,
         alignItems = alignItems,
-        display = display
+        display = display,
     )
 }
 
@@ -89,7 +89,7 @@ fun DelegatingMap.setStyle(
             margin = margin,
             padding = padding,
             alignItems = alignItems,
-            display = display
+            display = display,
         ),
     )
 }
@@ -100,7 +100,7 @@ fun buildStyle(
     fontSize: String? = null,
     textAlign: String? = null,
     width: String? = null,
-    height: String?=  null,
+    height: String? = null,
     margin: String? = null,
     padding: String? = null,
     alignItems: String? = null,

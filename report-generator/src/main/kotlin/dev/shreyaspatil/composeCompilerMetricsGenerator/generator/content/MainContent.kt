@@ -61,7 +61,7 @@ fun HTML.MainContent(
             hr { }
             ComposablesReport(
                 includeStableComposables = options.includeStableComposables,
-                composablesReport = composablesReport
+                composablesReport = composablesReport,
             )
             hr { }
             if (options.includeClasses) {
