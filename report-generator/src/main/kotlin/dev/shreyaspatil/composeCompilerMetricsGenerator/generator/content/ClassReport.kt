@@ -26,7 +26,9 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.ClassDetail
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.ClassesReport
+import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.CheckIconWithText
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.CollapsibleContent
+import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.CrossIconWithText
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.EmptyContent
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.style.Colors
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.style.setStyle
@@ -68,10 +70,10 @@ fun FlowContent.ClassesReport(
                         ClassesReport(report.unstableClasses)
                     }
                 } else {
-                    EmptyContent("No Unstable classes found 😁")
+                    EmptyContent("No Unstable classes found")
                 }
 
-                if (report.stableClasses.isNotEmpty() && !includeStableClasses) {
+                if (report.stableClasses.isNotEmpty() && includeStableClasses) {
                     CollapsibleContent(
                         summary = "Stable Classes",
                         summaryAttr = {
@@ -108,8 +110,8 @@ fun FlowContent.ClassesReport(classes: List<ClassDetail>) = table {
                 h3 {
                     span(statusCssClass(detail.stability === Condition.STABLE)) {
                         when (detail.stability) {
-                            Condition.STABLE -> +"✅ Stable"
-                            Condition.UNSTABLE -> +"❌ Unstable"
+                            Condition.STABLE -> CheckIconWithText("Stable")
+                            Condition.UNSTABLE -> CrossIconWithText("Unstable")
                             else -> +"Missing"
                         }
                     }

@@ -32,8 +32,11 @@ object StyleProps {
     const val FontSize = "font-size"
     const val TextAlign = "text-align"
     const val Width = "width"
+    const val Height = "height"
     const val Margin = "margin"
     const val Padding = "padding"
+    const val AlignItems = "align-items"
+    const val Display = "Display"
 }
 
 fun HTMLTag.setStyle(
@@ -42,8 +45,11 @@ fun HTMLTag.setStyle(
     fontSize: String? = null,
     textAlign: String? = null,
     width: String? = null,
+    height: String? = null,
     margin: String? = null,
     padding: String? = null,
+    alignItems: String? = null,
+    display: String? = null,
 ) {
     attributes.setStyle(
         color = color,
@@ -51,8 +57,11 @@ fun HTMLTag.setStyle(
         fontSize = fontSize,
         textAlign = textAlign,
         width = width,
+        height = height,
         margin = margin,
         padding = padding,
+        alignItems = alignItems,
+        display = display,
     )
 }
 
@@ -62,8 +71,11 @@ fun DelegatingMap.setStyle(
     fontSize: String? = null,
     textAlign: String? = null,
     width: String? = null,
+    height: String? = null,
     margin: String? = null,
     padding: String? = null,
+    alignItems: String? = null,
+    display: String? = null,
 ) {
     set(
         "style",
@@ -73,8 +85,11 @@ fun DelegatingMap.setStyle(
             fontSize = fontSize,
             textAlign = textAlign,
             width = width,
+            height = height,
             margin = margin,
             padding = padding,
+            alignItems = alignItems,
+            display = display,
         ),
     )
 }
@@ -85,16 +100,22 @@ fun buildStyle(
     fontSize: String? = null,
     textAlign: String? = null,
     width: String? = null,
+    height: String? = null,
     margin: String? = null,
     padding: String? = null,
+    alignItems: String? = null,
+    display: String? = null,
 ): String = buildString {
     color?.let { append(styleProperty(StyleProps.Color, color)) }
     backgroundColor?.let { append(styleProperty(StyleProps.BackgroundColor, backgroundColor)) }
     fontSize?.let { append(styleProperty(StyleProps.FontSize, fontSize)) }
     textAlign?.let { append(styleProperty(StyleProps.TextAlign, textAlign)) }
     width?.let { append(styleProperty(StyleProps.Width, width)) }
+    height?.let { append(styleProperty(StyleProps.Height, height)) }
     margin?.let { append(styleProperty(StyleProps.Margin, margin)) }
     padding?.let { append(styleProperty(StyleProps.Padding, padding)) }
+    alignItems?.let { append(styleProperty(StyleProps.AlignItems, it)) }
+    display?.let { append(styleProperty(StyleProps.Display, it)) }
 }
 
 fun styleProperty(property: String, value: String) = "$property:$value;"
