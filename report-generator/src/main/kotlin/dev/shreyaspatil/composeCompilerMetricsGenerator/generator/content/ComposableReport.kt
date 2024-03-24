@@ -26,7 +26,9 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposableDetail
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposablesReport
+import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.CheckIconWithText
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.CollapsibleContent
+import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.CrossIconWithText
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.content.common.EmptyContent
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.style.Colors
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.style.setStyle
@@ -112,16 +114,16 @@ fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) = table {
                 h4 {
                     span(if (detail.isSkippable) "status-success" else "status-failure") {
                         if (detail.isSkippable) {
-                            +"✅ Skippable"
+                            CheckIconWithText("Skippable")
                         } else {
-                            +"❌ Non Skippable"
+                            CrossIconWithText("Non Skippable")
                         }
                     }
                     span(if (detail.isRestartable) "status-success" else "status-failure") {
                         if (detail.isRestartable) {
-                            +" ✅ Restartable"
+                            CheckIconWithText("Restartable")
                         } else {
-                            +" ❌ Non Restartable"
+                            CrossIconWithText("Non Restartable")
                         }
                     }
                 }
