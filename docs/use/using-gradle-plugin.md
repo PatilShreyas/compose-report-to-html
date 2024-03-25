@@ -19,7 +19,7 @@ Apply the plugin to the module in which _**compose is enabled**_.
 
     ```groovy title="build.gradle"
     plugins {
-      id "dev.shreyaspatil.compose-compiler-report-generator" version "1.1.0"
+      id "dev.shreyaspatil.compose-compiler-report-generator" version "1.2.0"
     }
     ```
 
@@ -27,7 +27,7 @@ Apply the plugin to the module in which _**compose is enabled**_.
 
     ```kotlin title="build.gradle.kts"
     plugins {
-      id("dev.shreyaspatil.compose-compiler-report-generator") version "1.1.0"
+      id("dev.shreyaspatil.compose-compiler-report-generator") version "1.2.0"
     }    
     ```
 
@@ -45,7 +45,7 @@ Add this to top project level `build.gradle`
         }
       }
       dependencies {
-        classpath "dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.1.0"
+        classpath "dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.2.0"
       }
     }
     ```
@@ -66,7 +66,7 @@ Add this to top project level `build.gradle`
         }
       }
       dependencies {
-        classpath("dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.1.0")
+        classpath("dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.2.0")
       }
     }
     ```
@@ -133,6 +133,9 @@ If you have to configure plugin parameters manually (which is completely optiona
 
         // Whether to include the ALL classes in the final report or not.
         includeClasses = true/false // Default: true
+
+        // ONLY show unstable composables in the report without stats and classes
+        showOnlyUnstableComposables = true/false // Default: false
     }
     ```
 
@@ -160,5 +163,8 @@ If you have to configure plugin parameters manually (which is completely optiona
 
         // Whether to include the ALL classes in the final report or not.
         includeClasses.set(true/false) // Default: true
+
+        // ONLY show unstable composables in the report without stats and classes
+        showOnlyUnstableComposables = true/false // Default: false
     }
     ```

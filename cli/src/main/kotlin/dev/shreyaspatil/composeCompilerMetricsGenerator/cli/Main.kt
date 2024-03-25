@@ -222,5 +222,5 @@ fun printHeader(header: String) =
     )
 
 object Constants {
-    const val VERSION = "v1.1.0"
+    const val VERSION = "v1.2.0"
 }
