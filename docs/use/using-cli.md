@@ -68,6 +68,7 @@ Run the command to know the usage of CLI
         --includeStableComposables [true] -> Whether to include stable Composable functions in the report
         --includeStableClasses [true] -> Whether to include stable classes in the report
         --includeClasses [true] -> Whether to include all the classes in the report
+        --showOnlyUnstableComposables [false] -> Whether to ONLY include unstable composables in the report
         --help, -h -> Usage info
     ```
 

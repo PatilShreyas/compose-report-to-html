@@ -133,6 +133,9 @@ If you have to configure plugin parameters manually (which is completely optiona
 
         // Whether to include the ALL classes in the final report or not.
         includeClasses = true/false // Default: true
+
+        // ONLY show unstable composables in the report without stats and classes
+        showOnlyUnstableComposables = true/false // Default: false
     }
     ```
 
@@ -160,5 +163,8 @@ If you have to configure plugin parameters manually (which is completely optiona
 
         // Whether to include the ALL classes in the final report or not.
         includeClasses.set(true/false) // Default: true
+
+        // ONLY show unstable composables in the report without stats and classes
+        showOnlyUnstableComposables = true/false // Default: false
     }
     ```
