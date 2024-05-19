@@ -41,10 +41,20 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.tooling.GradleConnector
 import java.io.File
 import java.io.FileNotFoundException
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 
 const val KEY_ENABLE_REPORT_GEN = "dev.shreyaspatil.composeCompiler.reportGen.enable"
 
+@CacheableTask
 abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
+
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val projectDirectory: DirectoryProperty
+
     @get:Input
     abstract val compileKotlinTasks: Property<String>
 
@@ -80,7 +90,7 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     }
 
     private fun generateRawMetricsAndReport() {
-        GradleConnector.newConnector().forProjectDirectory(project.layout.projectDirectory.asFile)
+        GradleConnector.newConnector().forProjectDirectory(projectDirectory.get().asFile)
             .connect()
             .use {
                 it.newBuild()
@@ -153,6 +163,7 @@ fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): Ta
     val reportExtension = ComposeCompilerReportExtension.get(project)
 
     return tasks.register(taskName, ComposeCompilerReportGenerateTask::class.java) {
+        projectDirectory.set(layout.projectDirectory)
         compileKotlinTasks.set(compileKotlinTaskName)
         reportName.set(reportExtension.name)
         composeRawMetricsOutputDirectory.set(reportExtension.composeRawMetricsOutputDirectory)
