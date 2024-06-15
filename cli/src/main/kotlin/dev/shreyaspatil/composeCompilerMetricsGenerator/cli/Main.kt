@@ -34,6 +34,7 @@ import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.default
 import kotlinx.cli.required
+import okio.Path.Companion.toOkioPath
 import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -205,10 +206,10 @@ class CliArguments(args: Array<String>, private val path: Path) {
     }
 
     private fun getRawReportProviderFromDirectory(directory: String): ComposeCompilerRawReportProvider.FromDirectory {
-        return ComposeCompilerRawReportProvider.FromDirectory(File(Paths.get(directory).toAbsolutePath().toString()))
+        return ComposeCompilerRawReportProvider.FromDirectory(File(Paths.get(directory).toAbsolutePath().toString()).toOkioPath())
     }
 
-    private fun files(filenames: String): List<File> {
+    private fun files(filenames: String): List<okio.Path> {
         return filenames.split(",").map { ensureFileExists(it) { "File not exist: $it" } }
     }
 }
