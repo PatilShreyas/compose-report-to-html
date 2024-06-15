@@ -158,12 +158,14 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     }
 }
 
-fun Project.registerComposeCompilerReportGenTaskForTarget(target: KotlinTarget, buildType: String? = null): TaskProvider<ComposeCompilerReportGenerateTask> {
+fun Project.registerComposeCompilerReportGenTaskForTarget(
+    target: KotlinTarget,
+    buildType: String? = null,
+): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = target.name + (buildType ?: "") + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromTarget(target, buildType)
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName)
 }
-
 
 fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = variant.name + "ComposeCompilerHtmlReport"
@@ -171,7 +173,10 @@ fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): Ta
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName)
 }
 
-fun Project.registerComposeCompilerReportGenTask(taskName: String, compileKotlinTaskName: String): TaskProvider<ComposeCompilerReportGenerateTask> {
+fun Project.registerComposeCompilerReportGenTask(
+    taskName: String,
+    compileKotlinTaskName: String,
+): TaskProvider<ComposeCompilerReportGenerateTask> {
     val reportExtension = ComposeCompilerReportExtension.get(project)
 
     return tasks.register(taskName, ComposeCompilerReportGenerateTask::class.java) {
@@ -209,8 +214,11 @@ fun compileKotlinTaskNameFromVariant(variant: Variant): String {
 /**
  * Returns a task name for compile<BUILD_TYPE>Kotlin<TARGET> with [target]
  */
-fun compileKotlinTaskNameFromTarget(target: KotlinTarget, buildType: String?): String {
+fun compileKotlinTaskNameFromTarget(
+    target: KotlinTarget,
+    buildType: String?,
+): String {
     val targetName = target.name.let { it[0].toUpperCase() + it.substring(1) }
     val buildTypeName = buildType?.let { it[0].toUpperCase() + it.substring(1) } ?: ""
-    return "compile${buildTypeName}Kotlin${targetName}"
+    return "compile${buildTypeName}Kotlin$targetName"
 }

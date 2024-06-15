@@ -128,7 +128,10 @@ class ReportGenPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.configureKotlinAndroidComposeCompilerReports(androidExt: AndroidComponentsExtension<*, *, *>, checkForComposeFlag: Boolean) {
+    private fun Project.configureKotlinAndroidComposeCompilerReports(
+        androidExt: AndroidComponentsExtension<*, *, *>,
+        checkForComposeFlag: Boolean,
+    ) {
         val commonExtension = runCatching { extensions.getByType(CommonExtension::class.java) }.getOrNull()
 
         androidExt.onVariants { variant ->
