@@ -4,17 +4,14 @@ val VERSION_NAME: String by project
 val GROUP: String by project
 
 plugins {
-    kotlin("jvm") version libs.versions.kotlin.get()
+    kotlin("jvm") version libs.versions.kotlin.get() apply false
+    kotlin("multiplatform") version libs.versions.kotlin.get() apply false
     alias(libs.plugins.spotless)
     alias(libs.plugins.mavenPublish) apply false
 }
 
 group = GROUP
 version = VERSION_NAME
-
-repositories {
-    mavenCentral()
-}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
