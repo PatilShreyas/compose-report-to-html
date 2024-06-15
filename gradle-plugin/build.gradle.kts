@@ -9,13 +9,6 @@ plugins {
     alias(libs.plugins.gradle.plugin.publish)
 }
 
-repositories {
-    mavenCentral()
-    google()
-    gradlePluginPortal()
-    maven(url = "https://plugins.gradle.org/m2/")
-}
-
 group = GROUP
 version = VERSION_NAME
 
@@ -24,9 +17,11 @@ dependencies {
     compileOnly(kotlin("stdlib"))
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.android.gradle.plugin)
+    compileOnly(libs.compose.multiplatform.gradle.plugin)
 
     implementation(project(":core"))
     implementation(project(":report-generator"))
+    implementation(libs.okio)
 }
 
 tasks.getByName<Test>("test") {
