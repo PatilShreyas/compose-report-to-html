@@ -23,12 +23,31 @@
  */
 package dev.shreyaspatil.composeCompilerMetricsGenerator.core
 
+import okio.FileSystem
+import okio.Path
+
 /**
  * Provides content of a composable report and metrics
  */
 class ComposeMetricsContentProvider(private val fileProvider: ComposeCompilerRawReportProvider) {
-    val briefStatisticsContents: List<String> get() = fileProvider.briefStatisticsJsonFiles.map { it.readText() }
+    val briefStatisticsContents: List<String> get() = fileProvider.briefStatisticsJsonFiles.map { it.readUtf8() }
     val detailedStatisticsCsvRows: List<String> get() = fileProvider.detailedStatisticsCsvFiles.flatMap { it.readLines() }
-    val composablesReportContents: String get() = fileProvider.composableReportFiles.joinToString(separator = "\n") { it.readText() }
-    val classesReportContents: String get() = fileProvider.classesReportFiles.joinToString(separator = "\n") { it.readText() }
+    val composablesReportContents: String get() = fileProvider.composableReportFiles.joinToString(separator = "\n") { it.readUtf8() }
+    val classesReportContents: String get() = fileProvider.classesReportFiles.joinToString(separator = "\n") { it.readUtf8() }
+    private val fileSystem = FileSystem.SYSTEM
+
+    private fun Path.readUtf8(): String {
+        return fileSystem.read(this) { readUtf8() }
+    }
+
+    private fun Path.readLines(): List<String> {
+        val result = mutableListOf<String>()
+        fileSystem.read(this) {
+            while (true) {
+                val line = readUtf8Line() ?: break
+                result += line
+            }
+        }
+        return result
+    }
 }
