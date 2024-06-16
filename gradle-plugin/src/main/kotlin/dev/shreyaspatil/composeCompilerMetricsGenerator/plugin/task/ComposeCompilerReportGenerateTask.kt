@@ -164,18 +164,18 @@ fun Project.registerComposeCompilerReportGenTaskForTarget(
 ): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = target.name + (buildType ?: "") + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromTarget(target, buildType)
-    val descSuffix = buildString {
-        append("'${target.name}' target")
-        if (buildType != null)
-            append(" '$buildType' variant")
-        append(" in multiplatform project")
-    }
+    val descSuffix =
+        buildString {
+            append("'${target.name}' target")
+            if (buildType != null) {
+                append(" '$buildType' variant")
+            }
+            append(" in multiplatform project")
+        }
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
-fun Project.registerComposeCompilerReportGenTaskForJvmProject(
-    projectName: String,
-): TaskProvider<ComposeCompilerReportGenerateTask> {
+fun Project.registerComposeCompilerReportGenTaskForJvmProject(projectName: String): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = projectName + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = "compileKotlin"
     val descSuffix = "'Jvm/Desktop' Project"
