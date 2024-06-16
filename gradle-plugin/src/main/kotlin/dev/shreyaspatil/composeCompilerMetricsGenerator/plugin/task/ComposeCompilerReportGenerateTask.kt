@@ -167,6 +167,14 @@ fun Project.registerComposeCompilerReportGenTaskForTarget(
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName)
 }
 
+fun Project.registerComposeCompilerReportGenTaskForJvmProject(
+    projectName: String,
+): TaskProvider<ComposeCompilerReportGenerateTask> {
+    val taskName = projectName + "ComposeCompilerHtmlReport"
+    val compileKotlinTaskName = "compileKotlin"
+    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName)
+}
+
 fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = variant.name + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromVariant(variant)

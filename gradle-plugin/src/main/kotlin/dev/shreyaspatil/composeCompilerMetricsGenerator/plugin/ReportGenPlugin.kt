@@ -26,6 +26,7 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.variant.AndroidComponentsExtension
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.executingComposeCompilerReportGenerationGradleTask
+import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForJvmProject
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForTarget
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForVariant
 import org.gradle.api.Plugin
@@ -81,7 +82,7 @@ class ReportGenPlugin : Plugin<Project> {
 
     private fun Project.configureKotlinJvmComposeCompilerReports(jvmExt: KotlinJvmProjectExtension) {
         // Create gradle tasks for generating report
-        registerComposeCompilerReportGenTaskForTarget(jvmExt.target)
+        registerComposeCompilerReportGenTaskForJvmProject(jvmExt.target.project.name)
 
         afterEvaluate {
             // When this method returns true it means gradle task for generating report is executing otherwise
@@ -100,15 +101,16 @@ class ReportGenPlugin : Plugin<Project> {
     }
 
     private fun Project.configureKotlinMultiplatformComposeCompilerReports(multiplatformExt: KotlinMultiplatformExtension) {
-        val kotlinTargets = multiplatformExt.targets.filter { it.name != "metadata" }
         // Create gradle tasks for generating report
-        kotlinTargets.forEach { target ->
-            if (target.name == "android") {
+        multiplatformExt.targets.configureEach {
+            if (this.name == "metadata") return@configureEach
+
+            if (this.name == "android") {
                 // register a task for each build type
-                registerComposeCompilerReportGenTaskForTarget(target, buildType = "Debug")
-                registerComposeCompilerReportGenTaskForTarget(target, buildType = "Release")
+                registerComposeCompilerReportGenTaskForTarget(this, buildType = "Debug")
+                registerComposeCompilerReportGenTaskForTarget(this, buildType = "Release")
             } else {
-                registerComposeCompilerReportGenTaskForTarget(target)
+                registerComposeCompilerReportGenTaskForTarget(this)
             }
         }
 
