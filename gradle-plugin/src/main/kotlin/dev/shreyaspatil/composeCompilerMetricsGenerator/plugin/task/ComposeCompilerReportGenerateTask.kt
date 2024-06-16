@@ -164,7 +164,13 @@ fun Project.registerComposeCompilerReportGenTaskForTarget(
 ): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = target.name + (buildType ?: "") + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromTarget(target, buildType)
-    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName)
+    val descSuffix = buildString {
+        append("'${target.name}' target")
+        if (buildType != null)
+            append(" '$buildType' variant")
+        append(" in multiplatform project")
+    }
+    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
 fun Project.registerComposeCompilerReportGenTaskForJvmProject(
@@ -172,18 +178,21 @@ fun Project.registerComposeCompilerReportGenTaskForJvmProject(
 ): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = projectName + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = "compileKotlin"
-    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName)
+    val descSuffix = "'Jvm/Desktop' Project"
+    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
 fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = variant.name + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromVariant(variant)
-    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName)
+    val descSuffix = "'${variant.name}' variant in android project"
+    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
 fun Project.registerComposeCompilerReportGenTask(
     taskName: String,
     compileKotlinTaskName: String,
+    descSuffix: String,
 ): TaskProvider<ComposeCompilerReportGenerateTask> {
     val reportExtension = ComposeCompilerReportExtension.get(project)
 
@@ -199,7 +208,7 @@ fun Project.registerComposeCompilerReportGenTask(
         showOnlyUnstableComposables.set(reportExtension.showOnlyUnstableComposables)
 
         group = "compose compiler report"
-        description = "Generate Compose Compiler Metrics and Report"
+        description = "Generate Compose Compiler Metrics and Report for $descSuffix"
     }
 }
 
