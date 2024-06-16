@@ -70,12 +70,12 @@ class ReportGenPlugin : Plugin<Project> {
                         target.configureKotlinMultiplatformComposeCompilerReports(multiplatform)
                     }
                     android != null -> { // if kotlin android is applied
-                        target.configureKotlinAndroidComposeCompilerReports(android, checkForComposeFlag = false)
+                        target.configureKotlinAndroidComposeCompilerReports(android)
                     }
                 }
             }
             android != null -> {
-                target.configureKotlinAndroidComposeCompilerReports(android, checkForComposeFlag = true)
+                target.configureKotlinAndroidComposeCompilerReports(android)
             }
         }
     }
@@ -132,7 +132,6 @@ class ReportGenPlugin : Plugin<Project> {
 
     private fun Project.configureKotlinAndroidComposeCompilerReports(
         androidExt: AndroidComponentsExtension<*, *, *>,
-        checkForComposeFlag: Boolean,
     ) {
         val commonExtension = runCatching { extensions.getByType(CommonExtension::class.java) }.getOrNull()
 
@@ -142,12 +141,10 @@ class ReportGenPlugin : Plugin<Project> {
         }
 
         afterEvaluate {
-            if (checkForComposeFlag) {
-                val isComposeEnabled = commonExtension?.buildFeatures?.compose
+            val isComposeEnabled = commonExtension?.buildFeatures?.compose
 
-                if (isComposeEnabled != true) {
-                    error("Jetpack Compose is not found enabled in this module '$name'")
-                }
+            if (isComposeEnabled != true) {
+                error("Jetpack Compose is not found enabled in this module '$name'")
             }
 
             // When this method returns true it means gradle task for generating report is executing otherwise
