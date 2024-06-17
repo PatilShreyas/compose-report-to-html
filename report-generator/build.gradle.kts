@@ -1,20 +1,15 @@
 plugins {
-    kotlin("multiplatform")
+    kotlin("jvm")
     id(libs.plugins.mavenPublish.get().pluginId)
 }
+repositories {
+    mavenCentral()
+}
 
-kotlin {
-    applyDefaultHierarchyTemplate()
+dependencies {
+    implementation(project(":core"))
+    implementation(kotlin("stdlib"))
 
-    jvm()
-
-    sourceSets {
-        commonMain.dependencies {
-            implementation(project(":core"))
-            implementation(kotlin("stdlib"))
-
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.html.jvm)
-        }
-    }
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.html.jvm)
 }
