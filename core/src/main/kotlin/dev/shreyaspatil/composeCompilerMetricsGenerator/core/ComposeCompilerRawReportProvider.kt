@@ -26,25 +26,25 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.core
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.file.ReportAndMetricsFileFinder
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils.ensureDirectory
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils.ensureFileExists
-import okio.Path
+import java.io.File
 
 /**
  * Provide files of compose compiler metrics and reports
  */
 sealed interface ComposeCompilerRawReportProvider {
-    val briefStatisticsJsonFiles: List<Path>
-    val detailedStatisticsCsvFiles: List<Path>
-    val composableReportFiles: List<Path>
-    val classesReportFiles: List<Path>
+    val briefStatisticsJsonFiles: List<File>
+    val detailedStatisticsCsvFiles: List<File>
+    val composableReportFiles: List<File>
+    val classesReportFiles: List<File>
 
     /**
      * Provides report from individual files
      */
     class FromIndividualFiles(
-        override val briefStatisticsJsonFiles: List<Path>,
-        override val detailedStatisticsCsvFiles: List<Path>,
-        override val composableReportFiles: List<Path>,
-        override val classesReportFiles: List<Path>,
+        override val briefStatisticsJsonFiles: List<File>,
+        override val detailedStatisticsCsvFiles: List<File>,
+        override val composableReportFiles: List<File>,
+        override val classesReportFiles: List<File>,
     ) : ComposeCompilerRawReportProvider {
         init {
             validateComposeCompilerRawReportProvider()
@@ -54,13 +54,13 @@ sealed interface ComposeCompilerRawReportProvider {
     /**
      * Searches for files in the given [directory] and provides report and metric files found in that directory.
      */
-    class FromDirectory(directory: Path) : ComposeCompilerRawReportProvider {
+    class FromDirectory(directory: File) : ComposeCompilerRawReportProvider {
         private val finder = ReportAndMetricsFileFinder(directory)
 
-        override val briefStatisticsJsonFiles: List<Path> = finder.findBriefStatisticsJsonFile()
-        override val detailedStatisticsCsvFiles: List<Path> = finder.findDetailsStatisticsCsvFile()
-        override val composableReportFiles: List<Path> = finder.findComposablesReportTxtFile()
-        override val classesReportFiles: List<Path> = finder.findClassesReportTxtFile()
+        override val briefStatisticsJsonFiles: List<File> = finder.findBriefStatisticsJsonFile()
+        override val detailedStatisticsCsvFiles: List<File> = finder.findDetailsStatisticsCsvFile()
+        override val composableReportFiles: List<File> = finder.findComposablesReportTxtFile()
+        override val classesReportFiles: List<File> = finder.findClassesReportTxtFile()
 
         init {
             ensureDirectory(directory) { "Directory '$directory' not exists" }

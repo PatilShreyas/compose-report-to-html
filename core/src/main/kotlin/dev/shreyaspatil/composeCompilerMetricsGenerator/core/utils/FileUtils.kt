@@ -23,10 +23,9 @@
  */
 package dev.shreyaspatil.composeCompilerMetricsGenerator.core.utils
 
-import okio.FileNotFoundException
-import okio.FileSystem
-import okio.Path
-import okio.Path.Companion.toPath
+import java.io.File
+import java.io.FileNotFoundException
+import java.nio.file.Paths
 
 /**
  * Checks whether directory with [path] exists or not.
@@ -36,8 +35,8 @@ inline fun ensureDirectory(
     path: String,
     lazyMessage: () -> Any,
 ) {
-    val absolutePath = FileSystem.SYSTEM.canonicalize(path.toPath())
-    ensureDirectory(absolutePath, lazyMessage)
+    val file = File(Paths.get(path).toAbsolutePath().toString())
+    ensureDirectory(file, lazyMessage)
 }
 
 /**
@@ -45,14 +44,11 @@ inline fun ensureDirectory(
  * Else throws [FileNotFoundException].
  */
 inline fun ensureDirectory(
-    directory: Path,
+    directory: File,
     lazyMessage: () -> Any,
 ) {
-    val fileSystem = FileSystem.SYSTEM
-    val absolutePath = if (directory.isAbsolute) directory else fileSystem.canonicalize(directory)
-    println("Checking directory '$absolutePath'")
-    val isDirectory = fileSystem.metadataOrNull(directory)?.isDirectory == true
-    if (!isDirectory) {
+    println("Checking directory '${directory.absolutePath}'")
+    if (!directory.isDirectory) {
         val message = lazyMessage()
         throw FileNotFoundException(message.toString())
     }
@@ -64,22 +60,20 @@ inline fun ensureDirectory(
 inline fun ensureFileExists(
     filename: String,
     lazyMessage: () -> Any,
-): Path {
-    val absolutePath = FileSystem.SYSTEM.canonicalize(filename.toPath())
-    return ensureFileExists(absolutePath, lazyMessage)
+): File {
+    val file = File(Paths.get(filename).toAbsolutePath().toString())
+    return ensureFileExists(file, lazyMessage)
 }
 
 /**
  * Checks whether [file] with exists or not. Else throws [FileNotFoundException].
  */
 inline fun ensureFileExists(
-    file: Path,
+    file: File,
     lazyMessage: () -> Any,
-): Path {
-    val fileSystem = FileSystem.SYSTEM
-    val absolutePath = if (file.isAbsolute) file else fileSystem.canonicalize(file)
-    println("Checking file '$absolutePath'")
-    if (!fileSystem.exists(file)) {
+): File {
+    println("Checking file '${file.absolutePath}'")
+    if (!file.exists()) {
         val message = lazyMessage()
         throw FileNotFoundException(message.toString())
     }
