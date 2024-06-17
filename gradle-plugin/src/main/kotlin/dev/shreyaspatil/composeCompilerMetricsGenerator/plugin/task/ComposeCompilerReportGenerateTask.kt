@@ -30,7 +30,6 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.HtmlReportGene
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportOptions
 import dev.shreyaspatil.composeCompilerMetricsGenerator.generator.ReportSpec
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ComposeCompilerReportExtension
-import okio.Path.Companion.toOkioPath
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
@@ -126,7 +125,7 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
 
         val rawReportProvider =
             ComposeCompilerRawReportProvider.FromDirectory(
-                directory = composeRawMetricsOutputDirectory.get().asFile.toOkioPath(),
+                directory = composeRawMetricsOutputDirectory.get().asFile,
             )
 
         // Provide metric files to generator

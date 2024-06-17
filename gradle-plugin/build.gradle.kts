@@ -21,7 +21,6 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":report-generator"))
-    implementation(libs.okio)
 }
 
 tasks.getByName<Test>("test") {
