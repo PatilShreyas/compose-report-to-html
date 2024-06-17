@@ -7,12 +7,15 @@ application {
     mainClass.set(mainCliClassName)
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation(project(":core"))
     implementation(project(":report-generator"))
 
     implementation(kotlin("stdlib"))
-    implementation(libs.okio)
     implementation(libs.kotlinx.cli)
 }
 
