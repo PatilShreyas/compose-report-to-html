@@ -32,7 +32,6 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComp
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
-import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonToolOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
@@ -42,40 +41,32 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class ReportGenPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val reportExt = ComposeCompilerReportExtension.create(target)
+        var pluginApplied = false
 
-        val android =
-            runCatching {
-                target.extensions.getByType(AndroidComponentsExtension::class.java)
-            }.getOrNull()
-        val jvm =
-            runCatching {
-                target.extensions.getByType(KotlinJvmProjectExtension::class.java)
-            }.getOrNull()
-        val multiplatform =
-            runCatching {
-                target.extensions.getByType(KotlinMultiplatformExtension::class.java)
-            }.getOrNull()
-        val composeMultiplatform =
-            runCatching {
-                target.extensions.getByType(ComposeExtension::class.java)
-            }.getOrNull()
-
-        when {
-            composeMultiplatform != null -> {
-                when {
-                    jvm != null -> { // if kotlin jvm is applied
-                        target.configureKotlinJvmComposeCompilerReports(jvm)
-                    }
-                    multiplatform != null -> { // if kotlin multiplatform is applied
-                        target.configureKotlinMultiplatformComposeCompilerReports(multiplatform)
-                    }
-                    android != null -> { // if kotlin android is applied
-                        target.configureKotlinAndroidComposeCompilerReports(android)
-                    }
+        with(target) {
+            pluginManager.withPlugin("org.jetbrains.compose") {
+                pluginApplied = true
+                pluginManager.withPlugin("org.jetbrains.kotlin.jvm") { // if kotlin jvm is applied
+                    val jvm = extensions.getByType(KotlinJvmProjectExtension::class.java)
+                    configureKotlinJvmComposeCompilerReports(jvm)
+                }
+                pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") { // if kotlin multiplatform is applied
+                    val multiplatform = extensions.getByType(KotlinMultiplatformExtension::class.java)
+                    configureKotlinMultiplatformComposeCompilerReports(multiplatform)
+                }
+                pluginManager.withPlugin("org.jetbrains.kotlin.android") { // if kotlin android is applied
+                    val android = extensions.getByType(AndroidComponentsExtension::class.java)
+                    configureKotlinAndroidComposeCompilerReports(android)
                 }
             }
-            android != null -> {
-                target.configureKotlinAndroidComposeCompilerReports(android)
+            if (!pluginApplied) {
+                val android = extensions.getByType(AndroidComponentsExtension::class.java)
+                pluginManager.withPlugin("com.android.application") {
+                    configureKotlinAndroidComposeCompilerReports(android)
+                }
+                pluginManager.withPlugin("com.android.library") {
+                    configureKotlinAndroidComposeCompilerReports(android)
+                }
             }
         }
     }
