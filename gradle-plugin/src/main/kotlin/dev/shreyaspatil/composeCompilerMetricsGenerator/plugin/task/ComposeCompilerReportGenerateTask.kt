@@ -174,8 +174,8 @@ fun Project.registerComposeCompilerReportGenTaskForTarget(
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
-fun Project.registerComposeCompilerReportGenTaskForJvmProject(projectName: String): TaskProvider<ComposeCompilerReportGenerateTask> {
-    val taskName = projectName + "ComposeCompilerHtmlReport"
+fun Project.registerComposeCompilerReportGenTaskForJvmProject(): TaskProvider<ComposeCompilerReportGenerateTask> {
+    val taskName = "jvmComposeCompilerHtmlReport"
     val compileKotlinTaskName = "compileKotlin"
     val descSuffix = "'Jvm/Desktop' Project"
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)

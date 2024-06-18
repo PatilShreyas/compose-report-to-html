@@ -73,7 +73,7 @@ class ReportGenPlugin : Plugin<Project> {
 
     private fun Project.configureKotlinJvmComposeCompilerReports(jvmExt: KotlinJvmProjectExtension) {
         // Create gradle tasks for generating report
-        registerComposeCompilerReportGenTaskForJvmProject(jvmExt.target.project.name)
+        registerComposeCompilerReportGenTaskForJvmProject()
 
         afterEvaluate {
             // When this method returns true it means gradle task for generating report is executing otherwise
