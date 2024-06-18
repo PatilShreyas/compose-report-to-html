@@ -159,15 +159,16 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
 
 fun Project.registerComposeCompilerReportGenTaskForTarget(
     target: KotlinTarget,
-    buildType: String? = null,
+    variant: Variant? = null,
 ): TaskProvider<ComposeCompilerReportGenerateTask> {
-    val taskName = target.name + (buildType ?: "") + "ComposeCompilerHtmlReport"
-    val compileKotlinTaskName = compileKotlinTaskNameFromTarget(target, buildType)
+    val variantName = variant?.name?.let { it[0].toUpperCase() + it.substring(1) } ?: ""
+    val taskName = target.name + variantName + "ComposeCompilerHtmlReport"
+    val compileKotlinTaskName = compileKotlinTaskNameFromTarget(target, variantName)
     val descSuffix =
         buildString {
             append("'${target.name}' target")
-            if (buildType != null) {
-                append(" '$buildType' variant")
+            if (variant != null) {
+                append(" '${variant.name}' variant")
             }
             append(" in multiplatform project")
         }
@@ -232,9 +233,8 @@ fun compileKotlinTaskNameFromVariant(variant: Variant): String {
  */
 fun compileKotlinTaskNameFromTarget(
     target: KotlinTarget,
-    buildType: String?,
+    variantName: String,
 ): String {
     val targetName = target.name.let { it[0].toUpperCase() + it.substring(1) }
-    val buildTypeName = buildType?.let { it[0].toUpperCase() + it.substring(1) } ?: ""
-    return "compile${buildTypeName}Kotlin$targetName"
+    return "compile${variantName}Kotlin$targetName"
 }

@@ -97,9 +97,11 @@ class ReportGenPlugin : Plugin<Project> {
             if (this.name == "metadata") return@configureEach
 
             if (this.name == "android") {
-                // register a task for each build type
-                registerComposeCompilerReportGenTaskForTarget(this, buildType = "Debug")
-                registerComposeCompilerReportGenTaskForTarget(this, buildType = "Release")
+                // register a task for each variant
+                val androidExt = extensions.getByType(AndroidComponentsExtension::class.java)
+                androidExt.onVariants { variant ->
+                    registerComposeCompilerReportGenTaskForTarget(this, variant)
+                }
             } else {
                 registerComposeCompilerReportGenTaskForTarget(this)
             }
