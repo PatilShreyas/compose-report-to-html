@@ -43,6 +43,7 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.tooling.GradleConnector
+import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -156,9 +157,43 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     }
 }
 
+fun Project.registerComposeCompilerReportGenTaskForTarget(
+    target: KotlinTarget,
+    variant: Variant? = null,
+): TaskProvider<ComposeCompilerReportGenerateTask> {
+    val variantName = variant?.name?.let { it[0].toUpperCase() + it.substring(1) } ?: ""
+    val taskName = target.name + variantName + "ComposeCompilerHtmlReport"
+    val compileKotlinTaskName = compileKotlinTaskNameFromTarget(target, variantName)
+    val descSuffix =
+        buildString {
+            append("'${target.name}' target")
+            if (variant != null) {
+                append(" '${variant.name}' variant")
+            }
+            append(" in multiplatform project")
+        }
+    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
+}
+
+fun Project.registerComposeCompilerReportGenTaskForJvmProject(): TaskProvider<ComposeCompilerReportGenerateTask> {
+    val taskName = "jvmComposeCompilerHtmlReport"
+    val compileKotlinTaskName = "compileKotlin"
+    val descSuffix = "'Jvm/Desktop' Project"
+    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
+}
+
 fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = variant.name + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromVariant(variant)
+    val descSuffix = "'${variant.name}' variant in android project"
+    return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
+}
+
+fun Project.registerComposeCompilerReportGenTask(
+    taskName: String,
+    compileKotlinTaskName: String,
+    descSuffix: String,
+): TaskProvider<ComposeCompilerReportGenerateTask> {
     val reportExtension = ComposeCompilerReportExtension.get(project)
 
     return tasks.register(taskName, ComposeCompilerReportGenerateTask::class.java) {
@@ -173,7 +208,7 @@ fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): Ta
         showOnlyUnstableComposables.set(reportExtension.showOnlyUnstableComposables)
 
         group = "compose compiler report"
-        description = "Generate Compose Compiler Metrics and Report"
+        description = "Generate Compose Compiler Metrics and Report for $descSuffix"
     }
 }
 
@@ -191,4 +226,15 @@ fun Project.executingComposeCompilerReportGenerationGradleTask() =
 fun compileKotlinTaskNameFromVariant(variant: Variant): String {
     val variantName = variant.name.let { it[0].toUpperCase() + it.substring(1) }
     return "compile${variantName}Kotlin"
+}
+
+/**
+ * Returns a task name for compile<BUILD_TYPE>Kotlin<TARGET> with [target]
+ */
+fun compileKotlinTaskNameFromTarget(
+    target: KotlinTarget,
+    variantName: String,
+): String {
+    val targetName = target.name.let { it[0].toUpperCase() + it.substring(1) }
+    return "compile${variantName}Kotlin$targetName"
 }

@@ -5,6 +5,7 @@ coroutines = "1.8.1"
 spotless = "6.25.0"
 kotlinxHtml = "0.11.0"
 kotlinxCli = "0.3.6"
+compose = "1.6.10-rc03"
 mavenPublish = "0.28.0"
 androidGradlePlugin = "8.3.0"
 gradlePluginPublish = "1.2.1"
@@ -16,6 +17,7 @@ kotlinx-html-jvm = { module = "org.jetbrains.kotlinx:kotlinx-html-jvm", version.
 kotlinx-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlinxCli" }
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-multiplatform-gradle-plugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }
 
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
