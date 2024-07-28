@@ -1,11 +1,11 @@
 [versions]
 kotlin = "1.9.24"
-serialization = "1.7.0"
+serialization = "1.7.1"
 coroutines = "1.8.1"
 spotless = "6.25.0"
 kotlinxHtml = "0.11.0"
 kotlinxCli = "0.3.6"
-mavenPublish = "0.28.0"
+mavenPublish = "0.29.0"
 androidGradlePlugin = "8.3.0"
 gradlePluginPublish = "1.2.1"
 
