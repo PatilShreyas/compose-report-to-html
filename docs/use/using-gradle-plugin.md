@@ -4,6 +4,8 @@ Using the Gradle Plugin, you can fully automate the process of generating the re
 This Gradle plugin takes care of generating raw compose metrics and report from the Compose compiler and then 
 generates the beautified report from them.
 
+**This plugin has support for Android projects and Kotlin Multiplatform projects.**
+
 ## ✅ Apply the plugin
 
 Apply the plugin to the module in which _**compose is enabled**_.
@@ -19,7 +21,7 @@ Apply the plugin to the module in which _**compose is enabled**_.
 
     ```groovy title="build.gradle"
     plugins {
-      id "dev.shreyaspatil.compose-compiler-report-generator" version "1.3.1"
+      id "dev.shreyaspatil.compose-compiler-report-generator" version "1.4.0"
     }
     ```
 
@@ -27,7 +29,7 @@ Apply the plugin to the module in which _**compose is enabled**_.
 
     ```kotlin title="build.gradle.kts"
     plugins {
-      id("dev.shreyaspatil.compose-compiler-report-generator") version "1.3.1"
+      id("dev.shreyaspatil.compose-compiler-report-generator") version "1.4.0"
     }    
     ```
 
@@ -45,7 +47,7 @@ Add this to top project level `build.gradle`
         }
       }
       dependencies {
-        classpath "dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.3.1"
+        classpath "dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.4.0"
       }
     }
     ```
@@ -66,7 +68,7 @@ Add this to top project level `build.gradle`
         }
       }
       dependencies {
-        classpath("dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.3.1")
+        classpath("dev.shreyaspatil.compose-compiler-report-generator:gradle-plugin:1.4.0")
       }
     }
     ```
@@ -79,12 +81,22 @@ Add this to top project level `build.gradle`
 
 ## 💫 Sync the project 
 
-Once plugin is applied, sync the project. After the project is synced, tasks for generating compose report will be 
-generated for the variants and flavors used in the project.
+Once plugin is applied, sync the project. After the project is synced, tasks for generating compose 
+report will be generated for the variants and flavors used in the project.
 
 !!! example
+
+    === "Android Project"
+
+        ![](../images/gradle-plugin-example-android.png){ height="150" }
+
+    === "Multiplatform Project"
+        For Kotlin Multiplatform project, tasks will be generated for the platform modules 
+        and build types.
+
+        ![](../images/gradle-plugin-example-kmp.png){ height="120" }
     
-    ![](../images/gradle-plugin-example.png){ height="150" }
+    
 
 ## 🪄 Generate report
 
@@ -139,7 +151,7 @@ If you have to configure plugin parameters manually (which is completely optiona
     }
     ```
 
-=== "Kotlin"
+=== "Kotlin (JVM / Android / Multiplatform)"
     
     ```kotlin title="build.gradle.kts"
     htmlComposeCompilerReport {
