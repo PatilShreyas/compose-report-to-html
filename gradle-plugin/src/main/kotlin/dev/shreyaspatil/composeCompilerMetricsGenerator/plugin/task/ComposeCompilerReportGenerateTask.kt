@@ -157,11 +157,16 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     }
 }
 
+/**
+ * Register a task for generating Compose Compiler Report for a Kotlin Multiplatform Android target.
+ * @param target Kotlin Target for which report is to be generated
+ * @param variant Android Variant for which report is to be generated
+ */
 fun Project.registerComposeCompilerReportGenTaskForTarget(
     target: KotlinTarget,
     variant: Variant? = null,
 ): TaskProvider<ComposeCompilerReportGenerateTask> {
-    val variantName = variant?.name?.let { it[0].toUpperCase() + it.substring(1) } ?: ""
+    val variantName = variant?.name?.let { it[0].uppercaseChar() + it.substring(1) } ?: ""
     val taskName = target.name + variantName + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromTarget(target, variantName)
     val descSuffix =
@@ -175,6 +180,9 @@ fun Project.registerComposeCompilerReportGenTaskForTarget(
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
+/**
+ * Register a task for generating Compose Compiler Report for JVM variant.
+ */
 fun Project.registerComposeCompilerReportGenTaskForJvmProject(): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = "jvmComposeCompilerHtmlReport"
     val compileKotlinTaskName = "compileKotlin"
@@ -182,13 +190,22 @@ fun Project.registerComposeCompilerReportGenTaskForJvmProject(): TaskProvider<Co
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
+/**
+ * Register a task for generating Compose Compiler Report for Android variant.
+ */
 fun Project.registerComposeCompilerReportGenTaskForVariant(variant: Variant): TaskProvider<ComposeCompilerReportGenerateTask> {
     val taskName = variant.name + "ComposeCompilerHtmlReport"
     val compileKotlinTaskName = compileKotlinTaskNameFromVariant(variant)
-    val descSuffix = "'${variant.name}' variant in android project"
+    val descSuffix = "'${variant.name}' variant in Android project"
     return registerComposeCompilerReportGenTask(taskName, compileKotlinTaskName, descSuffix)
 }
 
+/**
+ * Register a task for generating Compose Compiler Report.
+ * @param taskName Name of the task
+ * @param compileKotlinTaskName Name of the compileKotlin task
+ * @param descSuffix Description suffix
+ */
 fun Project.registerComposeCompilerReportGenTask(
     taskName: String,
     compileKotlinTaskName: String,

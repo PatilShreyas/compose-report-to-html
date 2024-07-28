@@ -23,16 +23,13 @@
  */
 package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin
 
-import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.variant.AndroidComponentsExtension
-import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.executingComposeCompilerReportGenerationGradleTask
-import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForJvmProject
-import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForTarget
-import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForVariant
+import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.multiplatform.android.configureKotlinAndroidComposeCompilerReports
+import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.multiplatform.configureKotlinMultiplatformComposeCompilerReports
+import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.multiplatform.jvm.configureKotlinJvmComposeCompilerReports
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
-import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonToolOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -41,11 +38,11 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class ReportGenPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val reportExt = ComposeCompilerReportExtension.create(target)
-        var pluginApplied = false
+        var isAppliedForKmp = false
 
         with(target) {
             pluginManager.withPlugin("org.jetbrains.compose") {
-                pluginApplied = true
+                isAppliedForKmp = true
                 pluginManager.withPlugin("org.jetbrains.kotlin.jvm") { // if kotlin jvm is applied
                     val jvm = extensions.getByType(KotlinJvmProjectExtension::class.java)
                     configureKotlinJvmComposeCompilerReports(jvm)
@@ -59,118 +56,40 @@ class ReportGenPlugin : Plugin<Project> {
                     configureKotlinAndroidComposeCompilerReports(android)
                 }
             }
-            if (!pluginApplied) {
+            var isAppliedForAndroid = false
+            if (!isAppliedForKmp) {
                 val android = extensions.getByType(AndroidComponentsExtension::class.java)
                 pluginManager.withPlugin("com.android.application") {
                     configureKotlinAndroidComposeCompilerReports(android)
+                    isAppliedForAndroid = true
                 }
                 pluginManager.withPlugin("com.android.library") {
                     configureKotlinAndroidComposeCompilerReports(android)
+                    isAppliedForAndroid = true
                 }
             }
-        }
-    }
-
-    private fun Project.configureKotlinJvmComposeCompilerReports(jvmExt: KotlinJvmProjectExtension) {
-        // Create gradle tasks for generating report
-        registerComposeCompilerReportGenTaskForJvmProject()
-
-        afterEvaluate {
-            // When this method returns true it means gradle task for generating report is executing otherwise
-            // normal compilation task is executing.
-            val isFromReportGenGradleTask = executingComposeCompilerReportGenerationGradleTask()
-            if (isFromReportGenGradleTask) {
-                jvmExt.target {
-                    compilations.filter { !it.name.endsWith("Test") }.forEach {
-                        it.kotlinOptions {
-                            configureKotlinOptionsForComposeCompilerReport(this@configureKotlinJvmComposeCompilerReports)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun Project.configureKotlinMultiplatformComposeCompilerReports(multiplatformExt: KotlinMultiplatformExtension) {
-        // Create gradle tasks for generating report
-        multiplatformExt.targets.configureEach {
-            if (this.name == "metadata") return@configureEach
-
-            if (this.name == "android") {
-                // register a task for each variant
-                val androidExt = extensions.getByType(AndroidComponentsExtension::class.java)
-                androidExt.onVariants { variant ->
-                    registerComposeCompilerReportGenTaskForTarget(this, variant)
-                }
-            } else {
-                registerComposeCompilerReportGenTaskForTarget(this)
-            }
-        }
-
-        afterEvaluate {
-            // When this method returns true it means gradle task for generating report is executing otherwise
-            // normal compilation task is executing.
-            val isFromReportGenGradleTask = executingComposeCompilerReportGenerationGradleTask()
-            if (isFromReportGenGradleTask) {
-                multiplatformExt.targets.flatMap { it.compilations }
-                    .filter { !it.name.endsWith("Test", ignoreCase = true) }
-                    .forEach {
-                        it.kotlinOptions {
-                            configureKotlinOptionsForComposeCompilerReport(this@configureKotlinMultiplatformComposeCompilerReports)
-                        }
-                    }
-            }
-        }
-    }
-
-    private fun Project.configureKotlinAndroidComposeCompilerReports(androidExt: AndroidComponentsExtension<*, *, *>) {
-        val commonExtension = runCatching { extensions.getByType(CommonExtension::class.java) }.getOrNull()
-
-        androidExt.onVariants { variant ->
-            // Create gradle tasks for generating report
-            registerComposeCompilerReportGenTaskForVariant(variant)
-        }
-
-        afterEvaluate {
-            val isComposeEnabled = commonExtension?.buildFeatures?.compose
-
-            if (isComposeEnabled != true) {
+            if (!isAppliedForAndroid && !isAppliedForKmp) {
                 error("Jetpack Compose is not found enabled in this module '$name'")
             }
-
-            // When this method returns true it means gradle task for generating report is executing otherwise
-            // normal compilation task is executing.
-            val isFromReportGenGradleTask = executingComposeCompilerReportGenerationGradleTask()
-            if (isFromReportGenGradleTask) {
-                val kotlinAndroidExt = extensions.getByType<KotlinAndroidProjectExtension>()
-                kotlinAndroidExt.target {
-                    // Exclude for test variants, no use!
-                    compilations.filter { !it.name.endsWith("Test") }.forEach {
-                        it.kotlinOptions {
-                            configureKotlinOptionsForComposeCompilerReport(this@afterEvaluate)
-                        }
-                    }
-                }
-            }
         }
     }
+}
 
-    private fun KotlinCommonToolOptions.configureKotlinOptionsForComposeCompilerReport(project: Project) {
-        val reportExtension = project.extensions.getByType<ComposeCompilerReportExtension>()
-        val outputPath = reportExtension.composeRawMetricsOutputDirectory.absolutePath
-        if (reportExtension.enableReport.get()) {
-            freeCompilerArgs +=
-                listOf(
-                    "-P",
-                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath",
-                )
-        }
-        if (reportExtension.enableMetrics.get()) {
-            freeCompilerArgs +=
-                listOf(
-                    "-P",
-                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath",
-                )
-        }
+fun KotlinCommonToolOptions.configureKotlinOptionsForComposeCompilerReport(project: Project) {
+    val reportExtension = project.extensions.getByType<ComposeCompilerReportExtension>()
+    val outputPath = reportExtension.composeRawMetricsOutputDirectory.absolutePath
+    if (reportExtension.enableReport.get()) {
+        freeCompilerArgs +=
+            listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath",
+            )
+    }
+    if (reportExtension.enableMetrics.get()) {
+        freeCompilerArgs +=
+            listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath",
+            )
     }
 }
