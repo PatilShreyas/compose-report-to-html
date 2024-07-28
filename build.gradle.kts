@@ -12,10 +12,6 @@ plugins {
 group = GROUP
 version = VERSION_NAME
 
-repositories {
-    mavenCentral()
-}
-
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }

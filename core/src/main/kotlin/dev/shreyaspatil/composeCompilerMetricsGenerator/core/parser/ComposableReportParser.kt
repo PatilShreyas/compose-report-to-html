@@ -34,7 +34,7 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.C
  */
 object ComposableReportParser : Parser<String, ComposablesReport> {
     private val REGEX_COMPOSABLE_FUNCTION = "(?:(.*))fun (\\w*)".toRegex()
-    private val REGEX_COMPOSABLE_PARAMETERS = "(?:(stable|unstable|) (\\w*:\\s.*))".toRegex()
+    private val REGEX_COMPOSABLE_PARAMETERS = "(?:(stable|unstable|\\w+) (\\w*:\\s.*))".toRegex()
 
     /**
      * Parses all composable functions
