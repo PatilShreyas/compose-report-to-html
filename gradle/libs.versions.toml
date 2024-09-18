@@ -7,7 +7,7 @@ kotlinxHtml = "0.11.0"
 kotlinxCli = "0.3.6"
 compose = "1.6.11"
 mavenPublish = "0.29.0"
-androidGradlePlugin = "8.5.1"
+androidGradlePlugin = "8.6.1"
 gradlePluginPublish = "1.2.1"
 
 [libraries]
