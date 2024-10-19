@@ -34,7 +34,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.longOrNull
-import java.nio.file.Files
 
 /**
  * Provides metrics and reports of a Compose compiler
@@ -129,56 +128,4 @@ private class DefaultComposeCompilerMetricsProvider(
 fun ComposeCompilerMetricsProvider(files: ComposeCompilerRawReportProvider): ComposeCompilerMetricsProvider {
     val contentProvider = ComposeMetricsContentProvider(files)
     return DefaultComposeCompilerMetricsProvider(contentProvider)
-}
-
-fun main() {
-    val json =
-        """
-        {
-          "skippableComposables" : 110,
-          "restartableComposables" : 146,
-          "readonlyComposables" : 0,
-          "totalComposables" : 154,
-          "restartGroups" : 146,
-          "totalGroups" : 165,
-          "staticArguments" : 217,
-          "certainArguments" : 163,
-          "knownStableArguments" : 1363,
-          "knownUnstableArguments" : 31,
-          "unknownStableArguments" : 2,
-          "totalArguments" : 1396,
-          "markedStableClasses" : 2,
-          "inferredStableClasses" : 8,
-          "inferredUnstableClasses" : 2,
-          "inferredUncertainClasses" : 0,
-          "effectivelyStableClasses" : 10,
-          "totalClasses" : 12,
-          "memoizedLambdas" : 103,
-          "singletonLambdas" : 14,
-          "singletonComposableLambdas" : 25,
-          "composableLambdas" : 69,
-          "totalLambdas" : 122,
-          "featureFlags" : {
-            "StrongSkipping" : true
-          }
-        }
-        """.trimIndent()
-
-    val ss =
-        DefaultComposeCompilerMetricsProvider(
-            ComposeMetricsContentProvider(
-                ComposeCompilerRawReportProvider.FromIndividualFiles(
-                    listOf(
-                        Files.createTempFile("dfdfd", "dsdsd").toFile().apply {
-                            writeText(json)
-                        },
-                    ),
-                    emptyList(),
-                    emptyList(),
-                    emptyList(),
-                ),
-            ),
-        )
-
-    println(ss.getOverallStatistics())
 }
