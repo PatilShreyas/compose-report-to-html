@@ -30,8 +30,10 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.classes.Class
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.ComposablesReport
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ClassReportParser
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ComposableReportParser
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.longOrNull
 
 /**
  * Provides metrics and reports of a Compose compiler
@@ -62,14 +64,25 @@ interface ComposeCompilerMetricsProvider {
  * Default implementation for [ComposeCompilerMetricsProvider] which parses content provided by
  * [ComposeCompilerRawReportProvider].
  */
-@OptIn(ExperimentalStdlibApi::class)
 private class DefaultComposeCompilerMetricsProvider(
     private val contentProvider: ComposeMetricsContentProvider,
 ) : ComposeCompilerMetricsProvider {
     override fun getOverallStatistics(): Map<String, Long> {
         val statistics = mutableMapOf<String, Long>()
         contentProvider.briefStatisticsContents.forEach { statContent ->
-            val stats = Json.decodeFromString<Map<String, Long>>(statContent)
+            val stats =
+                Json
+                    .decodeFromString<JsonObject>(statContent)
+                    .mapNotNull { entry ->
+                        // In Compose 1.7.0, now JSON also includes the details of compiler features.
+                        // To avoid deserialization issues, we have to skip adding these details in this report and just
+                        // have to take primitive values (i.e. actually metrics) in the account.
+                        val primitive = entry.value as? JsonPrimitive
+                        primitive?.longOrNull?.let { longValue ->
+                            entry.key to longValue
+                        }
+                    }
+
             if (statistics.isEmpty()) {
                 statistics.putAll(stats)
             } else {
