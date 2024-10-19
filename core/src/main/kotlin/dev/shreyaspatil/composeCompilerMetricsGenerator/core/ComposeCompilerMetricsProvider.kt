@@ -31,7 +31,9 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables.C
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ClassReportParser
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.parser.ComposableReportParser
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.*
+import java.io.File
+import java.nio.file.Files
 
 /**
  * Provides metrics and reports of a Compose compiler
@@ -62,14 +64,24 @@ interface ComposeCompilerMetricsProvider {
  * Default implementation for [ComposeCompilerMetricsProvider] which parses content provided by
  * [ComposeCompilerRawReportProvider].
  */
-@OptIn(ExperimentalStdlibApi::class)
 private class DefaultComposeCompilerMetricsProvider(
     private val contentProvider: ComposeMetricsContentProvider,
 ) : ComposeCompilerMetricsProvider {
     override fun getOverallStatistics(): Map<String, Long> {
         val statistics = mutableMapOf<String, Long>()
         contentProvider.briefStatisticsContents.forEach { statContent ->
-            val stats = Json.decodeFromString<Map<String, Long>>(statContent)
+            val stats = Json
+                .decodeFromString<JsonObject>(statContent)
+                .mapNotNull { entry ->
+                    // In Compose 1.7.0, now JSON also includes the details of compiler features.
+                    // To avoid deserialization issues, we have to skip adding these details in this report and just
+                    // have to take primitive values (i.e. actually metrics) in the account.
+                    val primitive = entry.value as? JsonPrimitive
+                    primitive?.longOrNull?.let { longValue ->
+                        entry.key to longValue
+                    }
+                }
+
             if (statistics.isEmpty()) {
                 statistics.putAll(stats)
             } else {
@@ -115,4 +127,49 @@ private class DefaultComposeCompilerMetricsProvider(
 fun ComposeCompilerMetricsProvider(files: ComposeCompilerRawReportProvider): ComposeCompilerMetricsProvider {
     val contentProvider = ComposeMetricsContentProvider(files)
     return DefaultComposeCompilerMetricsProvider(contentProvider)
+}
+
+fun main() {
+    val json = """
+        {
+          "skippableComposables" : 110,
+          "restartableComposables" : 146,
+          "readonlyComposables" : 0,
+          "totalComposables" : 154,
+          "restartGroups" : 146,
+          "totalGroups" : 165,
+          "staticArguments" : 217,
+          "certainArguments" : 163,
+          "knownStableArguments" : 1363,
+          "knownUnstableArguments" : 31,
+          "unknownStableArguments" : 2,
+          "totalArguments" : 1396,
+          "markedStableClasses" : 2,
+          "inferredStableClasses" : 8,
+          "inferredUnstableClasses" : 2,
+          "inferredUncertainClasses" : 0,
+          "effectivelyStableClasses" : 10,
+          "totalClasses" : 12,
+          "memoizedLambdas" : 103,
+          "singletonLambdas" : 14,
+          "singletonComposableLambdas" : 25,
+          "composableLambdas" : 69,
+          "totalLambdas" : 122,
+          "featureFlags" : {
+            "StrongSkipping" : true
+          }
+        }
+    """.trimIndent()
+
+    val ss = DefaultComposeCompilerMetricsProvider(ComposeMetricsContentProvider(
+        ComposeCompilerRawReportProvider.FromIndividualFiles(
+            listOf(
+                Files.createTempFile("dfdfd", "dsdsd").toFile().apply {
+                    writeText(json)
+                }), emptyList(), emptyList(), emptyList()
+        )
+    )
+    )
+
+    println(ss.getOverallStatistics())
 }
