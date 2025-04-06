@@ -90,10 +90,13 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
     }
 
     private fun generateRawMetricsAndReport() {
-        GradleConnector.newConnector().forProjectDirectory(projectDirectory.get().asFile)
+        GradleConnector
+            .newConnector()
+            .forProjectDirectory(projectDirectory.get().asFile)
             .connect()
             .use {
-                it.newBuild()
+                it
+                    .newBuild()
                     .setStandardOutput(System.out)
                     .setStandardError(System.err)
                     .setStandardInput(System.`in`)
@@ -104,8 +107,7 @@ abstract class ComposeCompilerReportGenerateTask : DefaultTask() {
                         "--rerun-tasks",
                         // Signal for enabling report generation in `kotlinOptions{}` block.
                         "-P$KEY_ENABLE_REPORT_GEN=true",
-                    )
-                    .run()
+                    ).run()
             }
     }
 

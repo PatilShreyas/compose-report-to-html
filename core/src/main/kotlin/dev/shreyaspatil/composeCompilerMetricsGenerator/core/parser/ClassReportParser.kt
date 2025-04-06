@@ -84,11 +84,19 @@ object ClassReportParser : Parser<String, ClassesReport> {
                 ?: error("Undefined stability status for the class body: $classBody")
 
         val runtimeStability =
-            REGEX_RUNTIME_STABILITY.find(classBody)?.groupValues?.getOrNull(1)?.let { ConditionMapper.from(it) }
+            REGEX_RUNTIME_STABILITY
+                .find(classBody)
+                ?.groupValues
+                ?.getOrNull(1)
+                ?.let { ConditionMapper.from(it) }
 
         val fields =
-            REGEX_CLASS_FIELDS.findAll(classBody).map { it.groupValues }.filter { it.isNotEmpty() }
-                .map { ClassDetail.Field(it[2], it[3]) }.toList()
+            REGEX_CLASS_FIELDS
+                .findAll(classBody)
+                .map { it.groupValues }
+                .filter { it.isNotEmpty() }
+                .map { ClassDetail.Field(it[2], it[3]) }
+                .toList()
 
         return ClassDetail(
             className = className,

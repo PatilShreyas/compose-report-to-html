@@ -98,14 +98,18 @@ fun saveReportAsHtml(
 /**
  * Parses and validates CLI arguments
  */
-class CliArguments(args: Array<String>, private val path: Path) {
+class CliArguments(
+    args: Array<String>,
+    private val path: Path,
+) {
     private val parser = ArgParser("Compose Compiler Report to HTML Generator ~ ${Constants.VERSION}")
 
-    val applicationName by parser.option(
-        ArgType.String,
-        shortName = "app",
-        description = "Application name (To be displayed in the report)",
-    ).required()
+    val applicationName by parser
+        .option(
+            ArgType.String,
+            shortName = "app",
+            description = "Application name (To be displayed in the report)",
+        ).required()
 
     val inputDirectory by parser.option(
         ArgType.String,
@@ -137,31 +141,36 @@ class CliArguments(args: Array<String>, private val path: Path) {
         description = "Class Metrics TXT files (separated by commas)",
     )
 
-    val outputDirectory by parser.option(
-        ArgType.String,
-        shortName = "o",
-        description = "Output directory name",
-    ).default(path.toAbsolutePath().toString())
+    val outputDirectory by parser
+        .option(
+            ArgType.String,
+            shortName = "o",
+            description = "Output directory name",
+        ).default(path.toAbsolutePath().toString())
 
-    val includeStableComposables by parser.option(
-        ArgType.Boolean,
-        description = "Whether to include stable Composable functions in the report",
-    ).default(true)
+    val includeStableComposables by parser
+        .option(
+            ArgType.Boolean,
+            description = "Whether to include stable Composable functions in the report",
+        ).default(true)
 
-    val includeStableClasses by parser.option(
-        ArgType.Boolean,
-        description = "Whether to include stable classes in the report",
-    ).default(true)
+    val includeStableClasses by parser
+        .option(
+            ArgType.Boolean,
+            description = "Whether to include stable classes in the report",
+        ).default(true)
 
-    val includeClasses by parser.option(
-        ArgType.Boolean,
-        description = "Whether to include all the classes in the report",
-    ).default(true)
+    val includeClasses by parser
+        .option(
+            ArgType.Boolean,
+            description = "Whether to include all the classes in the report",
+        ).default(true)
 
-    val showOnlyUnstableComposables by parser.option(
-        ArgType.Boolean,
-        description = "Whether to ONLY include unstable composables in the report",
-    ).default(false)
+    val showOnlyUnstableComposables by parser
+        .option(
+            ArgType.Boolean,
+            description = "Whether to ONLY include unstable composables in the report",
+        ).default(false)
 
     init {
         parser.parse(args)
@@ -195,22 +204,18 @@ class CliArguments(args: Array<String>, private val path: Path) {
         }
     }
 
-    private fun getRawReportProviderFromIndividualFiles(): ComposeCompilerRawReportProvider {
-        return ComposeCompilerRawReportProvider.FromIndividualFiles(
+    private fun getRawReportProviderFromIndividualFiles(): ComposeCompilerRawReportProvider =
+        ComposeCompilerRawReportProvider.FromIndividualFiles(
             briefStatisticsJsonFiles = files(overallStatsFile!!),
             detailedStatisticsCsvFiles = files(detailedStatsFile!!),
             composableReportFiles = files(composableMetricsFile!!),
             classesReportFiles = files(classMetricsFile!!),
         )
-    }
 
-    private fun getRawReportProviderFromDirectory(directory: String): ComposeCompilerRawReportProvider.FromDirectory {
-        return ComposeCompilerRawReportProvider.FromDirectory(File(Paths.get(directory).toAbsolutePath().toString()))
-    }
+    private fun getRawReportProviderFromDirectory(directory: String): ComposeCompilerRawReportProvider.FromDirectory =
+        ComposeCompilerRawReportProvider.FromDirectory(File(Paths.get(directory).toAbsolutePath().toString()))
 
-    private fun files(filenames: String): List<File> {
-        return filenames.split(",").map { ensureFileExists(it) { "File not exist: $it" } }
-    }
+    private fun files(filenames: String): List<File> = filenames.split(",").map { ensureFileExists(it) { "File not exist: $it" } }
 }
 
 fun printHeader(header: String) =

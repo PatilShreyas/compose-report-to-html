@@ -63,8 +63,9 @@ fun FlowOrPhrasingContent.SvgIcon(
 /**
  * Represents as a `path` for SVG
  */
-class SvgPath(consumer: TagConsumer<*>) :
-    HTMLTag(
+class SvgPath(
+    consumer: TagConsumer<*>,
+) : HTMLTag(
         tagName = "path",
         consumer = consumer,
         initialAttributes = emptyMap(),
