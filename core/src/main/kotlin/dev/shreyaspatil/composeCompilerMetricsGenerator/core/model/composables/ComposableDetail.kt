@@ -49,7 +49,10 @@ data class ComposableDetail(
      * @property condition Stability condition of a parameter
      * @property details Name and type details of a parameter
      */
-    data class Parameter(val condition: Condition, val details: String) {
+    data class Parameter(
+        val condition: Condition,
+        val details: String,
+    ) {
         private val nameAndType by lazy {
             details.split(":").map { it.trim() }.let { (name, type) -> name to type }
         }

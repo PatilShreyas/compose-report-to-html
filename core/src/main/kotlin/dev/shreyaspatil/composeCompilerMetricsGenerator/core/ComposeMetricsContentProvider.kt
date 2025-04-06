@@ -26,7 +26,9 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.core
 /**
  * Provides content of a composable report and metrics
  */
-class ComposeMetricsContentProvider(private val fileProvider: ComposeCompilerRawReportProvider) {
+class ComposeMetricsContentProvider(
+    private val fileProvider: ComposeCompilerRawReportProvider,
+) {
     val briefStatisticsContents: List<String> get() = fileProvider.briefStatisticsJsonFiles.map { it.readText() }
     val detailedStatisticsCsvRows: List<String> get() = fileProvider.detailedStatisticsCsvFiles.flatMap { it.readLines() }
     val composablesReportContents: String get() = fileProvider.composableReportFiles.joinToString(separator = "\n") { it.readText() }

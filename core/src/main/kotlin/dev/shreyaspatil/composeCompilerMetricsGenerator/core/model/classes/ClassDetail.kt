@@ -47,9 +47,13 @@ data class ClassDetail(
      * @property status Status of a field. E.g. STABLE, UNSTABLE, etc
      * @property details Name and type details of a field.
      */
-    data class Field(val status: String, val details: String) {
+    data class Field(
+        val status: String,
+        val details: String,
+    ) {
         private val nameAndType by lazy {
-            details.split(":")
+            details
+                .split(":")
                 .map { it.trim() }
                 .let { (name, type) -> name to type }
         }

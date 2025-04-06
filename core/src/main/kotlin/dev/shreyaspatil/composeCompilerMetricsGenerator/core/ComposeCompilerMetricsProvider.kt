@@ -101,7 +101,8 @@ private class DefaultComposeCompilerMetricsProvider(
             if (csv.size > 1) {
                 val headers = splitWithCsvSeparator(csv.first())
 
-                csv.subList(1, csv.size)
+                csv
+                    .subList(1, csv.size)
                     .map { splitWithCsvSeparator(it) }
                     .map { items -> RowItems(items.mapIndexed { index, value -> Item(headers[index], value) }) }
             } else {
@@ -111,13 +112,9 @@ private class DefaultComposeCompilerMetricsProvider(
         return DetailedStatistics(metrics)
     }
 
-    override fun getComposablesReport(): ComposablesReport {
-        return ComposableReportParser.parse(contentProvider.composablesReportContents)
-    }
+    override fun getComposablesReport(): ComposablesReport = ComposableReportParser.parse(contentProvider.composablesReportContents)
 
-    override fun getClassesReport(): ClassesReport {
-        return ClassReportParser.parse(contentProvider.classesReportContents)
-    }
+    override fun getClassesReport(): ClassesReport = ClassReportParser.parse(contentProvider.classesReportContents)
 
     private fun splitWithCsvSeparator(content: String) = content.split(",").filter { it.isNotBlank() }
 }

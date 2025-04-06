@@ -32,7 +32,10 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
  * @property classes All class details
  * @property errors List of Errors occurred while parsing the classes
  */
-data class ClassesReport(val classes: List<ClassDetail>, val errors: List<ParsingException>) {
+data class ClassesReport(
+    val classes: List<ClassDetail>,
+    val errors: List<ParsingException>,
+) {
     private val stableAndUnstableClasses by lazy {
         classes.partition { it.stability === Condition.STABLE }
     }
