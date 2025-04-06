@@ -54,7 +54,9 @@ sealed interface ComposeCompilerRawReportProvider {
     /**
      * Searches for files in the given [directory] and provides report and metric files found in that directory.
      */
-    class FromDirectory(directory: File) : ComposeCompilerRawReportProvider {
+    class FromDirectory(
+        directory: File,
+    ) : ComposeCompilerRawReportProvider {
         private val finder = ReportAndMetricsFileFinder(directory)
 
         override val briefStatisticsJsonFiles: List<File> = finder.findBriefStatisticsJsonFile()

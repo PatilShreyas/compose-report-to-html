@@ -43,15 +43,18 @@ class ReportGenPlugin : Plugin<Project> {
         with(target) {
             pluginManager.withPlugin("org.jetbrains.compose") {
                 isAppliedForKmp = true
-                pluginManager.withPlugin("org.jetbrains.kotlin.jvm") { // if kotlin jvm is applied
+                pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+                    // if kotlin jvm is applied
                     val jvm = extensions.getByType(KotlinJvmProjectExtension::class.java)
                     configureKotlinJvmComposeCompilerReports(jvm)
                 }
-                pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") { // if kotlin multiplatform is applied
+                pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
+                    // if kotlin multiplatform is applied
                     val multiplatform = extensions.getByType(KotlinMultiplatformExtension::class.java)
                     configureKotlinMultiplatformComposeCompilerReports(multiplatform)
                 }
-                pluginManager.withPlugin("org.jetbrains.kotlin.android") { // if kotlin android is applied
+                pluginManager.withPlugin("org.jetbrains.kotlin.android") {
+                    // if kotlin android is applied
                     val android = extensions.getByType(AndroidComponentsExtension::class.java)
                     configureKotlinAndroidComposeCompilerReports(android)
                 }

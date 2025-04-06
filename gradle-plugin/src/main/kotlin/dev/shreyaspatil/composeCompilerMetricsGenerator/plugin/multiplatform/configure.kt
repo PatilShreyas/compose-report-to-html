@@ -60,7 +60,8 @@ fun Project.configureKotlinMultiplatformComposeCompilerReports(multiplatformExt:
 }
 
 fun Project.configureKotlinOptionsForComposeCompilerReport(compilations: Collection<KotlinCompilation<*>>) {
-    compilations.filter { compilation -> !compilation.name.endsWith("Test", ignoreCase = true) }
+    compilations
+        .filter { compilation -> !compilation.name.endsWith("Test", ignoreCase = true) }
         .forEach {
             it.kotlinOptions {
                 configureKotlinOptionsForComposeCompilerReport(this@configureKotlinOptionsForComposeCompilerReport)

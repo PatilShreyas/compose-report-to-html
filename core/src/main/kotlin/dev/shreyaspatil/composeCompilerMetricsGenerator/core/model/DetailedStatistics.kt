@@ -28,7 +28,9 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.core.model
  *
  * @property items List of detailed items
  */
-data class DetailedStatistics(val items: List<RowItems>) {
+data class DetailedStatistics(
+    val items: List<RowItems>,
+) {
     /**
      * Headers of a report
      */
@@ -38,9 +40,14 @@ data class DetailedStatistics(val items: List<RowItems>) {
 /**
  * Model for holding list of name and value pairs i.e. item details
  */
-data class RowItems(val item: List<Item>)
+data class RowItems(
+    val item: List<Item>,
+)
 
 /**
  * Model representing name-value pairs
  */
-data class Item(val name: String, val value: String)
+data class Item(
+    val name: String,
+    val value: String,
+)
