@@ -50,8 +50,7 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
                     }.onFailure { cause ->
                         errors.add(ParsingException(function, cause))
                     }.getOrNull()
-                }
-                .toList()
+                }.toList()
 
         return ComposablesReport(composables, errors.toList())
     }
@@ -87,8 +86,12 @@ object ComposableReportParser : Parser<String, ComposablesReport> {
         val isSkippable = functionDetail.contains("skippable")
 
         val params =
-            REGEX_COMPOSABLE_PARAMETERS.findAll(function).map { it.groupValues }.filter { it.isNotEmpty() }
-                .map { ComposableDetail.Parameter(ConditionMapper.from(it[1]), it[2]) }.toList()
+            REGEX_COMPOSABLE_PARAMETERS
+                .findAll(function)
+                .map { it.groupValues }
+                .filter { it.isNotEmpty() }
+                .map { ComposableDetail.Parameter(ConditionMapper.from(it[1]), it[2]) }
+                .toList()
 
         return ComposableDetail(
             functionName = functionName,

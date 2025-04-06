@@ -9,7 +9,7 @@ Thus, before using CLI, you'll need to generate compose compiler metrics and rep
 
 Make sure to generate Compose compiler metrics and reports as
 mentioned [here](https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md)
-or [this good read article by Chris Banes](https://chris.banes.dev/composable-metrics/). These files are then needed to
+or [this good read article by Chris Banes](https://chrisbanes.me/posts/composable-metrics/). These files are then needed to
 this CLI utility to feed the data.
 
 To generate the report, provide details related to app, metric and report files and output directory.
