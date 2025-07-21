@@ -2,7 +2,7 @@
 kotlin = "2.1.20"
 serialization = "1.8.1"
 coroutines = "1.10.2"
-spotless = "7.0.3"
+spotless = "7.2.0"
 kotlinxHtml = "0.12.0"
 kotlinxCli = "0.3.6"
 compose = "1.8.1"
