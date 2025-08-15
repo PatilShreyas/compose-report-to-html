@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.1.20"
+kotlin = "2.2.10"
 serialization = "1.8.1"
 coroutines = "1.10.2"
 spotless = "7.0.3"
