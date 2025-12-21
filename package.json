@@ -10,7 +10,7 @@
   "version": "1.5.0",
   "jdeploy": {
     "jdk": false,
-    "javaVersion": "11",
+    "javaVersion": "17",
     "jar": "cli/build/libs/cli.jar",
     "javafx": false,
     "title": "Compose Report to HTML Generator"
