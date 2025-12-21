@@ -24,13 +24,49 @@
 package dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.composables
 
 import dev.shreyaspatil.composeCompilerMetricsGenerator.core.exception.ParsingException
+import dev.shreyaspatil.composeCompilerMetricsGenerator.core.model.Condition
 
 data class ComposablesReport(
     val composables: List<ComposableDetail>,
     val errors: List<ParsingException>,
 ) {
-    private val partitionedComposables by lazy { composables.partition { !it.isSkippable && it.isRestartable } }
+    /**
+     * The composable functions which are restartable but not skippable.
+     */
+    val restartableButNotSkippableComposables: List<ComposableDetail>
 
-    val restartableButNotSkippableComposables: List<ComposableDetail> get() = partitionedComposables.first
-    val nonIssuesComposables: List<ComposableDetail> get() = partitionedComposables.second
+    /**
+     * The composable functions which are restartable and skippable but some of their parameters are unstable or has
+     * missing stability.
+     */
+    val unstableParameterComposables: List<ComposableDetail>
+
+    /**
+     * The composable functions without any issues or are healthy.
+     */
+    val nonIssuesComposables: List<ComposableDetail>
+
+    init {
+        val restartableNotSkippable = mutableListOf<ComposableDetail>()
+        val unstableParams = mutableListOf<ComposableDetail>()
+        val nonIssues = mutableListOf<ComposableDetail>()
+
+        composables.forEach { detail ->
+            when {
+                !detail.isSkippable && detail.isRestartable -> {
+                    restartableNotSkippable.add(detail)
+                }
+                detail.params.any { it.condition != Condition.STABLE } -> {
+                    unstableParams.add(detail)
+                }
+                else -> {
+                    nonIssues.add(detail)
+                }
+            }
+        }
+
+        this.restartableButNotSkippableComposables = restartableNotSkippable
+        this.unstableParameterComposables = unstableParams
+        this.nonIssuesComposables = nonIssues
+    }
 }
