@@ -25,9 +25,11 @@ package dev.shreyaspatil.composeCompilerMetricsGenerator.generator.style
 
 object Colors {
     const val RED_DARK = "#D32F2F"
+    const val ORANGE = "#FFA500"
     const val GREEN_LIGHT = "#B2DFDB"
     const val GREEN_DARK = "#004D40"
     const val PINK_LIGHT = "#FFEBEE"
+    const val ORANGE_LIGHT = "#FFF7E8"
     const val ALABASTER = "#F1F8E9"
     const val YELLOW = "#FFF9C4"
     const val BLUE_LIGHT = "#E1F5FE"

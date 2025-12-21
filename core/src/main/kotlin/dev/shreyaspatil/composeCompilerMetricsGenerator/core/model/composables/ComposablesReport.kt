@@ -46,7 +46,6 @@ data class ComposablesReport(
      */
     val nonIssuesComposables: List<ComposableDetail>
 
-
     init {
         val restartableNotSkippable = mutableListOf<ComposableDetail>()
         val unstableParams = mutableListOf<ComposableDetail>()

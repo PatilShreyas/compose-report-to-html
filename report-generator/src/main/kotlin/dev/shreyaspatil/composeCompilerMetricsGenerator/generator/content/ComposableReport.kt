@@ -52,13 +52,21 @@ fun BODY.ComposablesReport(
     composablesReport: ComposablesReport,
 ) {
     if (composablesReport.composables.isEmpty()) {
-        EmptyContent("No Composables Report")
+        EmptyContent("No Composables Found")
         return
     }
     section {
         if (onlyUnstableComposables) {
-            setStyle(backgroundColor = Colors.PINK_LIGHT, padding = "16px")
-            ComposablesReport(composablesReport.restartableButNotSkippableComposables)
+            section {
+                setStyle(backgroundColor = Colors.PINK_LIGHT, padding = "16px")
+                h3 { +"Composables with issues (Restartable but Not Skippable)" }
+                ComposablesReport(composablesReport.restartableButNotSkippableComposables)
+            }
+            section {
+                setStyle(backgroundColor = Colors.ORANGE_LIGHT, padding = "16px")
+                h3 { +"Composables having unstable parameters" }
+                ComposablesReport(composablesReport.unstableParameterComposables)
+            }
             return@section
         }
         CollapsibleContent("Composables Report") {
@@ -72,8 +80,33 @@ fun BODY.ComposablesReport(
                     setStyle(backgroundColor = Colors.PINK_LIGHT)
                     ComposablesReport(composablesReport.restartableButNotSkippableComposables)
                 }
-            } else {
-                EmptyContent("No composable found with issues 😁")
+            }
+
+            if (composablesReport.unstableParameterComposables.isNotEmpty()) {
+                CollapsibleContent(
+                    summary = "Composables with unstable parameters",
+                    summaryAttr = {
+                        setStyle(backgroundColor = Colors.ORANGE, fontSize = "18px")
+                    },
+                ) {
+                    setStyle(backgroundColor = Colors.ORANGE_LIGHT)
+                    ComposablesReport(composablesReport.unstableParameterComposables)
+                }
+            }
+
+            val emptyContentTexts =
+                buildList {
+                    if (composablesReport.restartableButNotSkippableComposables.isEmpty()) {
+                        add("Restartable but Not Skippable")
+                    }
+
+                    if (composablesReport.unstableParameterComposables.isEmpty()) {
+                        add("Unstable properties")
+                    }
+                }.takeIf { it.isNotEmpty() }
+
+            if (emptyContentTexts != null) {
+                EmptyContent("No composables found: ${emptyContentTexts.joinToString(", ")}")
             }
 
             if (composablesReport.nonIssuesComposables.isNotEmpty() && includeStableComposables) {
@@ -162,7 +195,6 @@ fun FlowContent.ComposablesReport(composables: List<ComposableDetail>) =
 
 @Suppress("ktlint:standard:function-naming")
 fun BODY.OnlyUnstableComposables(composablesReport: ComposablesReport) {
-    h3 { +"Composables with issues (Restartable but Not Skippable)" }
     ComposablesReport(
         includeStableComposables = false,
         onlyUnstableComposables = true,
