@@ -30,9 +30,9 @@ import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.multiplatform.jvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
-import org.jetbrains.kotlin.gradle.dsl.KotlinCommonToolOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 @Suppress("UnstableApiUsage")
 class ReportGenPlugin : Plugin<Project> {
@@ -78,21 +78,25 @@ class ReportGenPlugin : Plugin<Project> {
     }
 }
 
-fun KotlinCommonToolOptions.configureKotlinOptionsForComposeCompilerReport(project: Project) {
+fun KotlinCompilationTask<*>.configureCompilerOptionsForComposeCompilerReport(project: Project) {
     val reportExtension = project.extensions.getByType<ComposeCompilerReportExtension>()
     val outputPath = reportExtension.composeRawMetricsOutputDirectory.absolutePath
-    if (reportExtension.enableReport.get()) {
-        freeCompilerArgs +=
-            listOf(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath",
+    compilerOptions {
+        if (reportExtension.enableReport.get()) {
+            freeCompilerArgs.addAll(
+                listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$outputPath",
+                ),
             )
-    }
-    if (reportExtension.enableMetrics.get()) {
-        freeCompilerArgs +=
-            listOf(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath",
+        }
+        if (reportExtension.enableMetrics.get()) {
+            freeCompilerArgs.addAll(
+                listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$outputPath",
+                ),
             )
+        }
     }
 }
