@@ -26,12 +26,13 @@
 package dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.multiplatform
 
 import com.android.build.api.variant.AndroidComponentsExtension
-import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.configureKotlinOptionsForComposeCompilerReport
+import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.configureCompilerOptionsForComposeCompilerReport
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.executingComposeCompilerReportGenerationGradleTask
 import dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.task.registerComposeCompilerReportGenTaskForTarget
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 fun Project.configureKotlinMultiplatformComposeCompilerReports(multiplatformExt: KotlinMultiplatformExtension) {
     // Create gradle tasks for generating report
@@ -62,9 +63,7 @@ fun Project.configureKotlinMultiplatformComposeCompilerReports(multiplatformExt:
 fun Project.configureKotlinOptionsForComposeCompilerReport(compilations: Collection<KotlinCompilation<*>>) {
     compilations
         .filter { compilation -> !compilation.name.endsWith("Test", ignoreCase = true) }
-        .forEach {
-            it.kotlinOptions {
-                configureKotlinOptionsForComposeCompilerReport(this@configureKotlinOptionsForComposeCompilerReport)
-            }
+        .forEach { compilation ->
+            compilation.compileTaskProvider.orNull?.configureCompilerOptionsForComposeCompilerReport(this)
         }
 }
