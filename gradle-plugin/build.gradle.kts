@@ -28,15 +28,15 @@ tasks.getByName<Test>("test") {
 }
 
 gradlePlugin {
-    website.set("https://github.com/PatilShreyas/compose-report-to-html")
-    vcsUrl.set("https://github.com/PatilShreyas/compose-report-to-html")
+    website = "https://github.com/PatilShreyas/compose-report-to-html"
+    vcsUrl = "https://github.com/PatilShreyas/compose-report-to-html"
     plugins {
-        create("reportGenPlugin") {
+        register("reportGenPlugin") {
             id = "dev.shreyaspatil.compose-compiler-report-generator"
             displayName = POM_NAME
             description = POM_DESCRIPTION
             implementationClass = "dev.shreyaspatil.composeCompilerMetricsGenerator.plugin.ReportGenPlugin"
-            tags.set(listOf("android", "compose", "report", "jetpackcompose", "composecompiler"))
+            tags = listOf("android", "compose", "report", "jetpackcompose", "composecompiler")
         }
     }
 }
