@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 val VERSION_NAME: String by project
 val GROUP: String by project
 
@@ -12,8 +10,8 @@ plugins {
 group = GROUP
 version = VERSION_NAME
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+kotlin {
+    jvmToolchain(libs.versions.java.get().toInt())
 }
 
 subprojects {
@@ -21,7 +19,7 @@ subprojects {
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         kotlin {
             target("**/*.kt")
-            targetExclude("$buildDir/**/*.kt")
+            targetExclude("${layout.buildDirectory}/**/*.kt")
             targetExclude("bin/**/*.kt")
 
             ktlint()
