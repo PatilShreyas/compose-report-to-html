@@ -18,7 +18,7 @@
   "dependencies": {
     "node-fetch": "^2.6.7",
     "njre": "^1.1.0",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.10.0"
   },
   "license": "MIT",
   "name": "compose-report2html",
